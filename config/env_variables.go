@@ -4,9 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"path"
-
-	"github.com/ab22/env"
 )
 
 // Struct that contains all of the configuration variables
@@ -22,24 +19,6 @@ type envVariables struct {
 			Admin string
 		}
 	}
-}
-
-// Reads all variables from envinronment
-func (e *envVariables) Parse() error {
-	var err error
-	var distFolder string
-
-	if err = env.Parse(&e.App); err != nil {
-		return err
-	}
-
-	if e.App.Env != "DEV" {
-		distFolder = "dist"
-	}
-
-	e.App.Frontend.Admin = path.Join("frontend/admin", distFolder)
-
-	return nil
 }
 
 // Validate checks if the most important fields are set and are not empty

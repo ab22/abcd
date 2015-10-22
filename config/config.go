@@ -1,5 +1,11 @@
 package config
 
+import (
+	"path"
+
+	"github.com/ab22/env"
+)
+
 // Constant config variables.
 const (
 	DbLogMode    = false
@@ -11,11 +17,18 @@ var (
 )
 
 func Initialize() error {
+	var adminFolder string
 	var err error
 
-	if err = EnvVariables.Parse(); err != nil {
+	if err = env.Parse(&EnvVariables); err != nil {
 		return err
 	}
+
+	if EnvVariables.App.Env != "DEV" {
+		adminFolder = "dist"
+	}
+
+	EnvVariables.App.Frontend.Admin = path.Join("frontend/admin", adminFolder)
 
 	if err = EnvVariables.Validate(); err != nil {
 		return err

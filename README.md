@@ -1,6 +1,6 @@
 # A.B.C.D.
 
-Main repository for the API and frontend applications for A.B.C.D.
+Main repository for the Go web API and frontend applications for A.B.C.D.
 
 ## TODO
 

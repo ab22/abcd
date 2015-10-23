@@ -9,26 +9,29 @@ import (
 // Constant config variables.
 const (
 	DbLogMode    = false
-	NoReplyEmail = "noreply@abcd.es"
+	NoReplyEmail = "noreply@abcd.com"
 )
 
 var (
-	EnvVariables envVariables // Contains environment configuration variables.
+	// Contains environment configuration variables.
+	EnvVariables envVariables
 )
 
 func Initialize() error {
-	var adminFolder string
+	var adminAppFolder string
 	var err error
 
 	if err = env.Parse(&EnvVariables); err != nil {
 		return err
 	}
 
-	if EnvVariables.App.Env != "DEV" {
-		adminFolder = "dist"
+	if EnvVariables.App.Env == "DEV" {
+		adminAppFolder = "app"
+	} else {
+		adminAppFolder = "dist"
 	}
 
-	EnvVariables.App.Frontend.Admin = path.Join("frontend/admin", adminFolder)
+	EnvVariables.App.Frontend.Admin = path.Join("frontend/admin", adminAppFolder)
 
 	if err = EnvVariables.Validate(); err != nil {
 		return err

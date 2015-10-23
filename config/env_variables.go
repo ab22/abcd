@@ -42,7 +42,7 @@ func (e *envVariables) Validate() error {
 func (e *envVariables) Print() {
 	log.Println("----------------------------------")
 	log.Println("Application Port:", e.App.Port)
-	log.Println(" Frontend folder:", e.App.Frontend.Admin)
+	log.Println("       Admin App:", e.App.Frontend.Admin)
 	log.Println("     Environment:", e.App.Env)
 	log.Println("----------------------------------")
 }

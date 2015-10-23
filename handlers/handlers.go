@@ -46,9 +46,10 @@ type ApiHandler func(http.ResponseWriter, *http.Request) (interface{}, *ApiError
 // and loads cached templates.
 func Initialize() {
 	secretKey := config.EnvVariables.App.Secret
-	adminPath := config.EnvVariables.App.Frontend.Admin
+	adminAppPath := config.EnvVariables.App.Frontend.Admin
 
 	gob.Register(&SessionData{})
+
 	cookieStore = sessions.NewCookieStore([]byte(secretKey))
-	cachedTemplates = template.Must(template.ParseFiles(adminPath + "/index.html"))
+	cachedTemplates = template.Must(template.ParseFiles(adminAppPath + "/index.html"))
 }

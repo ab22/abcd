@@ -46,8 +46,8 @@ func registerApiRoutes(router *mux.Router) {
 
 func registerStaticFilesServer(router *mux.Router) {
 	// Register the static files server handler separately.
-	adminPath := config.EnvVariables.App.Frontend.Admin
-	staticFilesPath := path.Join(adminPath, "static")
+	adminAppPath := config.EnvVariables.App.Frontend.Admin
+	staticFilesPath := path.Join(adminAppPath, "static")
 
 	staticFilesHandler := handlers.NoDirListing(http.FileServer(http.Dir(staticFilesPath)))
 	staticFilesHandler = handlers.GzipContent(staticFilesHandler)

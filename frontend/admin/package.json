@@ -1,0 +1,21 @@
+{
+  "name": "A.B.C.D application",
+  "version": "0.0.1",
+  "description": "",
+
+  "engines": {
+    "npm": "2.6.x",
+    "node": "0.12.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ab22/abcd"
+  },
+  
+  "devDependencies": {
+      "grunt": "^0.4.5"
+  },
+  "dependencies": {
+  
+  } 
+}

@@ -1,0 +1,14 @@
+{
+  "name": "A.B.C.D application",
+  "version": "0.0.1",
+  "description": "Web application",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

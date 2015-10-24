@@ -44,6 +44,8 @@ func registerApiRoutes(router *mux.Router) {
 	}
 }
 
+// registerStaticFilesServer creates the static file server for the default
+// admin app. This might need to change in case we add more frontend apps.
 func registerStaticFilesServer(router *mux.Router) {
 	// Register the static files server handler separately.
 	adminAppPath := config.EnvVariables.App.Frontend.Admin

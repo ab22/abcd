@@ -9,6 +9,6 @@
 	"unused": true,
 	"strict": true,
 	"globals": {
-		"angular": false,
+		"angular": false
 	}
 }

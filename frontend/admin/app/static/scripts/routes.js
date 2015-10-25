@@ -4,7 +4,7 @@
 	angular.module('app')
 	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 			var viewsPath = '/static/views/';
-			$urlRouterProvider.otherwise('/home/login');
+			$urlRouterProvider.otherwise('/home');
 
 			$stateProvider.
 				state('home',{
@@ -14,7 +14,6 @@
 				state('home.login',{
 					url: '/login',
 					templateUrl: viewsPath+'login.html',
-					requiresAuthentication: false
 
 				});
 

@@ -5,12 +5,12 @@ Main repository for the Go web API and frontend applications for A.B.C.D.
 ## Configuration
 
 Before running the project, it is necessary to have a Go workspace and the
-$GOPATH environment variable. Read (How to Write Go Code)[https://golang.org/doc/code.html]
+$GOPATH environment variable. Read [How to Write Go Code](https://golang.org/doc/code.html)
 to configure the project correctly.
 
 ### Downloading the project
 
-```
+```shell
 go get github.com/ab22/abcd
 ```
 
@@ -18,7 +18,7 @@ go get github.com/ab22/abcd
 
 To compile and run the project, you can simply run:
 
-```
+```shell
 go run *.go
 ```
 
@@ -26,7 +26,7 @@ If on Windows, this will create a temp executable, so everytime you run this,
 the Windows firewall will ask for permissions to run it. So to avoid that popup
 to show everytime, you can instead run:
 
-```
+```shell
 build.sh && run.sh
 ```
 

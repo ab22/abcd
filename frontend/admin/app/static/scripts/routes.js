@@ -10,7 +10,12 @@
 				state('home',{
 					url: '/home',
 					templateUrl: viewsPath+'home.html'
-			});
+			}),
+				state('login',{
+					url: '/login',{
+					templateUrl: viewsPath+'login.html'
+					}
+				})
 
 }]);
 

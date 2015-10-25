@@ -3,10 +3,10 @@
 
 	angular.module('app')
 	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
-			var viewsPath = '/static/views/';
+			var viewsPath = 'static/views/';
 			$urlRouterProvider.otherwise('/home');
 
-			$stateProvider
+			$stateProvider.
 				state('home',{
 					url: '/home',
 					templateUrl: viewsPath+'home.html'

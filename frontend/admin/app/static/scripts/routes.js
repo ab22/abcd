@@ -13,7 +13,7 @@
 					controller:'HomeCtrl'
 
 			}).
-				state('home.login',{
+				state('login',{
 					url: '/login',
 					templateUrl: viewsPath+'login.html',
 					controller:'LoginCtrl'

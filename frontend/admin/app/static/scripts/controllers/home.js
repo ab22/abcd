@@ -1,11 +1,12 @@
 
 ;(function(angular) {
 	'use strict';
-angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location'
+angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location',
 		function($scope,$location) {
-			$scopre.changeLoginView=function(){
+			$scope.changeLoginView=function(){
 				$location.path('/home/login');
 			}
 
-
+   }
+]);
 })(angular);

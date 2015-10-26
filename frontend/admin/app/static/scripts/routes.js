@@ -9,11 +9,14 @@
 			$stateProvider.
 				state('home',{
 					url: '/home',
-					templateUrl: viewsPath+'home.html'
+					templateUrl: viewsPath+'home.html',
+					controller:'HomeCtrl'
+
 			}).
 				state('home.login',{
 					url: '/login',
 					templateUrl: viewsPath+'login.html',
+					controller:'LoginCtrl'
 
 				});
 

@@ -7,6 +7,6 @@ angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location',
 				$location.path('/home/login');
 			}
 
-   }
-]);
+
+}]);
 })(angular);

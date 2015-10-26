@@ -6,7 +6,7 @@ angular.module('app.controllers').controller('LoginCtrl', ['$scope','$location',
 			$scopre.signIn=function(){
 
 			}
-}
-]);
+
+}]);
 })(angular);
 

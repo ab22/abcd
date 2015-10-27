@@ -2,7 +2,6 @@
   "name": "A.B.C.D application",
   "version": "0.0.1",
   "description": "",
-
   "engines": {
     "npm": "2.6.x",
     "node": "0.12.x"
@@ -11,11 +10,20 @@
     "type": "git",
     "url": "https://github.com/ab22/abcd"
   },
-  
+  "dependencies": {},
   "devDependencies": {
-      "grunt": "^0.4.5"
-  },
-  "dependencies": {
-  
-  } 
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-copy": "^0.8.1",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-htmlmin": "^0.4.0",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-uglify": "^0.9.2",
+    "grunt-filerev": "^2.3.1",
+    "grunt-jscs": "^2.1.0",
+    "grunt-text-replace": "^0.4.0",
+    "grunt-usemin": "^3.1.1",
+    "grunt-wiredep": "^2.0.0"
+  }
 }

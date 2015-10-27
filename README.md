@@ -1,3 +1,5 @@
+![Login](http://i.imgur.com/esdXYyA.png)
+
 # A.B.C.D.
 
 Main repository for the Go web API and frontend applications for A.B.C.D.

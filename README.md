@@ -2,6 +2,8 @@
 
 Main repository for the Go web API and frontend applications for A.B.C.D.
 
+![Login](http://i.imgur.com/esdXYyA.png)
+
 ## Configuration
 
 Before running the project, it is necessary to have a Go workspace and the

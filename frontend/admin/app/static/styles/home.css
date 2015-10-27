@@ -123,6 +123,10 @@
 * Placeholder dashboard ideas
 */
 
+.page-header {
+	border-bottom: 4px double #EEE;
+}
+
 .placeholders {
 	margin-bottom: 30px;
 	text-align: center;

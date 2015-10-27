@@ -1,38 +1,28 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="app"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Login Form</title>
-  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-</head>
-<body>
-  <section class="container">
-    <div class="login" ng-controller="LoginCtrl">
-      <h1>Login to Web App</h1>
-      <form ng-submit="signIn()">
-        <p><input type="text" ng-model="credential.username" value="" placeholder="Username or Email"></p>
-        <p>[[credential.username]]</p>
-        <p><input type="password" ng-model="credential.password" value="" placeholder="Password"></p>
-         <p>[[credential.password]]</p>
-        <p class="remember_me">
-          <label>
-            <input type="checkbox" name="remember_me" id="remember_me">
-            Remember me on this computer
-          </label>
-        </p>
-        <p class="submit"><input type="submit"  value="Login"></p>
-      </form>
-    </div>
+<section class="login-body">
+	<div class="container">
+		<div class="header login-header clearfix">
+			<div class="row">
+				<div class="col-md-11 text-center">
+					<h1>Instituto Técnico A.B.C.D.</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-signin">
+					<label for="inputEmail" class="sr-only">Email:</label>
+					<input type="email" id="inputEmail" class="form-control" placeholder="Correo" required autofocus>
 
-    <div class="login-help">
-      <p>Forgot your password? <a href="index.html">Click here to reset it</a>.</p>
-    </div>
-  </section>
+					<label for="inputPassword" class="sr-only">Clave:</label>
+					<input type="password" id="inputPassword" class="form-control" placeholder="Clave" required>
 
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<img src="static/images/intro.png" />
+			</div>
+		</div>
 
-</body>
-</html>
+	</div>
+</section>

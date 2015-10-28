@@ -1,12 +1,13 @@
-
 ;(function(angular) {
 	'use strict';
-angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location',
+
+	angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location',
 		function($scope,$location) {
-			$scope.changeLoginView=function(){
+
+			$scope.signOut = function(){
 				$location.path('/login');
-			}
+			};
 
-
-}]);
+		}
+	]);
 })(angular);

@@ -41,6 +41,7 @@
 .navbar-inverse .navbar-nav > li > a:focus {
 	text-decoration: underline;
 	color: #2895F1;
+	cursor: pointer;
 }
 
 .navbar-header > .navbar-brand {

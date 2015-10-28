@@ -37,7 +37,7 @@ module.exports = function (grunt) {
 	config.copy = {
 		index: {
 			expand: true,
-			cwd: './',
+			cwd: '<%= globals.appPath %>/',
 			dest: '<%= globals.dist %>',
 			src: [
 				'index.html'

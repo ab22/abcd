@@ -1,19 +1,19 @@
 ;(function(angular) {
-'use strict';
+	'use strict';
 
 	angular.module('app').config(['$stateProvider', '$urlRouterProvider',
-		function($stateProvider, $urlRouterProvider){
+		function($stateProvider, $urlRouterProvider) {
 			var viewsPath = '/static/views/';
 			$urlRouterProvider.otherwise('/home');
 
 			$stateProvider.
-				state('home',{
+				state('home', {
 					url: '/home',
-					templateUrl: viewsPath+'home.html',
+					templateUrl: viewsPath + 'home.html',
 					controller:'HomeCtrl'
-				}).state('login',{
+				}).state('login', {
 					url: '/login',
-					templateUrl: viewsPath+'login.html',
+					templateUrl: viewsPath + 'login.html',
 					controller:'LoginCtrl'
 				});
 		}

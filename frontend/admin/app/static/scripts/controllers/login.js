@@ -4,7 +4,7 @@
 	angular.module('app.controllers').controller('LoginCtrl', ['$scope','$location',
 		function($scope,$location) {
 
-			$scope.authenticate = function(){
+			$scope.authenticate = function() {
 				$location.path('/home');
 			};
 

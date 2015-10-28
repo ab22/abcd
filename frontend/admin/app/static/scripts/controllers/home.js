@@ -4,7 +4,7 @@
 	angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location',
 		function($scope,$location) {
 
-			$scope.signOut = function(){
+			$scope.signOut = function() {
 				$location.path('/login');
 			};
 

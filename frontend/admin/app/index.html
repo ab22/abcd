@@ -5,7 +5,22 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
 
-		<!-- build:js(.) static/scripts/vendor.js -->
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<!-- build:css(app) static/styles/vendor.css -->
+			<!-- bower:css -->
+			<link rel="stylesheet" href="static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+			<link rel="stylesheet" href="static/bower_components/ngToast/dist/ngToast.css" />
+			<!-- endbower -->
+
+			<link rel="stylesheet" href="static/styles/main.css" />
+			<link rel="stylesheet" href="static/styles/home.css" />
+			<link rel="stylesheet" href="static/styles/login.css" />
+		<!-- endbuild -->
+
+		<!-- build:js(app) static/scripts/vendor.js -->
+
 			<!-- bower:js -->
 			<script src="static/bower_components/jquery/dist/jquery.js"></script>
 			<script src="static/bower_components/angular/angular.js"></script>
@@ -19,27 +34,14 @@
 			<script src="static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 			<script src="static/bower_components/ngToast/dist/ngToast.js"></script>
 			<!-- endbower -->
-		<!-- endbower -->
 
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-		<!-- build:css(.) static/styles/vendor.css -->
-			<!-- bower:css -->
-			<link rel="stylesheet" href="static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-			<link rel="stylesheet" href="static/bower_components/ngToast/dist/ngToast.css" />
-			<!-- endbower -->
-
-			<link rel="stylesheet" href="static/styles/main.css" />
-			<link rel="stylesheet" href="static/styles/home.css" />
-			<link rel="stylesheet" href="static/styles/login.css" />
 		<!-- endbuild -->
 	</head>
 	<body>
 		<toast></toast>
 		<div ui-view></div>
 
-		<!-- build:js(.) static/scripts/app.js -->
+		<!-- build:js(app) static/scripts/app.js -->
 			<script src="static/scripts/app.js"></script>
 			<script src="static/scripts/routes.js"></script>
 			<script src="static/scripts/controllers/home.js"></script>

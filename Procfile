@@ -1,1 +1,1 @@
-web: instituto-abcd
+web: abcd

@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/ab22/abcd/Godeps/_workspace/src/github.com/gorilla/mux"
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/handlers"
-	"github.com/gorilla/mux"
 )
 
 // Registers a route to a template file. Sets up authentication middleware

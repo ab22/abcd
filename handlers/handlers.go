@@ -5,8 +5,8 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/ab22/abcd/Godeps/_workspace/src/github.com/gorilla/sessions"
 	"github.com/ab22/abcd/config"
-	"github.com/gorilla/sessions"
 )
 
 const (

@@ -3,7 +3,7 @@ package config
 import (
 	"path"
 
-	"github.com/ab22/env"
+	"github.com/ab22/abcd/Godeps/_workspace/src/github.com/ab22/env"
 )
 
 // Constant config variables.

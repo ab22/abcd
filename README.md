@@ -37,16 +37,24 @@ build.sh && run.sh
 ### Frontend
 
 ☑ Setup a package.json file.
+
 ☑ Configure bower and a bower.json file with the dependencies.
+
 ☑ Create and configure the jshint files and js code styles (jscsrc).
+
 ☑ Setup grunt and it's tasks.
+
 
 ### Backend
 
 ☑ Configure the backend file for dependencies to run the project.
+
 ☐ Setup the db models and services module.
+
 ☑ Setup the Godep folder for dependencies.
+
 ☐ Configuration variables for databases.
+
 
 ### Others
 

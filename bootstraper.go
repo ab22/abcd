@@ -47,3 +47,14 @@ func initializeHandlersModule() error {
 
 	return nil
 }
+
+// Migrate models
+func migrateModels() error {
+	log.Println("Migrating database...")
+
+	if err := models.Migrate(); err != nil {
+		return err
+	}
+
+	return nil
+}

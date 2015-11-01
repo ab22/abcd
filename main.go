@@ -12,6 +12,7 @@ var (
 	// Defines all of the functions to be executed and configured on boot.
 	abcdBootstrapper = bootstrapper{
 		initializeConfigurationModule,
+		migrateModels,
 		initializeHandlersModule,
 	}
 )

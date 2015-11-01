@@ -25,7 +25,7 @@ type envVariables struct {
 		Port     int    `env:"DB_PORT" envDefault:"5432"`
 		User     string `env:"DB_USER" envDefault:"postgres"`
 		Password string `env:"DB_PASS" envDefault:"1234"`
-		Name     string `env:"DB_NAME" envDefault:"playcheck"`
+		Name     string `env:"DB_NAME" envDefault:"abcd"`
 	}
 }
 

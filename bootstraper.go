@@ -41,14 +41,6 @@ func initializeConfigurationModule() error {
 	return nil
 }
 
-// Configure abcd/handlers package.
-func initializeHandlersModule() error {
-	log.Println("Initializing handlers...")
-	handlers.Initialize()
-
-	return nil
-}
-
 // Migrate models
 func migrateModels() error {
 	log.Println("Migrating database...")
@@ -56,6 +48,25 @@ func migrateModels() error {
 	if err := models.Migrate(); err != nil {
 		return err
 	}
+
+	return nil
+}
+
+// Configure playcheck/services package.
+func initializeServicesModule() error {
+	log.Println("Initializing services...")
+
+	if err := services.Initialize(); err != nil {
+		log.Fatalln(err)
+	}
+
+	return nil
+}
+
+// Configure abcd/handlers package.
+func initializeHandlersModule() error {
+	log.Println("Initializing handlers...")
+	handlers.Initialize()
 
 	return nil
 }

@@ -13,6 +13,7 @@ var (
 	abcdBootstrapper = bootstrapper{
 		initializeConfigurationModule,
 		migrateModels,
+		initializeServicesModule,
 		initializeHandlersModule,
 	}
 )

@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ab22/abcd/Godeps/_workspace/src/github.com/ab22/env"
+	"github.com/ab22/env"
 )
 
 const (

@@ -74,5 +74,8 @@ func (e *envVariables) Print() {
 	log.Println("Application Port:", e.App.Port)
 	log.Println("       Admin App:", e.App.Frontend.Admin)
 	log.Println("     Environment:", e.App.Env)
+	log.Println("   Database Host:", e.Db.Host)
+	log.Println("   Database Port:", e.Db.Port)
+	log.Println("   Database Name:", e.Db.Name)
 	log.Println("----------------------------------")
 }

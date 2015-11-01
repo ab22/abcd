@@ -3,9 +3,9 @@ package models
 import (
 	"fmt"
 
+	"github.com/ab22/abcd/config"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
-	"github/ab22/abcd/config"
 )
 
 func Migrate() error {

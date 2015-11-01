@@ -19,6 +19,14 @@ type envVariables struct {
 			Admin string
 		}
 	}
+
+	Db struct {
+		Host     string `env:"DB_HOST" envDefault:"localhost"`
+		Port     int    `env:"DB_PORT" envDefault:"5432"`
+		User     string `env:"DB_USER" envDefault:"postgres"`
+		Password string `env:"DB_PASS" envDefault:"1234"`
+		Name     string `env:"DB_NAME" envDefault:"playcheck"`
+	}
 }
 
 // Validate checks if the most important fields are set and are not empty
@@ -26,12 +34,34 @@ type envVariables struct {
 func (e *envVariables) Validate() error {
 	var errorMsg = "config: field [%v] was not set!"
 
+	// App validation
 	if e.App.HostUrl == "" {
 		return errors.New(fmt.Sprintf(errorMsg, "App.HostURL"))
 	}
 
 	if e.App.Secret == "" {
 		return errors.New(fmt.Sprintf(errorMsg, "App.Secret"))
+	}
+
+	//Db validation
+	if e.Db.Host == "" {
+		return errors.New(fmt.Sprintf(errorMsg, "Db.Host"))
+	}
+
+	if e.Db.Port == 0 {
+		return errors.New(fmt.Sprintf(errorMsg, "Db.Port"))
+	}
+
+	if e.Db.User == "" {
+		return errors.New(fmt.Sprintf(errorMsg, "Db.User"))
+	}
+
+	if e.Db.Password == "" {
+		return errors.New(fmt.Sprintf(errorMsg, "Db.Password"))
+	}
+
+	if e.Db.Name == "" {
+		return errors.New(fmt.Sprintf(errorMsg, "Db.Name"))
 	}
 
 	return nil

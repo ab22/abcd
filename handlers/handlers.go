@@ -21,6 +21,7 @@ var (
 	// Define and export global handlers to encapsulate handler's
 	// functions and avoid name collisions.
 	StaticHandler = staticHandler{}
+	AuthHandler   = authHandler{}
 )
 
 // Describes the data that every session cookie must store.

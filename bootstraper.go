@@ -6,6 +6,7 @@ import (
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/handlers"
 	"github.com/ab22/abcd/models"
+	"github.com/ab22/abcd/services"
 )
 
 // bootstrapFunc is a simple function that configures the app modules, takes

@@ -42,5 +42,24 @@ var routes = Routes{
 			RequiresAuth: false,
 		},
 	},
-	ApiRoutes: []ApiRoute{},
+	ApiRoutes: []ApiRoute{
+		{
+			Pattern:      "auth/checkAuthentication/",
+			Method:       "POST",
+			HandlerFunc:  handlers.AuthHandler.CheckAuth,
+			RequiresAuth: true,
+		},
+		{
+			Pattern:      "auth/login/",
+			Method:       "POST",
+			HandlerFunc:  handlers.AuthHandler.Login,
+			RequiresAuth: false,
+		},
+		{
+			Pattern:      "auth/logout/",
+			Method:       "POST",
+			HandlerFunc:  handlers.AuthHandler.Logout,
+			RequiresAuth: true,
+		},
+	},
 }

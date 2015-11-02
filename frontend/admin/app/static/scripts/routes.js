@@ -10,11 +10,13 @@
 				state('home', {
 					url: '/home',
 					templateUrl: viewsPath + 'home.html',
-					controller:'HomeCtrl'
+					controller:'HomeCtrl',
+					requiresAuthentication: true
 				}).state('login', {
 					url: '/login',
 					templateUrl: viewsPath + 'login.html',
-					controller:'LoginCtrl'
+					controller:'LoginCtrl',
+					requiresAuthentication: false
 				});
 		}
 	]);

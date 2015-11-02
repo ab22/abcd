@@ -2,6 +2,7 @@
 	'use strict';
 
 	angular.module('app.controllers', []);
+	angular.module('app.services', []);
 
 	var app = angular.module('app', [
 		'ngToast',
@@ -48,6 +49,26 @@
 
 	app.config(['$httpProvider', function($httpProvider) {
 		$httpProvider.interceptors.push('httpInterceptor');
+	}]);
+
+	app.run(['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+		$rootScope.$on('$stateChangeStart', function(event, toState) {
+			if (toState.url === '/login') {
+				return;
+			}
+
+			if (!toState.requiresAuthentication) {
+				return;
+			}
+
+			Auth.checkAuthentication().error(function(response, status) {
+				if (status === 401) {
+					if (toState.requiresAuthentication) {
+						$state.go('login');
+					}
+				}
+			});
+		});
 	}]);
 
 })(angular);

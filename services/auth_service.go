@@ -9,8 +9,8 @@ type authService struct{}
 
 // Basic email/password authentication. BasicAuth checks if the user exists,
 // checks if the passwords match and if the user's state is active.
-func (s *authService) BasicAuth(email, password string) (*models.User, error) {
-	user, err := UserService.FindByEmail(email)
+func (s *authService) BasicAuth(username, password string) (*models.User, error) {
+	user, err := UserService.FindByUsername(username)
 	if err != nil {
 		return nil, err
 	} else if user == nil || user.Status != int(Active) {

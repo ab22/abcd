@@ -44,6 +44,7 @@ func (s *userService) FindByEmail(email string) (*models.User, error) {
 	err := db.
 		Where("email = ?", email).
 		First(user).Error
+
 	if err != nil {
 		if err != gorm.RecordNotFound {
 			return nil, err

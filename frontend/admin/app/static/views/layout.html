@@ -42,14 +42,17 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar" ng-repeat="options in menu">
-					<li ng-repeat="option in options" ng-class="{'active': option.label === activeOption}">
-						<a ng-href="{{option.link}}" ng-click="optionOnClick(option)">
+					<li ng-repeat="option in options" ng-class="{'active': option.label === activeOption.label}">
+						<a ng-href="#{{option.link}}" ng-click="optionOnClick(option)">
 							<i class="fa fa-fw {{option.icon}}"></i> {{option.label}}
 						</a>
 					</li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<h1 class="page-header">
+					<i class="fa {{activeOption.icon}} fa-lg"></i> {{activeOption.label}}
+				</h1>
 				<ui-view />
 			</div>
 		</div>

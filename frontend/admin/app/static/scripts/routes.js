@@ -25,7 +25,7 @@
 					requiresAuthentication: false
 				}).state('main.users', {
 					url: '/users',
-					templateUrl: viewsPath + 'users/layout.html',
+					template: '<ui-view />',
 					requiresAuthentication: true
 				}).state('main.users.all', {
 					url: '/all',

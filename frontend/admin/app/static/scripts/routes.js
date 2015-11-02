@@ -17,6 +17,15 @@
 					templateUrl: viewsPath + 'login.html',
 					controller:'LoginCtrl',
 					requiresAuthentication: false
+				}).state('home.users', {
+					url: '/users',
+					templateUrl: viewsPath + 'users/layout.html',
+					requiresAuthentication: true
+				}).state('home.users.all', {
+					url: '/all',
+					templateUrl: viewsPath + 'users/all.html',
+					controller: 'AllUsersCtrl',
+					requiresAuthentication: true
 				});
 		}
 	]);

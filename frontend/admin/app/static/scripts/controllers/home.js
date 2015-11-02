@@ -1,11 +1,13 @@
 ;(function(angular) {
 	'use strict';
 
-	angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location',
-		function($scope,$location) {
+	angular.module('app.controllers').controller('HomeCtrl', ['$scope','$location', 'Auth',
+		function($scope, $location, Auth) {
 
 			$scope.signOut = function() {
-				$location.path('/login');
+				Auth.logout().success(function() {
+					$location.path('/login');
+				});
 			};
 
 		}

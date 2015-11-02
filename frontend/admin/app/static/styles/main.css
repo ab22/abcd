@@ -3,3 +3,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 }
+
+.has-error .form-control {
+	border-color: #f35051;
+}

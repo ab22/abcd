@@ -9,14 +9,18 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<form class="form-signin">
-					<label for="inputEmail" class="sr-only">Email:</label>
-					<input ng-model="credentials.identifier" type="email" id="inputEmail" class="form-control" placeholder="Correo" required autofocus>
+				<form name="loginForm" class="form-signin" ng-submit="authenticate()">
+					<div class="form-group" ng-class="{'has-error': loginForm.email.$invalid && loginForm.email.$dirty}">
+						<label for="email" class="sr-only">Email:</label>
+						<input name="email" ng-model="credentials.identifier" type="email" class="form-control" placeholder="Correo" required autofocus>
+					</div>
 
-					<label for="inputPassword" class="sr-only">Clave:</label>
-					<input ng-model="credentials.password" type="password" id="inputPassword" class="form-control" placeholder="Clave" required>
+					<div class="form-group" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$dirty}">
+						<label for="password" class="sr-only">Clave:</label>
+						<input name="password" ng-model="credentials.password" type="password" class="form-control" placeholder="Clave" required>
+					</div>
 
-					<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="authenticate()">Iniciar Sesión</button>
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
 				</form>
 			</div>
 			<div class="col-md-6 text-center">

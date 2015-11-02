@@ -1,7 +1,7 @@
 ;(function(angular) {
 	'use strict';
 
-	angular.module('app').service('Auth', [
+	angular.module('app.services').service('Auth', [
 		function() {
 			var authService = {};
 

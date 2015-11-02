@@ -7,7 +7,8 @@
 		'ngToast',
 		'ngRoute',
 		'ui.router',
-		'app.controllers'
+		'app.controllers',
+		'app.services'
 	]);
 
 	app.factory('httpInterceptor', ['$rootScope', '$q', 'ngToast', function($rootScope, $q, ngToast) {

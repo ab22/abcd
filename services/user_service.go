@@ -18,6 +18,24 @@ const (
 	Disabled
 )
 
+func (s *userService) FindByUsername(username string) (*models.User, error) {
+	user := &models.User{}
+
+	err := db.
+		Where("username = ?", username).
+		First(user).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return nil, err
+		}
+
+		return nil, nil
+	}
+
+	return user, nil
+}
+
 // Searches for a User by Email.
 // Returns *models.User instance if it finds it, or nil otherwise.
 func (s *userService) FindByEmail(email string) (*models.User, error) {

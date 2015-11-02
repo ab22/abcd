@@ -18,6 +18,7 @@ const (
 	Disabled
 )
 
+// Search user by Username.
 func (s *userService) FindByUsername(username string) (*models.User, error) {
 	user := &models.User{}
 

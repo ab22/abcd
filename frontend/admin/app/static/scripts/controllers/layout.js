@@ -57,7 +57,7 @@
 						label: 'Reporte #3',
 						icon: 'fa-area-chart',
 						link: '#'
-					},
+					}
 				],
 				[
 					{
@@ -85,8 +85,8 @@
 						icon: 'fa-sign-out',
 						link: '#',
 						onClick: $scope.signOut
-					},
-				],
+					}
+				]
 			];
 
 			$scope.activeOption = $scope.menu[0][0].label;
@@ -95,11 +95,9 @@
 				$scope.activeOption = option.label;
 
 				if (typeof option.onClick === 'undefined') {
-					console.log('no onclick');
 					return;
 				}
 
-				console.log('executing....');
 				option.onClick();
 			};
 

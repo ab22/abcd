@@ -10,9 +10,9 @@
 		<div class="row">
 			<div class="col-md-6">
 				<form name="loginForm" class="form-signin" ng-submit="authenticate()">
-					<div class="form-group" ng-class="{'has-error': loginForm.email.$invalid && loginForm.email.$dirty}">
-						<label for="email" class="sr-only">Email:</label>
-						<input name="email" ng-model="credentials.identifier" type="email" class="form-control" placeholder="Correo" required autofocus>
+					<div class="form-group" ng-class="{'has-error': loginForm.username.$invalid && loginForm.username.$dirty}">
+						<label for="username" class="sr-only">Usuario:</label>
+						<input name="username" ng-model="credentials.identifier" type="text" class="form-control" placeholder="Usuario" required autofocus>
 					</div>
 
 					<div class="form-group" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$dirty}">

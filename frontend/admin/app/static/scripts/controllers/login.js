@@ -12,7 +12,6 @@
 				Auth.login($scope.credentials).success(function() {
 					$location.path('/home');
 				}).error(function(response) {
-					$scope.credentials.identifier = '';
 					$scope.credentials.password = '';
 
 					var message = response;

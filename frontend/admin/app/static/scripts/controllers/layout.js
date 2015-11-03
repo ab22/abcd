@@ -110,10 +110,10 @@
 			function determineActiveOption() {
 				var currentPath = $location.path();
 
-				for(var i in $scope.menu) {
+				for (var i in $scope.menu) {
 					var options = $scope.menu[i];
 
-					for(var x in options) {
+					for (var x in options) {
 						var option = options[x];
 
 						if (option.link === currentPath) {

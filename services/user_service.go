@@ -74,3 +74,21 @@ func (s *userService) ComparePasswords(hashedPassword []byte, password string) b
 	err := bcrypt.CompareHashAndPassword(hashedPassword, []byte(password))
 	return err == nil
 }
+
+// Finds all active users in the database.
+func (s *userService) FindAll() ([]models.User, error) {
+	var users []models.User
+	var err error
+
+	err = db.Find(&users).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return nil, err
+		}
+
+		return users, nil
+	}
+
+	return users, nil
+}

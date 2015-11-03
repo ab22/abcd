@@ -1,0 +1,42 @@
+<section>
+	<div class="row">
+		<div class="col-sm-12 table-responsive">
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Usuario</th>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>Correo</th>
+						<th>Fecha de Creación</th>
+						<th>Estado</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="u in users">
+						<td>{{u.id}}</td>
+						<td>{{u.username}}</td>
+						<td>{{u.firstName}}</td>
+						<td>{{u.lastName}}</td>
+						<td>{{u.email}}</td>
+						<td>{{u.createdAt | date:'dd/MM/yyyy h:mma'}}</td>
+						<td>{{statusToString(u.status)}}</td>
+						<td>
+							<a class="btn btn-xs btn-info" ng-href="#" title="Editar">
+								<i class="fa fa-fw fa-pencil"></i>
+							</a>
+						</td>
+						<td>
+							<a class="btn btn-xs btn-danger" ng-href="#" title="Eliminar">
+								<i class="fa fa-fw fa-remove"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>

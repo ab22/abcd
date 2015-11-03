@@ -22,6 +22,7 @@ var (
 	// functions and avoid name collisions.
 	StaticHandler = staticHandler{}
 	AuthHandler   = authHandler{}
+	UserHandler   = userHandler{}
 )
 
 // Describes the data that every session cookie must store.

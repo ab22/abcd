@@ -61,5 +61,11 @@ var routes = Routes{
 			HandlerFunc:  handlers.AuthHandler.Logout,
 			RequiresAuth: true,
 		},
+		{
+			Pattern:      "user/findAll/",
+			Method:       "GET",
+			HandlerFunc:  handlers.UserHandler.FindAllAvailable,
+			RequiresAuth: true,
+		},
 	},
 }

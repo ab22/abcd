@@ -73,13 +73,13 @@
 						link: ''
 					},
 					{
-						label: 'Privilegios',
-						icon: 'fa-trophy',
+						label: 'Mi Perfil',
+						icon: 'fa-user',
 						link: ''
 					},
 					{
 						label: 'Configuración',
-						icon: 'fa-male',
+						icon: 'fa-cogs',
 						link: ''
 					},
 					{
@@ -89,6 +89,13 @@
 						onClick: $scope.signOut
 					}
 				]
+			];
+
+			$scope.topMenu = [
+				$scope.menu[0][0],
+				$scope.menu[2][2],
+				$scope.menu[2][3],
+				$scope.menu[2][4]
 			];
 
 			$scope.optionOnClick = function(option) {

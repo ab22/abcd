@@ -44,16 +44,22 @@ build.sh && run.sh
 
 ☑ Setup grunt and it's tasks.
 
+☐ Setup the test frameworks.
+
+☐ Create tests for the application.
+
 
 ### Backend
 
 ☑ Configure the backend file for dependencies to run the project.
 
-☐ Setup the db models and services module.
+☑ Setup the db models and services module.
 
 ☑ Setup the Godep folder for dependencies.
 
-☐ Configuration variables for databases.
+☑ Configuration variables for databases.
+
+☐ Create tests for the application.
 
 
 ### Others

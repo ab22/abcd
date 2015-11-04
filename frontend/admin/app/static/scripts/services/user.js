@@ -47,6 +47,14 @@
 				});
 			};
 
+			userService.edit = function(userInfo) {
+				return $http({
+					url: Api.getRoute('user/edit/'),
+					method: 'POST',
+					data: userInfo
+				});
+			};
+
 			return userService;
 		}
 	]);

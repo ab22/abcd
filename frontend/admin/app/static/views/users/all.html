@@ -1,5 +1,13 @@
 <section>
 	<div class="row">
+		<div class="col-sm-2">
+			<a class="btn btn-primary">
+				<i class="fa fa-fw fa-user"></i>
+				Agregar usuario
+			</a>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-sm-12 table-responsive">
 			<table class="table table-bordered table-striped table-hover">
 				<thead>
@@ -25,7 +33,7 @@
 						<td>{{u.createdAt | date:'dd/MM/yyyy h:mma'}}</td>
 						<td>{{statusToString(u.status)}}</td>
 						<td>
-							<a class="btn btn-xs btn-info" ng-href="#" title="Editar">
+							<a class="btn btn-xs btn-info" ng-href="#/main/users/edit/{{u.id}}" title="Editar">
 								<i class="fa fa-fw fa-pencil"></i>
 							</a>
 						</td>

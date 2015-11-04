@@ -25,12 +25,17 @@
 					requiresAuthentication: false
 				}).state('main.users', {
 					url: '/users',
-					template: '<ui-view />',
+					templateUrl: viewsPath + 'users/layout.html',
 					requiresAuthentication: true
 				}).state('main.users.all', {
 					url: '/all',
 					templateUrl: viewsPath + 'users/all.html',
 					controller: 'AllUsersCtrl',
+					requiresAuthentication: true
+				}).state('main.users.edit', {
+					url: '/edit/{userId}',
+					templateUrl: viewsPath + 'users/edit.html',
+					controller: 'EditUserCtrl',
 					requiresAuthentication: true
 				});
 		}

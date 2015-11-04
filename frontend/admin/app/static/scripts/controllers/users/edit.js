@@ -19,8 +19,6 @@
 			});
 
 			$scope.editUser = function() {
-				console.log('User');
-				console.log($scope.user);
 			}
 		}
 	]);

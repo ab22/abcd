@@ -5,10 +5,16 @@
 		function($http, Api) {
 			var userService = {};
 
-			userService.statuses = {
-				0: 'Activo',
-				1: 'Deshabilitado'
-			};
+			userService.statuses = [
+				{
+					id: 0,
+					name: 'Activo'
+				},
+				{
+					id: 1,
+					name: 'Deshabilitado'
+				}
+			];
 
 			userService.findAll = function() {
 				return $http({
@@ -21,8 +27,10 @@
 				var statuses = userService.statuses;
 
 				for (var i in statuses) {
-					if (i === statusId) {
-						return statuses[i];
+					var status = statuses[i];
+
+					if (status.id === statusId) {
+						return status.name;
 					}
 				}
 

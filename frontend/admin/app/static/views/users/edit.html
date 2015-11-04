@@ -14,7 +14,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<form name="userForm" class="form-horizontal form-bordered" novalidate ng-submit="editUser()">
+			<form name="userForm" class="form-horizontal form-bordered" novalidate>
 				<div class="form-group" ng-class="{'has-error': userForm.username.$invalid && (userForm.username.$touched || userForm.$submitted)}">
 					<label for="username" class="col-sm-2 control-label">Usuario</label>
 					<div class="col-sm-8">
@@ -42,13 +42,14 @@
 				<div class="form-group">
 					<label for="status" class="col-sm-2 control-label">Estado</label>
 					<div class="col-sm-6">
-						<select name="status" class="form-control" ng-model="user.status" ng-options="id as status for (id, status) in statuses" required tooltip="">
+						<select name="status" class="form-control" ng-model="user.status" ng-options="status.id as status.name for status in statuses" required tooltip="">
 						</select>
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary">Aceptar</button>
+					<div class="col-sm-offset-2 col-sm-2">
+						<button type="submit" class="btn btn-primary" ng-click="userForm.$valid && editUser()">Aceptar</button>
+						<a type="submit" class="btn btn-default" href="#/main/users/all">Cancelar</a>
 					</div>
 				</div>
 			</form>

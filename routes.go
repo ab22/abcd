@@ -85,5 +85,11 @@ var routes = Routes{
 			HandlerFunc:  handlers.UserHandler.Edit,
 			RequiresAuth: true,
 		},
+		{
+			Pattern:      "user/changePassword/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.ChangePassword,
+			RequiresAuth: true,
+		},
 	},
 }

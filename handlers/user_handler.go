@@ -195,3 +195,30 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 		Success: true,
 	}, nil
 }
+
+// Change a user's password
+func (h *userHandler) ChangePassword(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	var payload struct {
+		UserId      int
+		NewPassword string
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err = decoder.Decode(&payload); err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusBadRequest,
+		}
+	}
+
+	err = services.UserService.ChangePassword(payload.UserId, payload.NewPassword)
+	if err != nil && err != services.RecordNotFound {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	}
+
+	return nil, nil
+}

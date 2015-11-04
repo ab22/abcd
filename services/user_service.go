@@ -141,3 +141,27 @@ func (s *userService) Edit(newUser *models.User) error {
 
 	return db.Save(&user).Error
 }
+
+// ChangePassword finds a user in the database by userId and changes it's
+// password.
+func (s *userService) ChangePassword(userId int, password string) error {
+	encryptedPassword, err := s.EncryptPassword(password)
+	if err != nil {
+		return err
+	}
+
+	err = db.
+		Table("users").
+		Where("id = ?", userId).
+		Update("password", string(encryptedPassword)).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return err
+		}
+	} else if db.RowsAffected == 0 {
+		return RecordNotFound
+	}
+
+	return nil
+}

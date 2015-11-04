@@ -65,6 +65,17 @@
 				});
 			};
 
+			userService.changePassword = function(userId, newPassword) {
+				return $http({
+					url: Api.getRoute('user/changePassword/'),
+					method: 'POST',
+					data: {
+						userId: userId,
+						newPassword: newPassword
+					}
+				});
+			};
+
 			return userService;
 		}
 	]);

@@ -96,6 +96,53 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 	return response, nil
 }
 
+func (h *userHandler) FindByUsername(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	var payload struct {
+		Username string
+	}
+	type MappedUser struct {
+		Id        int    `json:"id"`
+		Username  string `json:"username"`
+		Email     string `json:"email"`
+		FirstName string `json:"firstName"`
+		LastName  string `json:"lastName"`
+		Status    int    `json:"status"`
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err = decoder.Decode(&payload); err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusBadRequest,
+		}
+	}
+
+	user, err := services.UserService.FindByUsername(payload.Username)
+	if err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	} else if user == nil {
+		return nil, &ApiError{
+			Error:    nil,
+			HttpCode: http.StatusNotFound,
+		}
+	}
+
+	response := &MappedUser{
+		Id:        user.Id,
+		Username:  user.Username,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Status:    user.Status,
+	}
+
+	return response, nil
+}
+
 // Edit a user.
 func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
 	var err error

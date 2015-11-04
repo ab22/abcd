@@ -74,6 +74,12 @@ var routes = Routes{
 			RequiresAuth: true,
 		},
 		{
+			Pattern:      "user/findByUsername/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.FindByUsername,
+			RequiresAuth: true,
+		},
+		{
 			Pattern:      "user/edit/",
 			Method:       "POST",
 			HandlerFunc:  handlers.UserHandler.Edit,

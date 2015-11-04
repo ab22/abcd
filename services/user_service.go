@@ -111,3 +111,33 @@ func (s *userService) FindAll() ([]models.User, error) {
 
 	return users, nil
 }
+
+// Edit user modifies the basic user's models attributes. The function checks
+// if the username changed and if it needs to check if the username is already
+// taken.
+func (s *userService) Edit(newUser *models.User) error {
+	user, err := s.FindById(newUser.Id)
+
+	if err != nil {
+		return err
+	} else if user == nil {
+		return nil
+	}
+
+	if user.Username != newUser.Username {
+		duplicateUser, err := s.FindByUsername(newUser.Username)
+		if err != nil {
+			return err
+		} else if duplicateUser != nil {
+			return DuplicateUsernameError
+		}
+	}
+
+	user.Username = newUser.Username
+	user.Email = newUser.Email
+	user.FirstName = newUser.FirstName
+	user.LastName = newUser.LastName
+	user.Status = newUser.Status
+
+	return db.Save(&user).Error
+}

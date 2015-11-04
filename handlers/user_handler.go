@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	_ "github.com/ab22/abcd/models"
+	"github.com/ab22/abcd/models"
 	"github.com/ab22/abcd/services"
 )
 
@@ -84,7 +84,7 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		}
 	}
 
-	response := MappedUser{
+	response := &MappedUser{
 		Id:        user.Id,
 		Username:  user.Username,
 		Email:     user.Email,
@@ -94,4 +94,57 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 	}
 
 	return response, nil
+}
+
+// Edit a user.
+func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	var payload struct {
+		Id        int
+		Username  string
+		Email     string
+		FirstName string
+		LastName  string
+		Status    int
+	}
+	type Response struct {
+		Success      bool   `json:"success"`
+		ErrorMessage string `json:"errorMessage"`
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err = decoder.Decode(&payload); err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusBadRequest,
+		}
+	}
+
+	user := &models.User{
+		Id:        payload.Id,
+		Username:  payload.Username,
+		Email:     payload.Email,
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Status:    payload.Status,
+	}
+
+	err = services.UserService.Edit(user)
+	if err != nil {
+		if err == services.DuplicateUsernameError {
+			return &Response{
+				Success:      false,
+				ErrorMessage: "El nombre de usuario ya existe!",
+			}, nil
+		}
+
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	}
+
+	return &Response{
+		Success: true,
+	}, nil
 }

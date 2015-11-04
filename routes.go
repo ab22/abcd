@@ -73,5 +73,11 @@ var routes = Routes{
 			HandlerFunc:  handlers.UserHandler.FindById,
 			RequiresAuth: true,
 		},
+		{
+			Pattern:      "user/edit/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.Edit,
+			RequiresAuth: true,
+		},
 	},
 }

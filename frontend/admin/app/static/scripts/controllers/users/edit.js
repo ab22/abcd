@@ -38,7 +38,7 @@
 						return;
 					}
 
-					ngToast.create("Se actualizó el usuario!");
+					ngToast.create('Se actualizó el usuario!');
 					$location.path('/main/users/all');
 				});
 			};

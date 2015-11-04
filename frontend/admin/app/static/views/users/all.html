@@ -21,6 +21,7 @@
 						<th>Estado</th>
 						<th></th>
 						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,6 +33,11 @@
 						<td>{{u.email}}</td>
 						<td>{{u.createdAt | date:'dd/MM/yyyy h:mma'}}</td>
 						<td>{{statusToString(u.status)}}</td>
+						<td>
+							<button type="button" class="btn btn-xs btn-warning" ng-click="openChangePasswordModal(u.id, u.username)" title="Cambiar Clave">
+								<i class="fa fa-fw fa-key"></i>
+							</button>
+						</td>
 						<td>
 							<a class="btn btn-xs btn-info" ng-href="#/main/users/edit/{{u.id}}" title="Editar">
 								<i class="fa fa-fw fa-pencil"></i>

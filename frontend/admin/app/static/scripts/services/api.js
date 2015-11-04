@@ -5,7 +5,7 @@
 			var api = {};
 
 			api.getRoute = function(route) {
-				var url = '/api/';
+				var url = 'api/';
 
 				return url + route;
 			};

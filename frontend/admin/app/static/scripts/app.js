@@ -5,11 +5,14 @@
 	angular.module('app.services', []);
 
 	var app = angular.module('app', [
+		'app.controllers',
+		'app.services',
+
 		'ngToast',
 		'ngRoute',
+		'ngSanitize',
 		'ui.router',
-		'app.controllers',
-		'app.services'
+		'ui.bootstrap'
 	]);
 
 	app.factory('httpInterceptor', ['$rootScope', '$q', 'ngToast', function($rootScope, $q, ngToast) {

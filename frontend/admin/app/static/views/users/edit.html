@@ -18,7 +18,7 @@
 				<div class="form-group" ng-class="{'has-error': userForm.username.$invalid && (userForm.username.$dirty || userForm.$submitted)}">
 					<label for="username" class="col-sm-2 control-label">Usuario</label>
 					<div class="col-sm-8">
-						<input id="username" name="username" class="form-control" placeholder="Usuario" type="text" ng-model="user.username" ng-change="onUsernameChange()" ng-model-options="{debounce:500}" required>
+						<input id="username" name="username" class="form-control" placeholder="Usuario" type="text" ng-model="user.username" ng-change="onUsernameChange()" ng-model-options="{debounce:500}" required autofocus>
 						<label class="control-label" ng-show="userForm.username.$error.available">
 							<i class="fa fa-remove"></i>
 							El usuario ya existe!

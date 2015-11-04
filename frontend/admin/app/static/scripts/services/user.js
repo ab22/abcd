@@ -5,22 +5,38 @@
 		function($http, Api) {
 			var userService = {};
 
+			userService.statuses = {
+				0: 'Activo',
+				1: 'Deshabilitado'
+			};
+
 			userService.findAll = function() {
 				return $http({
-					url: Api.getRoute('user/findAll'),
+					url: Api.getRoute('user/findAll/'),
 					method: 'GET'
 				});
 			};
 
 			userService.statusToString = function(statusId) {
-				switch (statusId){
-					case 0:
-						return 'Activo';
-					case 1:
-						return 'Deshabilitado';
-					default:
-						return '';
+				var statuses = userService.statuses;
+
+				for (var i in statuses) {
+					if (i === statusId) {
+						return statuses[i];
+					}
 				}
+
+				return '';
+			};
+
+			userService.findById = function(userId) {
+				return $http({
+					url: Api.getRoute('user/findById/'),
+					method: 'POST',
+					data: {
+						userId: userId
+					}
+				});
 			};
 
 			return userService;

@@ -67,5 +67,11 @@ var routes = Routes{
 			HandlerFunc:  handlers.UserHandler.FindAllAvailable,
 			RequiresAuth: true,
 		},
+		{
+			Pattern:      "user/findById/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.FindById,
+			RequiresAuth: true,
+		},
 	},
 }

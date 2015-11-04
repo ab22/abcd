@@ -18,6 +18,25 @@ const (
 	Disabled
 )
 
+// Search user by id
+func (s *userService) FindById(userId int) (*models.User, error) {
+	user := &models.User{}
+
+	err := db.
+		Where("id = ?", userId).
+		First(user).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return nil, err
+		}
+
+		return nil, nil
+	}
+
+	return user, nil
+}
+
 // Search user by Username.
 func (s *userService) FindByUsername(username string) (*models.User, error) {
 	user := &models.User{}

@@ -42,6 +42,19 @@
 					$location.path('/main/users/all');
 				});
 			};
+
+			$scope.onUsernameChange = function() {
+				if ($scope.user.username === $scope.originalUsername) {
+					$scope.userForm.username.$setValidity('available', true);
+					return;
+				}
+
+				User.findByUsername($scope.user.username).success(function() {
+					$scope.userForm.username.$setValidity('available', false);
+				}).error(function(response, status) {
+					$scope.userForm.username.$setValidity('available', status === 404);
+				});
+			};
 		}
 	]);
 })(angular);

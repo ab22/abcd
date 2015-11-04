@@ -47,6 +47,16 @@
 				});
 			};
 
+			userService.findByUsername = function(username) {
+				return $http({
+					url: Api.getRoute('user/findByUsername/'),
+					method: 'POST',
+					data: {
+						username: username
+					}
+				});
+			};
+
 			userService.edit = function(userInfo) {
 				return $http({
 					url: Api.getRoute('user/edit/'),

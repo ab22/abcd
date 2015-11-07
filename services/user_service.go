@@ -169,35 +169,29 @@ func (s *userService) ChangePassword(userId int, password string) error {
 // Checks if a user with that email already exists in the database. If it does,
 // it returns an error, else it hashes the password, saves the new user
 // and returns the user.
-func (s *userService) Create(username, password, firstName, lastName, email string) (*models.User, error) {
+func (s *userService) Create(user *models.User) error {
 	var err error
 
-	result, err := s.FindByUsername(username)
+	result, err := s.FindByUsername(user.Username)
 	if err != nil {
-		return nil, err
+		return err
 	} else if result != nil {
-		return nil, DuplicateUsernameError
+		return DuplicateUsernameError
 	}
 
-	hashedPassword, err := s.EncryptPassword(password)
+	hashedPassword, err := s.EncryptPassword(user.Password)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	user := &models.User{
-		Username:  username,
-		Password:  string(hashedPassword),
-		FirstName: firstName,
-		LastName:  lastName,
-		Email:     email,
-		Status:    int(Active),
-	}
+	user.Password = string(hashedPassword)
+	user.Status = int(Active)
 
 	err = db.Create(&user).Error
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return user, nil
+	return nil
 }

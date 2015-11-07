@@ -59,7 +59,16 @@
 					}
 
 					ngToast.create('Se actualizó el usuario!');
-					$location.path('/main/users/all');
+					$scope.userForm.$setPristine();
+					$scope.userForm.$setUntouched();
+					$scope.passwordRepeat = '';
+					$scope.user = {
+						username: '',
+						password: '',
+						firstName: '',
+						lastName: '',
+						email: ''
+					};
 				});
 			};
 		}

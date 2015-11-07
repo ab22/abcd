@@ -48,7 +48,19 @@
 					return;
 				}
 
-				console.log('Create user:', $scope.user);
+				User.create($scope.user).success(function(response) {
+					if (!response.success) {
+						ngToast.create({
+							className: 'danger',
+							content: response.errorMessage,
+							dismissButton: true
+						});
+						return;
+					}
+
+					ngToast.create('Se actualizó el usuario!');
+					$location.path('/main/users/all');
+				});
 			};
 		}
 	]);

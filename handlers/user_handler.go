@@ -196,6 +196,58 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 	}, nil
 }
 
+//Create a user
+// Edit a user.
+func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	var payload struct {
+		Username  string
+		Password  string
+		FirstName string
+		LastName  string
+		Email     string
+	}
+	type Response struct {
+		Success      bool   `json:"success"`
+		ErrorMessage string `json:"errorMessage"`
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err = decoder.Decode(&payload); err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusBadRequest,
+		}
+	}
+
+	user := &models.User{
+		Username:  payload.Username,
+		Password:  payload.Password,
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Email:     payload.Email,
+	}
+
+	err = services.UserService.Create(user)
+	if err != nil {
+		if err == services.DuplicateUsernameError {
+			return &Response{
+				Success:      false,
+				ErrorMessage: "El nombre de usuario ya existe!",
+			}, nil
+		}
+
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	}
+
+	return &Response{
+		Success: true,
+	}, nil
+}
+
 // Change a user's password
 func (h *userHandler) ChangePassword(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
 	var err error

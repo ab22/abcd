@@ -27,8 +27,10 @@ var (
 
 // Describes the data that every session cookie must store.
 type SessionData struct {
-	UserId int
-	Email  string
+	UserId     int
+	RoleId     int
+	Email      string
+	Privileges []Privilege
 }
 
 // Returned by the ApiHandler functions. Contains information about the error

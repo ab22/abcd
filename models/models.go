@@ -26,6 +26,8 @@ func Migrate() error {
 	defer db.Close()
 
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Role{})
+	db.AutoMigrate(&Privilege{})
 
 	return nil
 }

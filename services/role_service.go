@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/ab22/abcd/models"
+	"github.com/jinzhu/gorm"
 )
 
 // Contains all of the logic for user roles.

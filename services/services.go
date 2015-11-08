@@ -12,8 +12,10 @@ var (
 
 	// Define and export global service instances to avoid
 	// creating new instances everytime it is needed.
-	AuthService = authService{}
-	UserService = userService{}
+	AuthService      = authService{}
+	UserService      = userService{}
+	RoleService      = roleService{}
+	PrivilegeService = privilegeService{}
 )
 
 // Creates a connection to the database and assigns it

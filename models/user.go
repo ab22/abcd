@@ -12,9 +12,8 @@ type User struct {
 	FirstName string `sql:"size:60"`
 	LastName  string `sql:"size:60"`
 	Status    int
+	RoleId    int
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt *time.Time
-
-	Roles []Role
 }

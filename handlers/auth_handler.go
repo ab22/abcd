@@ -62,6 +62,7 @@ func (h *authHandler) Login(w http.ResponseWriter, r *http.Request) (interface{}
 
 	session.Values["data"] = &SessionData{
 		UserId: user.Id,
+		RoleId: user.RoleId,
 		Email:  user.Email,
 	}
 	session.Save(r, w)

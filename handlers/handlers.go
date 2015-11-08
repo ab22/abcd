@@ -25,12 +25,11 @@ var (
 	UserHandler   = userHandler{}
 )
 
-// Describes the data that every session cookie must store.
+// SessionData describes the session cookie for all users.
 type SessionData struct {
-	UserId     int
-	RoleId     int
-	Email      string
-	Privileges []Privilege
+	UserId int
+	RoleId int
+	Email  string
 }
 
 // Returned by the ApiHandler functions. Contains information about the error

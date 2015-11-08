@@ -2,13 +2,14 @@ package services
 
 import (
 	"github.com/ab22/abcd/models"
+	"github.com/jinzhu/gorm"
 )
 
 // Contains all of the logic for user privileges.
 type privilegeService struct{}
 
 // Returns all privileges for a Role.
-func (s *privilegeService) GetAllByRoleId(roleId int) ([]models.Privilege, error) {
+func (s *privilegeService) FindAllByRoleId(roleId int) ([]models.Privilege, error) {
 	var privileges []models.Privilege
 	var err error
 
@@ -22,7 +23,8 @@ func (s *privilegeService) GetAllByRoleId(roleId int) ([]models.Privilege, error
 
 	err = db.Model(&role).
 		Association("Privileges").
-		Find(&privileges)
+		Find(&privileges).
+		Error
 
 	if err != nil {
 		if err != gorm.RecordNotFound {

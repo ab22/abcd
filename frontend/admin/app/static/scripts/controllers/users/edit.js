@@ -3,6 +3,7 @@
 
 	angular.module('app.controllers').controller('EditUserCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'User', 'roles',
 		function($scope, $stateParams, $location, ngToast, User, roles) {
+			console.log('Roles:', roles);
 			$scope.roles = roles;
 			$scope.userNotFound = false;
 			$scope.statuses = User.statuses;

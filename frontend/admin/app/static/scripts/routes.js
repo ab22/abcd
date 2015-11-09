@@ -39,8 +39,8 @@
 					requiresAuthentication: true,
 					resolve: {
 						roles: ['Role', function(Role) {
-							return Role.findAll().then(function(roles) {
-								return roles;
+							return Role.findAll().then(function(response) {
+								return response.data;
 							}, function() {
 								return [];
 							});

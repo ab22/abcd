@@ -36,7 +36,16 @@
 					url: '/edit/{userId}',
 					templateUrl: viewsPath + 'users/edit.html',
 					controller: 'EditUserCtrl',
-					requiresAuthentication: true
+					requiresAuthentication: true,
+					resolve: {
+						roles: ['Role', function(Role) {
+							return Role.findAll().then(function(roles) {
+								return roles;
+							}, function() {
+								return [];
+							});
+						}]
+					}
 				}).state('main.users.create', {
 					url: '/create',
 					templateUrl: viewsPath + 'users/create.html',

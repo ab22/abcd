@@ -8,7 +8,7 @@
 			roleService.findAll = function() {
 				return $http({
 					url: Api.getRoute('role/findAll/'),
-					method: 'POST'
+					method: 'GET'
 				});
 			};
 

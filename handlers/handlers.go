@@ -24,6 +24,7 @@ var (
 	StaticHandler = staticHandler{}
 	AuthHandler   = authHandler{}
 	UserHandler   = userHandler{}
+	RoleHandler   = roleHandler{}
 )
 
 // SessionData describes the session cookie for all users.

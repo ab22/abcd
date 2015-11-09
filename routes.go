@@ -99,7 +99,7 @@ var routes = Routes{
 		},
 		{
 			Pattern:      "role/findAll/",
-			Method:       "POST",
+			Method:       "GET",
 			HandlerFunc:  handlers.RoleHandler.FindAll,
 			RequiresAuth: true,
 		},

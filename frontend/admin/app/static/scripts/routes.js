@@ -50,7 +50,16 @@
 					url: '/create',
 					templateUrl: viewsPath + 'users/create.html',
 					controller: 'CreateUserCtrl',
-					requiresAuthentication: true
+					requiresAuthentication: true,
+					resolve: {
+						roles: ['Role', function(Role) {
+							return Role.findAll().then(function(response) {
+								return response.data;
+							}, function() {
+								return [];
+							});
+						}]
+					}
 				});
 		}
 	]);

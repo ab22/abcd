@@ -1,8 +1,9 @@
 ;(function(angular) {
 	'use strict';
 
-	angular.module('app.controllers').controller('CreateUserCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'User',
-		function($scope, $stateParams, $location, ngToast, User) {
+	angular.module('app.controllers').controller('CreateUserCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'User', 'roles',
+		function($scope, $stateParams, $location, ngToast, User, roles) {
+			$scope.roles = roles;
 			$scope.statuses = User.statuses;
 			$scope.passwordRepeat = '';
 			$scope.user = {
@@ -10,7 +11,7 @@
 				password: '',
 				firstName: '',
 				lastName: '',
-				email: ''
+				roleId: null
 			};
 
 			function passwordsMatch() {

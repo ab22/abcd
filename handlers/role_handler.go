@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"encoding/json"
+	_ "encoding/json"
 	"net/http"
 
 	"github.com/ab22/abcd/models"
@@ -30,7 +30,7 @@ func (h *roleHandler) FindAll(w http.ResponseWriter, r *http.Request) (interface
 
 	response := make([]MappedRole, 0, len(roles))
 	for _, role := range roles {
-		response = append(response, MappedUser{
+		response = append(response, MappedRole{
 			Id:   role.Id,
 			Name: role.Name,
 		})

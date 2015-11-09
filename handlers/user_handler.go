@@ -21,6 +21,7 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 		Email     string    `json:"email"`
 		FirstName string    `json:"firstName"`
 		LastName  string    `json:"lastName"`
+		RoleName  string    `json:"roleName"`
 		Status    int       `json:"status"`
 		CreatedAt time.Time `json:"createdAt"`
 	}
@@ -41,6 +42,7 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 			Email:     user.Email,
 			FirstName: user.FirstName,
 			LastName:  user.LastName,
+			RoleName:  user.Role.Name,
 			Status:    user.Status,
 			CreatedAt: user.CreatedAt,
 		})

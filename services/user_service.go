@@ -99,7 +99,10 @@ func (s *userService) FindAll() ([]models.User, error) {
 	var users []models.User
 	var err error
 
-	err = db.Order("id asc").Find(&users).Error
+	err = db.
+		Order("id asc").
+		Preload("Role").
+		Find(&users).Error
 
 	if err != nil {
 		if err != gorm.RecordNotFound {

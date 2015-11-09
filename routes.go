@@ -97,5 +97,11 @@ var routes = Routes{
 			HandlerFunc:  handlers.UserHandler.ChangePassword,
 			RequiresAuth: true,
 		},
+		{
+			Pattern:      "role/findAll/",
+			Method:       "POST",
+			HandlerFunc:  handlers.RoleHandler.FindAll,
+			RequiresAuth: true,
+		},
 	},
 }

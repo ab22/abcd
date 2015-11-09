@@ -12,7 +12,7 @@ import (
 type roleHandler struct{}
 
 // Returns all avaialble roles in the database.
-func (h *roleHandler) GetAll(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+func (h *roleHandler) FindAll(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
 	var roles []models.Role
 	var err error
 	type MappedRole struct {

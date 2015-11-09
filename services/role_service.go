@@ -26,3 +26,19 @@ func (s *roleService) Find(roleId int) (*models.Role, error) {
 
 	return role, nil
 }
+
+// Find all roles in database.
+func (s *roleService) FindAll() ([]models.Role, error) {
+	var roles []models.Role
+	var err error
+
+	err = db.Find(&roles).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return nil, err
+		}
+	}
+
+	return roles, nil
+}

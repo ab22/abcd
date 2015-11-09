@@ -61,6 +61,7 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
+		RoleId    int    `json:"roleId"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -91,6 +92,7 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Status:    user.Status,
+		RoleId:    user.RoleId,
 	}
 
 	return response, nil

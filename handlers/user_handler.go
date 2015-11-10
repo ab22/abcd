@@ -212,6 +212,7 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 		FirstName string
 		LastName  string
 		Email     string
+		RoleId    int
 	}
 	type Response struct {
 		Success      bool   `json:"success"`
@@ -232,6 +233,7 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
 		Email:     payload.Email,
+		RoleId:    payload.RoleId,
 	}
 
 	err = services.UserService.Create(user)

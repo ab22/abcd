@@ -141,6 +141,7 @@ func (s *userService) Edit(newUser *models.User) error {
 	user.FirstName = newUser.FirstName
 	user.LastName = newUser.LastName
 	user.Status = newUser.Status
+	user.RoleId = newUser.RoleId
 
 	return db.Save(&user).Error
 }

@@ -156,6 +156,7 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 		Email     string
 		FirstName string
 		LastName  string
+		RoleId    int
 		Status    int
 	}
 	type Response struct {
@@ -177,6 +178,7 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 		Email:     payload.Email,
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
+		RoleId:    payload.RoleId,
 		Status:    payload.Status,
 	}
 

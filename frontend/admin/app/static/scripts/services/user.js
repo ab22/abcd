@@ -8,7 +8,7 @@
 			userService.statuses = [
 				{
 					id: 0,
-					name: 'Activo'
+					name: 'Habilitado'
 				},
 				{
 					id: 1,

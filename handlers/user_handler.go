@@ -284,7 +284,6 @@ func (h *userHandler) ChangePassword(w http.ResponseWriter, r *http.Request) (in
 }
 
 // Delete user.
-// Change a user's password
 func (h *userHandler) Delete(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
 	var err error
 	var payload struct {

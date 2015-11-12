@@ -98,6 +98,12 @@ var routes = Routes{
 			RequiresAuth: true,
 		},
 		{
+			Pattern:      "user/delete/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.Delete,
+			RequiresAuth: true,
+		},
+		{
 			Pattern:      "role/findAll/",
 			Method:       "GET",
 			HandlerFunc:  handlers.RoleHandler.FindAll,

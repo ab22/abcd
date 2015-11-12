@@ -89,20 +89,20 @@
 						label: 'Mi Perfil',
 						icon: 'fa-user',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: false
 					},
 					{
 						label: 'Configuración',
 						icon: 'fa-cogs',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: false
 					},
 					{
 						label: 'Cerrar Sesión',
 						icon: 'fa-sign-out',
 						link: '',
 						onClick: $scope.signOut,
-						responsiveOnly: true
+						responsiveOnly: false
 					}
 				]
 			];
@@ -114,6 +114,10 @@
 				}
 
 				setActiveOption(option);
+			};
+
+			$scope.isResponsiveMode = function() {
+				return $scope.window.width <= 767;
 			};
 
 			function determineActiveOption() {

@@ -13,7 +13,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li ng-repeat="option in topMenu">
+					<li ng-repeat="option in topMenu" ng-show="!option.responsiveOnly || (option.responsiveOnly && isResponsiveMode())">
 						<a ng-href="#{{option.link}}" ng-click="optionOnClick(option)" data-toggle="collapse" data-target=".navbar-collapse">
 							<i class="fa {{option.icon}} fa-fw"></i>{{option.label}}
 						</a>

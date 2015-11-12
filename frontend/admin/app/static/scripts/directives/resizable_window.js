@@ -5,7 +5,7 @@
 		function($window) {
 			return {
 				restrict: 'A',
-				link: function(scope, element) {
+				link: function(scope) {
 					var window = angular.element($window);
 					scope.window = {
 						height: 0,

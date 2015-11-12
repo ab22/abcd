@@ -7,8 +7,8 @@ import (
 // Contains all of the logic for the systems authentications.
 type authService struct{}
 
-// Basic email/password authentication. BasicAuth checks if the user exists,
-// checks if the passwords match and if the user's state is active.
+// Basic username/password authentication. BasicAuth checks if the user exists,
+// if the passwords match and if the user's state is set as active.
 func (s *authService) BasicAuth(username, password string) (*models.User, error) {
 	user, err := UserService.FindByUsername(username)
 	if err != nil {

@@ -1,8 +1,6 @@
 package services
 
 import (
-	"time"
-
 	"github.com/ab22/abcd/models"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
@@ -210,7 +208,7 @@ func (s *userService) Delete(userId int) error {
 	err = db.
 		Table("users").
 		Where("id = ?", userId).
-		Delete(User{}).Error
+		Delete(models.User{}).Error
 
 	return err
 }

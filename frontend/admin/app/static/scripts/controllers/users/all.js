@@ -35,6 +35,12 @@
 				});
 			};
 
+			$scope.deleteUser = function(userId) {
+				User.delete(userId).success(function() {
+					ngToast.create('Se eliminó el usuario!');
+				});
+			};
+
 			requestUsers();
 		}
 	]);

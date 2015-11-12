@@ -84,6 +84,17 @@
 				});
 			};
 
+			userService.delete = function(userId, newPassword) {
+				return $http({
+					url: Api.getRoute('user/delete/'),
+					method: 'POST',
+					data: {
+						userId: userId,
+						newPassword: newPassword
+					}
+				});
+			};
+
 			return userService;
 		}
 	]);

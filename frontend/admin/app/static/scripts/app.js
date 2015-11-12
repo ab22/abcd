@@ -3,10 +3,12 @@
 
 	angular.module('app.controllers', []);
 	angular.module('app.services', []);
+	angular.module('app.directives', []);
 
 	var app = angular.module('app', [
 		'app.controllers',
 		'app.services',
+		'app.directives',
 
 		'ngToast',
 		'ngRoute',

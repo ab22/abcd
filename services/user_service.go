@@ -20,9 +20,16 @@ const (
 	Disabled
 )
 
-// SanitizeUsername converts the username string to a lowercase version of it.
+// SanitizeUsername trims the username string and converts it to a lowercase
+// version of it.
+//
+// In the future, more checks might be added such as not allowing the username
+// to start with numbers, not allowing special characters, etc.
 func (s *userService) SanitizeUsername(username string) string {
-	return strings.ToLower(username)
+	sanitizedString := strings.Trim(username)
+	sanitizedString = strings.ToLower(sanitizedString)
+
+	return sanitizedString
 }
 
 // Search user by id

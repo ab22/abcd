@@ -46,6 +46,8 @@
 				setPasswordFieldsValidities(match);
 
 				if (!match) {
+					$scope.user.password = '';
+					$scope.passwordRepeat = '';
 					return;
 				}
 

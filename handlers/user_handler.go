@@ -282,3 +282,30 @@ func (h *userHandler) ChangePassword(w http.ResponseWriter, r *http.Request) (in
 
 	return nil, nil
 }
+
+// Delete user.
+// Change a user's password
+func (h *userHandler) Delete(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	var payload struct {
+		UserId int
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err = decoder.Decode(&payload); err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusBadRequest,
+		}
+	}
+
+	err = services.UserService.Delete(payload.UserId)
+	if err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	}
+
+	return nil, nil
+}

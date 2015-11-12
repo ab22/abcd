@@ -142,7 +142,7 @@
 				$scope.activeOption = option;
 			}
 
-			function generateTopMenu(){
+			function generateTopMenu() {
 				$scope.topMenu = $scope.menu[0].concat($scope.menu[1].concat($scope.menu[2]));
 			}
 

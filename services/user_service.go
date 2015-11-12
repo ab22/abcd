@@ -1,6 +1,8 @@
 package services
 
 import (
+	"time"
+
 	"github.com/ab22/abcd/models"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
@@ -198,4 +200,17 @@ func (s *userService) Create(user *models.User) error {
 	}
 
 	return nil
+}
+
+// Delete User sets the DeletedAt time for the user which just hides
+// the record from any other select query.
+func (s *userService) Delete(userId int) error {
+	var err error
+
+	err = db.
+		Table("users").
+		Where("id = ?", userId).
+		Delete(User{}).Error
+
+	return err
 }

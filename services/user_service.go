@@ -26,7 +26,7 @@ const (
 // In the future, more checks might be added such as not allowing the username
 // to start with numbers, not allowing special characters, etc.
 func (s *userService) SanitizeUsername(username string) string {
-	sanitizedString := strings.Trim(username)
+	sanitizedString := strings.Trim(username, " ")
 	sanitizedString = strings.ToLower(sanitizedString)
 
 	return sanitizedString

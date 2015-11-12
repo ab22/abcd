@@ -12,91 +12,99 @@
 			};
 
 			$scope.activeOption = null;
+			$scope.topMenu = [];
 			$scope.menu = [
 				[
 					{
 						label: 'Inicio',
 						icon: 'fa-home',
-						link: '/main/home'
+						link: '/main/home',
+						responsiveOnly: false
 					},
 					{
 						label: 'Asignaturas',
 						icon: 'fa-book',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Alumnos',
 						icon: 'fa-child',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Docentes',
 						icon: 'fa-male',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Ingreso de Notas',
 						icon: 'fa-file-text-o',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					}
 				],
 				[
 					{
 						label: 'Boletines',
 						icon: 'fa-bullhorn',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Reporte #1',
 						icon: 'fa-calendar',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Reporte #2',
 						icon: 'fa-edit',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Reporte #3',
 						icon: 'fa-area-chart',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					}
 				],
 				[
 					{
 						label: 'Usuarios',
 						icon: 'fa-users',
-						link: '/main/users/all'
+						link: '/main/users/all',
+						responsiveOnly: true
 					},
 					{
 						label: 'Roles',
 						icon: 'fa-legal',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Mi Perfil',
 						icon: 'fa-user',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Configuración',
 						icon: 'fa-cogs',
-						link: ''
+						link: '',
+						responsiveOnly: true
 					},
 					{
 						label: 'Cerrar Sesión',
 						icon: 'fa-sign-out',
 						link: '',
-						onClick: $scope.signOut
+						onClick: $scope.signOut,
+						responsiveOnly: true
 					}
 				]
-			];
-
-			$scope.topMenu = [
-				$scope.menu[0][0],
-				$scope.menu[2][2],
-				$scope.menu[2][3],
-				$scope.menu[2][4]
 			];
 
 			$scope.optionOnClick = function(option) {
@@ -130,9 +138,15 @@
 				$scope.activeOption = option;
 			}
 
+			function generateTopMenu(){
+				$scope.topMenu = $scope.menu[0].concat($scope.menu[1].concat($scope.menu[2]));
+			}
+
 			function onLoad() {
 				var option = determineActiveOption();
 				setActiveOption(option);
+
+				generateTopMenu();
 			}
 
 			onLoad();

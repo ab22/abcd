@@ -35,7 +35,7 @@
 				});
 			};
 
-			$scope.deleteUser = function(userId) {
+			$scope.deleteUser = function(userId, username) {
 				User.delete(userId).success(function() {
 					ngToast.create('Se eliminó el usuario!');
 				});

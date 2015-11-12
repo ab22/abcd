@@ -17,7 +17,7 @@
 				var modalInstance = $modal.open({
 					animation: true,
 					controller: 'changePasswordModalCtrl',
-					templateUrl: 'static/views/users/changePasswordModal.html',
+					templateUrl: 'static/views/users/change_password_modal.html',
 					resolve: {
 						user: function() {
 							return {

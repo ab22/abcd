@@ -13,7 +13,7 @@ func (s *authService) BasicAuth(username, password string) (*models.User, error)
 	user, err := UserService.FindByUsername(username)
 	if err != nil {
 		return nil, err
-	} else if user == nil || user.Status != int(Active) {
+	} else if user == nil || user.Status != int(Enabled) {
 		return nil, nil
 	}
 

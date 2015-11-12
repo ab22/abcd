@@ -16,7 +16,7 @@ type UserStatus int
 
 // Defines all user statuses.
 const (
-	Active UserStatus = iota
+	Enabled UserStatus = iota
 	Disabled
 )
 
@@ -206,7 +206,7 @@ func (s *userService) Create(user *models.User) error {
 	}
 
 	user.Password = string(hashedPassword)
-	user.Status = int(Active)
+	user.Status = int(Enabled)
 
 	err = db.Create(&user).Error
 

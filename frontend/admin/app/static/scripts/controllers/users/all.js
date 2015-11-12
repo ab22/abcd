@@ -13,6 +13,18 @@
 				});
 			}
 
+			function removeUser(userId) {
+				var users = $scope.users;
+
+				for (var i in users) {
+					var user = users[i];
+
+					if (user.id === userId) {
+						users.splice(i, 1);
+					}
+				}
+			}
+
 			$scope.openChangePasswordModal = function(userId, username) {
 				var modalInstance = $modal.open({
 					animation: true,
@@ -36,8 +48,27 @@
 			};
 
 			$scope.deleteUser = function(userId, username) {
-				User.delete(userId).success(function() {
-					ngToast.create('Se eliminó el usuario!');
+				var modalData = {
+					title: 'Eliminar usuario: ' + username,
+					body: '¿Estás seguro de eliminar el usuario <strong>' + username + '</strong>?'
+				};
+
+				var modalInstance = $modal.open({
+					animation: true,
+					controller: 'confirmationModalCtrl',
+					templateUrl: 'static/views/common_modals/confirmation_modal.html',
+					resolve: {
+						data: function() {
+							return modalData;
+						}
+					}
+				});
+
+				modalInstance.result.then(function() {
+					User.delete(userId).success(function() {
+						ngToast.create('Se eliminó el usuario!');
+						removeUser(userId);
+					});
 				});
 			};
 

@@ -1,7 +1,7 @@
 ;(function(angular) {
 	'use strict';
 
-	angular.module('app.controllers').controller('confirmationModal', ['$scope', '$modalInstance', 'data',
+	angular.module('app.controllers').controller('confirmationModalCtrl', ['$scope', '$modalInstance', 'data',
 		function($scope, $modalInstance, data) {
 			$scope.modal = data;
 

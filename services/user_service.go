@@ -1,6 +1,8 @@
 package services
 
 import (
+	"strings"
+
 	"github.com/ab22/abcd/models"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
@@ -17,6 +19,11 @@ const (
 	Active UserStatus = iota
 	Disabled
 )
+
+// SanitizeUsername converts the username string to a lowercase version of it.
+func (s *userService) SanitizeUsername(username string) string {
+	return strings.ToLower(username)
+}
 
 // Search user by id
 func (s *userService) FindById(userId int) (*models.User, error) {
@@ -40,6 +47,7 @@ func (s *userService) FindById(userId int) (*models.User, error) {
 // Search user by Username.
 func (s *userService) FindByUsername(username string) (*models.User, error) {
 	user := &models.User{}
+	username = s.SanitizeUsername(username)
 
 	err := db.
 		Where("username = ?", username).
@@ -120,6 +128,7 @@ func (s *userService) FindAll() ([]models.User, error) {
 // taken.
 func (s *userService) Edit(newUser *models.User) error {
 	user, err := s.FindById(newUser.Id)
+	newUser.Username = s.SanitizeUsername(newUser.Username)
 
 	if err != nil {
 		return err
@@ -175,6 +184,7 @@ func (s *userService) ChangePassword(userId int, password string) error {
 // and returns the user.
 func (s *userService) Create(user *models.User) error {
 	var err error
+	user.Username = s.SanitizeUsername(user.Username)
 
 	result, err := s.FindByUsername(user.Username)
 	if err != nil {

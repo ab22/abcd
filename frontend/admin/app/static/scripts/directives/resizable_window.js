@@ -5,6 +5,9 @@
 		function($window) {
 			return {
 				restrict: 'A',
+				scope: {
+					window: '='
+				},
 				link: function(scope) {
 					var window = angular.element($window);
 					scope.window = {

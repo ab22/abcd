@@ -3,6 +3,7 @@
 
 	angular.module('app.controllers').controller('MainLayoutCtrl', ['$scope','$location', 'Auth',
 		function($scope, $location, Auth) {
+			$scope.window = {};
 
 			$scope.signOut = function() {
 				Auth.logout().success(function() {

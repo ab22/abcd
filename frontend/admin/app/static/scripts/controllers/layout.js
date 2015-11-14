@@ -88,7 +88,7 @@
 					{
 						label: 'Mi Perfil',
 						icon: 'fa-user',
-						link: '',
+						link: '/main/profile',
 						responsiveOnly: false
 					},
 					{

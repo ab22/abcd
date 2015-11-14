@@ -23,6 +23,11 @@
 					templateUrl: viewsPath + 'login.html',
 					controller:'LoginCtrl',
 					requiresAuthentication: false
+				}).state('main.profile', {
+					url: '/profile',
+					templateUrl: viewsPath + 'my_profile.html',
+					controller:'MyProfileCtrl',
+					requiresAuthentication: true
 				}).state('main.users', {
 					url: '/users',
 					templateUrl: viewsPath + 'users/layout.html',

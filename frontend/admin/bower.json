@@ -19,7 +19,8 @@
     "angular-sanitize": "~1.4.6",
     "angular-ui-router": "~0.2.15",
     "bootstrap": "~3.3.5",
-    "ngToast": "ngtoast#~1.5.5"
+    "ngToast": "ngtoast#~1.5.5",
+    "angular-loading-spinner": "~0.0.3"
   },
   "overrides": {
     "bootstrap": {

@@ -14,7 +14,8 @@
 		'ngRoute',
 		'ngSanitize',
 		'ui.router',
-		'ui.bootstrap'
+		'ui.bootstrap',
+		'ngLoadingSpinner'
 	]);
 
 	app.factory('httpInterceptor', ['$rootScope', '$q', 'ngToast', function($rootScope, $q, ngToast) {

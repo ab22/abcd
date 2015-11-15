@@ -128,6 +128,17 @@
 				});
 			};
 
+			userService.current.changeFullName = function(firstName, lastName) {
+				return $http({
+					url: Api.getRoute('user/current/changeFullName/'),
+					method: 'POST',
+					data: {
+						firstName: firstName,
+						lastName: lastName
+					}
+				});
+			};
+
 			return userService;
 		}
 	]);

@@ -248,3 +248,22 @@ func (s *userService) ChangeEmail(userId int, email string) error {
 
 	return nil
 }
+
+// Change the full name of the user.
+func (s *userService) ChangeFullName(userId int, firstName, lastName string) error {
+	err := db.
+		Table("users").
+		Where("id = ?", userId).
+		Update("first_name", firstName).
+		Update("last_name", lastName).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return err
+		}
+	} else if db.RowsAffected == 0 {
+		return RecordNotFound
+	}
+
+	return nil
+}

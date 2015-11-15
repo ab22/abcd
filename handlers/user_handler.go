@@ -401,3 +401,32 @@ func (h *userHandler) ChangeEmailForCurrentUser(w http.ResponseWriter, r *http.R
 
 	return nil, nil
 }
+
+// Change the logged user's full name.
+func (h *userHandler) ChangeFullNameForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	session, _ := cookieStore.Get(r, sessionCookieName)
+	sessionData := session.Values["data"].(*SessionData)
+	var payload struct {
+		FirstName string
+		LastName  string
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err = decoder.Decode(&payload); err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusBadRequest,
+		}
+	}
+
+	err = services.UserService.ChangeFullName(sessionData.UserId, payload.FirstName, payload.LastName)
+	if err != nil && err != services.RecordNotFound {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	}
+
+	return nil, nil
+}

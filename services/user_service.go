@@ -233,6 +233,8 @@ func (s *userService) Delete(userId int) error {
 
 // Change email for the specified user by user id.
 func (s *userService) ChangeEmail(userId int, email string) error {
+	email = strings.Trim(email, " ")
+
 	err := db.
 		Table("users").
 		Where("id = ?", userId).
@@ -251,6 +253,9 @@ func (s *userService) ChangeEmail(userId int, email string) error {
 
 // Change the full name of the user.
 func (s *userService) ChangeFullName(userId int, firstName, lastName string) error {
+	firstName = strings.Trim(firstName, " ")
+	lastName = strings.Trim(lastName, " ")
+
 	err := db.
 		Table("users").
 		Where("id = ?", userId).

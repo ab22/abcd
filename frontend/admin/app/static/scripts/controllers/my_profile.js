@@ -51,9 +51,9 @@
 				});
 
 				modalInstance.result.then(function(newEmail) {
-					//User.current.changePassword(newPassword).success(function() {
-						ngToast.create('Se actualizó tu correo!' + newEmail);
-					//});
+					User.current.changeEmail(newEmail).success(function() {
+						ngToast.create('Se actualizó tu correo!');
+					});
 				});
 			};
 

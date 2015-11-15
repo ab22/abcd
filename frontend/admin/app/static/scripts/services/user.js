@@ -118,6 +118,16 @@
 				});
 			};
 
+			userService.current.changeEmail = function(newEmail) {
+				return $http({
+					url: Api.getRoute('user/current/changeEmail/'),
+					method: 'POST',
+					data: {
+						newEmail: newEmail
+					}
+				});
+			};
+
 			return userService;
 		}
 	]);

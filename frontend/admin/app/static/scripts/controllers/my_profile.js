@@ -53,6 +53,7 @@
 				modalInstance.result.then(function(newEmail) {
 					User.current.changeEmail(newEmail).success(function() {
 						ngToast.create('Se actualizó tu correo!');
+						$scope.user.email = newEmail;
 					});
 				});
 			};

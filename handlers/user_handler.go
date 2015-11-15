@@ -202,8 +202,7 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 	}, nil
 }
 
-//Create a user
-// Edit a user.
+//Create a user.
 func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
 	var err error
 	var payload struct {
@@ -256,7 +255,7 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 	}, nil
 }
 
-// Change a user's password
+// Change a user's password.
 func (h *userHandler) ChangePassword(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
 	var err error
 	var payload struct {
@@ -345,4 +344,32 @@ func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Re
 		Status:    user.Status,
 		RolName:   user.Role.Name,
 	}, nil
+}
+
+// Change the logged user's password.
+func (h *userHandler) ChangePasswordForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	session, _ := cookieStore.Get(r, sessionCookieName)
+	sessionData := session.Values["data"].(*SessionData)
+	var payload struct {
+		NewPassword string
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err = decoder.Decode(&payload); err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusBadRequest,
+		}
+	}
+
+	err = services.UserService.ChangePassword(sessionData.UserId, payload.NewPassword)
+	if err != nil && err != services.RecordNotFound {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	}
+
+	return nil, nil
 }

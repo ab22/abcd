@@ -122,6 +122,12 @@ var routes = Routes{
 			RequiresAuth: true,
 		},
 		{
+			Pattern:      "user/current/changeFullName/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.ChangeFullNameForCurrentUser,
+			RequiresAuth: true,
+		},
+		{
 			Pattern:      "role/findAll/",
 			Method:       "GET",
 			HandlerFunc:  handlers.RoleHandler.FindAll,

@@ -9,7 +9,7 @@
 				<label class="col-sm-2 control-label">{{user.username}}</label>
 			</div>
 		</div>
-		<div class="form-group" ng-class="{'has-error': changeEmailForm.password.$invalid && (changeEmailForm.password.$dirty || changeEmailForm.$submitted)}">
+		<div class="form-group" ng-class="{'has-error': changeEmailForm.email.$invalid && (changeEmailForm.email.$dirty || changeEmailForm.$submitted)}">
 			<label class="col-sm-3 control-label">Correo</label>
 			<div class="col-sm-8">
 				<input name="email" type="email" class="form-control" placeholder="Correo" ng-model="email" required autofocus>

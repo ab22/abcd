@@ -59,6 +59,10 @@ build.sh && run.sh
 
 ☑ Configuration variables for databases.
 
+☐ Configure a database migrator. Currently, we are using the GORM
+  migrations but it would be better to have sql scripts to migrate
+  and create the data.
+
 ☐ Create tests for the application.
 
 

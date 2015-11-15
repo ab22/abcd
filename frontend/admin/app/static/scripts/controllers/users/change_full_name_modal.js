@@ -3,9 +3,8 @@
 
 	angular.module('app.controllers').controller('changeFullNameModalCtrl', ['$scope', '$modalInstance', 'user',
 		function($scope, $modalInstance, user) {
-			$scope.user = user;
-			$scope.firstName = '';
-			$scope.lastName = '';
+			$scope.firstName = user.firstName;
+			$scope.lastName = user.lastName;
 
 			$scope.accept = function() {
 				$scope.changeFullNameForm.$submitted = true;

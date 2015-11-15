@@ -58,6 +58,31 @@
 				});
 			};
 
+			$scope.openChangeFullNameModal = function() {
+				var modalInstance = $modal.open({
+					animation: true,
+					controller: 'changeFullNameModalCtrl',
+					templateUrl: 'static/views/users/change_full_name_modal.html',
+					resolve: {
+						user: function() {
+							return {
+								id: $scope.user.id,
+								username: $scope.user.username,
+								firstName: $scope.user.firstName,
+								lastName: $scope.user.lastName
+							};
+						}
+					}
+				});
+
+				modalInstance.result.then(function(newInfo) {
+					//User.current.changeEmail(newEmail).success(function() {
+						ngToast.create('Se actualizó tu correo!' + newInfo);
+						$scope.user.firstName = newInfo.firstName;
+						$scope.user.lastName = newInfo.lastName;
+					//});
+				});
+			};
 		}
 	]);
 })(angular);

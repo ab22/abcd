@@ -76,11 +76,11 @@
 				});
 
 				modalInstance.result.then(function(newInfo) {
-					//User.current.changeEmail(newEmail).success(function() {
-						ngToast.create('Se actualizó tu correo!' + newInfo);
+					User.current.changeFullName(newInfo.firstName, newInfo.lastName).success(function() {
 						$scope.user.firstName = newInfo.firstName;
 						$scope.user.lastName = newInfo.lastName;
-					//});
+						ngToast.create('Se actualizó tu nombre completo!');
+					});
 				});
 			};
 		}

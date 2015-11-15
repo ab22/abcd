@@ -4,6 +4,10 @@
 	angular.module('app.services').factory('User', ['$http', 'Api',
 		function($http, Api) {
 			var userService = {
+				// Current contains all methods that don't require any user id
+				// to pass as parameters. All of these functions modify the
+				// logged user's data, so the user id is taken from the session
+				// cookie.
 				current: {}
 			};
 

@@ -30,8 +30,30 @@
 
 				modalInstance.result.then(function(newPassword) {
 					User.current.changePassword(newPassword).success(function() {
-						ngToast.create('Se cambió la clave del usuario!');
+						ngToast.create('Se actualizó tu clave!');
 					});
+				});
+			};
+
+			$scope.openChangeEmailModal = function() {
+				var modalInstance = $modal.open({
+					animation: true,
+					controller: 'changeEmailModalCtrl',
+					templateUrl: 'static/views/users/change_email_modal.html',
+					resolve: {
+						user: function() {
+							return {
+								id: $scope.user.id,
+								username: $scope.user.username
+							};
+						}
+					}
+				});
+
+				modalInstance.result.then(function(newEmail) {
+					//User.current.changePassword(newPassword).success(function() {
+						ngToast.create('Se actualizó tu correo!' + newEmail);
+					//});
 				});
 			};
 

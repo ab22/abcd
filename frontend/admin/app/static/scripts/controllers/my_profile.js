@@ -29,7 +29,7 @@
 				});
 
 				modalInstance.result.then(function(newPassword) {
-					User.changePassword($scope.user.id, newPassword).success(function() {
+					User.current.changePassword(newPassword).success(function() {
 						ngToast.create('Se cambió la clave del usuario!');
 					});
 				});

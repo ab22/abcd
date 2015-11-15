@@ -16,6 +16,14 @@ body {
 	padding-bottom: 10px;
 }
 
+.pbottom30 {
+	padding-bottom: 30px;
+}
+
+.gray-border-bottom {
+	border-bottom: 1px #EEE solid;
+}
+
 /*
 	Tables
 */

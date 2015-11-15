@@ -323,7 +323,7 @@ func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Re
 		RolName   string `json:"roleName"`
 	}
 
-	user, err := services.UserService.FindById(SessionData.UserId)
+	user, err := services.UserService.FindById(sessionData.UserId)
 	if err != nil {
 		return nil, &ApiError{
 			Error:    err,

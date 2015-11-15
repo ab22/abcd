@@ -116,6 +116,12 @@ var routes = Routes{
 			RequiresAuth: true,
 		},
 		{
+			Pattern:      "user/current/changeEmail/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.ChangeEmailForCurrentUser,
+			RequiresAuth: true,
+		},
+		{
 			Pattern:      "role/findAll/",
 			Method:       "GET",
 			HandlerFunc:  handlers.RoleHandler.FindAll,

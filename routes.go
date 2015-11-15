@@ -110,7 +110,7 @@ var routes = Routes{
 			RequiresAuth: true,
 		},
 		{
-			Pattern:      "user/current/changePassword",
+			Pattern:      "user/current/changePassword/",
 			Method:       "POST",
 			HandlerFunc:  handlers.UserHandler.ChangePasswordForCurrentUser,
 			RequiresAuth: true,

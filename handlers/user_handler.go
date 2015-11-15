@@ -308,3 +308,41 @@ func (h *userHandler) Delete(w http.ResponseWriter, r *http.Request) (interface{
 
 	return nil, nil
 }
+
+// Retrieve logged user's information.
+func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	session, _ := cookieStore.Get(r, sessionCookieName)
+	sessionData := session.Values["data"].(*SessionData)
+	type Response struct {
+		Id        int    `json:"id"`
+		Username  string `json:"username"`
+		Email     string `json:"email"`
+		FirstName string `json:"firstName"`
+		LastName  string `json:"lastName"`
+		Status    int    `json:"status"`
+		RolName   string `json:"roleName"`
+	}
+
+	user, err := services.UserService.FindById(SessionData.UserId)
+	if err != nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusInternalServerError,
+		}
+	} else if user == nil {
+		return nil, &ApiError{
+			Error:    err,
+			HttpCode: http.StatusNotFound,
+		}
+	}
+
+	return &Response{
+		Id:        user.Id,
+		Username:  user.Username,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Status:    user.Status,
+		RolName:   user.Role.Name,
+	}, nil
+}

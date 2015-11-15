@@ -38,6 +38,7 @@ func (s *userService) FindById(userId int) (*models.User, error) {
 
 	err := db.
 		Where("id = ?", userId).
+		Preload("Role").
 		First(user).Error
 
 	if err != nil {

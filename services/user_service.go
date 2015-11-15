@@ -230,3 +230,21 @@ func (s *userService) Delete(userId int) error {
 
 	return err
 }
+
+// Change email for the specified user by user id.
+func (s *userService) ChangeEmail(userId int, email string) error {
+	err := db.
+		Table("users").
+		Where("id = ?", userId).
+		Update("email", email).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return err
+		}
+	} else if db.RowsAffected == 0 {
+		return RecordNotFound
+	}
+
+	return nil
+}

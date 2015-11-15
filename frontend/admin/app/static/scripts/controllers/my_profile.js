@@ -44,7 +44,8 @@
 						user: function() {
 							return {
 								id: $scope.user.id,
-								username: $scope.user.username
+								username: $scope.user.username,
+								email: $scope.user.email
 							};
 						}
 					}

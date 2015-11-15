@@ -3,7 +3,9 @@
 
 	angular.module('app.services').factory('User', ['$http', 'Api',
 		function($http, Api) {
-			var userService = {};
+			var userService = {
+				currentUser: {}
+			};
 
 			userService.statuses = [
 				{
@@ -99,6 +101,16 @@
 				return $http({
 					url: Api.getRoute('user/profile/'),
 					method: 'POST'
+				});
+			};
+
+			userService.currentUser.changePassword = function(newPassword) {
+				return $http({
+					url: Api.getRoute('user/current/changePassword/'),
+					method: 'POST',
+					data: {
+						newPassword: newPassword
+					}
 				});
 			};
 

@@ -2,7 +2,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<button type="button" class="navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -11,10 +11,10 @@
 				<a class="navbar-brand" href="#">
 				</a>
 			</div>
-			<div id="navbar" class="navbar-collapse collapse">
+			<div id="navbar" class="navbar-collapse collapse" collapse="isCollapsed">
 				<ul class="nav navbar-nav navbar-right">
 					<li ng-repeat="option in topMenu" ng-show="!option.responsiveOnly || (option.responsiveOnly && isResponsiveMode())">
-						<a ng-href="#{{option.link}}" ng-click="optionOnClick(option)" data-toggle="collapse" data-target=".navbar-collapse">
+						<a ng-href="#{{option.link}}" ng-click="optionOnClick(option)">
 							<i class="fa {{option.icon}} fa-fw"></i>{{option.label}}
 						</a>
 					</li>

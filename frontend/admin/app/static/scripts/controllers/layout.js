@@ -4,6 +4,7 @@
 	angular.module('app.controllers').controller('MainLayoutCtrl', ['$scope','$location', 'Auth',
 		function($scope, $location, Auth) {
 			$scope.window = {};
+			$scope.isCollapsed = true;
 
 			$scope.signOut = function() {
 				Auth.logout().success(function() {
@@ -108,6 +109,8 @@
 			];
 
 			$scope.optionOnClick = function(option) {
+				hideResponsiveMenu();
+
 				if (typeof option.onClick !== 'undefined') {
 					option.onClick();
 					return;
@@ -119,6 +122,12 @@
 			$scope.isResponsiveMode = function() {
 				return $scope.window.width <= 767;
 			};
+
+			function hideResponsiveMenu() {
+				if ($scope.isResponsiveMode()) {
+					$scope.isCollapsed = !$scope.isCollapsed;
+				}
+			}
 
 			function determineActiveOption() {
 				var currentPath = $location.path();

@@ -104,7 +104,7 @@ var routes = Routes{
 			RequiresAuth: true,
 		},
 		{
-			Pattern:      "user/profile",
+			Pattern:      "user/profile/",
 			Method:       "POST",
 			HandlerFunc:  handlers.UserHandler.GetProfileForCurrentUser,
 			RequiresAuth: true,

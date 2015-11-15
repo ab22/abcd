@@ -1,14 +1,14 @@
 <h1 class="page-header">
 	<i class="fa fa-user fa-lg"></i> Perfil
 </h1>
-<section >
+<section ng-show="!isLoading">
 	<div class="row pbottom30">
 		<div class="col-sm-6">
 			<div class="row gray-border-bottom field-title">
 				Nombre de Usuario
 			</div>
 			<div class="row">
-				<h4>admin</h4>
+				<h4>{{user.username}}</h4>
 			</div>
 		</div>
 	</div>
@@ -18,7 +18,7 @@
 				Nombre Completo
 			</div>
 			<div class="row">
-				<h4>Abelardo Ernesto Mendoza Alvarado</h4>
+				<h4>{{user.firstName}} {{user.lastName}}</h4>
 			</div>
 		</div>
 	</div>
@@ -28,7 +28,7 @@
 				Correo
 			</div>
 			<div class="row">
-				<h4>abelardo22.9@gmail.com</h4>
+				<h4>{{user.email}}</h4>
 			</div>
 		</div>
 		<div class="col-sm-4 col-sm-offset-1">
@@ -46,7 +46,7 @@
 				Rol
 			</div>
 			<div class="row">
-				<h4>Administrador</h4>
+				<h4>{{user.roleName}}</h4>
 			</div>
 		</div>
 		<div class="col-sm-4 col-sm-offset-1">
@@ -54,7 +54,7 @@
 				Estado
 			</div>
 			<div class="row">
-				<h4>Habilitado</h4>
+				<h4>{{statusToString(user.status)}}</h4>
 			</div>
 		</div>
 	</div>

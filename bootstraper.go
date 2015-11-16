@@ -42,17 +42,6 @@ func initializeConfigurationModule() error {
 	return nil
 }
 
-// Migrate models
-func migrateModels() error {
-	log.Println("Migrating database...")
-
-	if err := models.Migrate(); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // Configure playcheck/services package.
 func initializeServicesModule() error {
 	log.Println("Initializing services...")

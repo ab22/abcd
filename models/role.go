@@ -4,5 +4,5 @@ type Role struct {
 	Id   int
 	Name string `sql:"size:30"`
 
-	Privileges []Privilege `gorm:"many2many:role_privileges;"`
+	Privileges []Privilege `gorm:"many2many:roles_privileges;"`
 }

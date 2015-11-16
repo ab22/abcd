@@ -16,6 +16,19 @@ to configure the project correctly.
 go get github.com/ab22/abcd
 ```
 
+### Database Migrations
+
+It is required to have installed Postgres on the local computer. All migration
+files are saved in the migrations folder. To automatically run these queries,
+it is recommended to use the [migrate](https://trello.com/c/m0egTpLz/1953-approver-remove-second-popup-from-delete-item-workflow) tool.
+
+Console syntax to migrate all queries:
+
+```shell
+cd github.com/ab22/abcd/
+migrate -url postgres://user:pass@host:port/dbname?sslmode=disable -path ./migrations up
+```
+
 ### Compiling and Running
 
 To compile and run the project, you can simply run:
@@ -59,7 +72,7 @@ build.sh && run.sh
 
 ☑ Configuration variables for databases.
 
-☐ Configure a database migrator. Currently, we are using the GORM
+☑ Configure a database migrator. Currently, we are using the GORM
   migrations but it would be better to have sql scripts to migrate
   and create the data.
 

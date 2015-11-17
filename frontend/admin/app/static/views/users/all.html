@@ -9,7 +9,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12 table-responsive">
-			<table class="table table-bordered table-striped table-hover">
+			<table class="table table-bordered table-striped table-hover" st-table="users" st-safe-src="rowCollection">
 				<thead>
 					<tr>
 						<th>Id</th>
@@ -52,6 +52,13 @@
 						</td>
 					</tr>
 				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="11" class="text-center">
+							<div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+						</td>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>

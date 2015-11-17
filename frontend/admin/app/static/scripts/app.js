@@ -10,6 +10,7 @@
 		'app.services',
 		'app.directives',
 
+		'smart-table',
 		'ngToast',
 		'ngRoute',
 		'ngSanitize',

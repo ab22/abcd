@@ -4,12 +4,18 @@
 	angular.module('app.controllers').controller('AllUsersCtrl', ['$scope', '$modal', 'ngToast', 'User',
 		function($scope, $modal, ngToast, User) {
 			$scope.users = null;
+			$scope.rowCollection = [];
 
 			$scope.statusToString = User.statusToString;
 
 			function requestUsers() {
 				User.findAll().success(function(response) {
 					$scope.users = response;
+					$scope.rowCollection = [];
+
+					$scope.users.forEach(function(user) {
+						$scope.rowCollection.push(user);
+					});
 				});
 			}
 

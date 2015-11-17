@@ -78,6 +78,10 @@
 				});
 			};
 
+			$scope.reloadUsers = function() {
+				requestUsers();
+			};
+
 			requestUsers();
 		}
 	]);

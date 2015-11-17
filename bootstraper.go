@@ -5,7 +5,6 @@ import (
 
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/handlers"
-	"github.com/ab22/abcd/models"
 	"github.com/ab22/abcd/services"
 )
 

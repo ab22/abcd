@@ -1,10 +1,16 @@
 <section>
 	<div class="row">
 		<div class="col-sm-2">
-			<a class="btn btn-primary" href="#/main/users/create">
-				<i class="fa fa-fw fa-user"></i>
-				Agregar usuario
-			</a>
+			<div class="btn-group" role="group">
+				<a class="btn btn-primary" href="#/main/users/create">
+					<i class="fa fa-fw fa-user-plus"></i>
+					Agregar
+				</a>
+				<button type="button" class="btn btn-primary" ng-click="reloadUsers()">
+					<i class="fa fa-fw fa-refresh"></i>
+					Refrescar
+				</button>
+			</div>
 		</div>
 	</div>
 	<div class="row">

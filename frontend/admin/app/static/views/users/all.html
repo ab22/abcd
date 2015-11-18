@@ -23,7 +23,8 @@
 						<th st-sort="firstName">Nombres</th>
 						<th st-sort="lastName">Apellidos</th>
 						<th st-sort="email">Correo</th>
-						<th st-sort="roleName">Rol</th>
+						<th st-sort="isAdmin">Administrador</th>
+						<th st-sort="isTeacher">Docente</th>
 						<th st-sort="createdAt">Fecha de Creación</th>
 						<th>Estado</th>
 						<th></th>
@@ -38,7 +39,14 @@
 						<td>{{u.firstName}}</td>
 						<td>{{u.lastName}}</td>
 						<td>{{u.email}}</td>
-						<td>{{u.roleName}}</td>
+						<td>
+							<i style="color:green" class="fa fa-fw fa-check" ng-show="u.isAdmin"></i>
+							<i style="color:red" class="fa fa-fw fa-remove" ng-show="!u.isAdmin"></i>
+						</td>
+						<td>
+							<i style="color:green" class="fa fa-fw fa-check" ng-show="u.isTeacher"></i>
+							<i style="color:red" class="fa fa-fw fa-remove" ng-show="!u.isTeacher"></i>
+						</td>
 						<td>{{u.createdAt | date:'dd/MM/yyyy h:mma'}}</td>
 						<td>{{statusToString(u.status)}}</td>
 						<td>
@@ -60,7 +68,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="11" class="text-center">
+						<td colspan="12" class="text-center">
 							<div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
 						</td>
 					</tr>

@@ -127,11 +127,5 @@ var routes = Routes{
 			HandlerFunc:  handlers.UserHandler.ChangeFullNameForCurrentUser,
 			RequiresAuth: true,
 		},
-		{
-			Pattern:      "role/findAll/",
-			Method:       "GET",
-			HandlerFunc:  handlers.RoleHandler.FindAll,
-			RequiresAuth: true,
-		},
 	},
 }

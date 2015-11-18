@@ -52,15 +52,6 @@ func (h *authHandler) Login(w http.ResponseWriter, r *http.Request) (interface{}
 		}
 	}
 
-	privileges, err := services.PrivilegeService.FindAllByRoleId(user.RoleId)
-	if err != nil {
-		return nil, &ApiError{
-			Error:    nil,
-			HttpCode: http.StatusUnauthorized,
-			Message:  "Usuario/clave inválidos!",
-		}
-	}
-
 	session, err := cookieStore.Get(r, sessionCookieName)
 	if err != nil {
 		return nil, &ApiError{
@@ -70,10 +61,10 @@ func (h *authHandler) Login(w http.ResponseWriter, r *http.Request) (interface{}
 	}
 
 	session.Values["data"] = &SessionData{
-		UserId:     user.Id,
-		RoleId:     user.RoleId,
-		Email:      user.Email,
-		Privileges: privileges,
+		UserId:    user.Id,
+		Email:     user.Email,
+		IsAdmin:   user.IsAdmin,
+		IsTeacher: user.IsTeacher,
 	}
 	session.Save(r, w)
 

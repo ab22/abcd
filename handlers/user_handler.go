@@ -22,6 +22,8 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 		FirstName string    `json:"firstName"`
 		LastName  string    `json:"lastName"`
 		Status    int       `json:"status"`
+		IsAdmin   bool      `json:"isAdmin`
+		IsTeacher bool      `json:"isTeacher`
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
@@ -42,6 +44,8 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 			FirstName: user.FirstName,
 			LastName:  user.LastName,
 			Status:    user.Status,
+			IsAdmin:   user.IsAdmin,
+			IsTeacher: user.IsTeacher,
 			CreatedAt: user.CreatedAt,
 		})
 	}
@@ -61,6 +65,8 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
+		IsAdmin   bool   `json:"isAdmin`
+		IsTeacher bool   `json:"isTeacher`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -91,6 +97,8 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Status:    user.Status,
+		IsAdmin:   user.IsAdmin,
+		IsTeacher: user.IsTeacher,
 	}
 
 	return response, nil
@@ -108,6 +116,8 @@ func (h *userHandler) FindByUsername(w http.ResponseWriter, r *http.Request) (in
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
+		IsAdmin   bool   `json:"isAdmin`
+		IsTeacher bool   `json:"isTeacher`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -138,6 +148,8 @@ func (h *userHandler) FindByUsername(w http.ResponseWriter, r *http.Request) (in
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Status:    user.Status,
+		IsAdmin:   user.IsAdmin,
+		IsTeacher: user.IsTeacher,
 	}
 
 	return response, nil
@@ -153,6 +165,8 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 		FirstName string
 		LastName  string
 		Status    int
+		IsAdmin   bool
+		IsTeacher bool
 	}
 	type Response struct {
 		Success      bool   `json:"success"`
@@ -174,6 +188,8 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
 		Status:    payload.Status,
+		IsAdmin:   payload.IsAdmin,
+		IsTeacher: payload.IsTeacher,
 	}
 
 	err = services.UserService.Edit(user)
@@ -205,6 +221,8 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 		FirstName string
 		LastName  string
 		Email     string
+		IsAdmin   bool
+		IsTeacher bool
 	}
 	type Response struct {
 		Success      bool   `json:"success"`
@@ -225,6 +243,8 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
 		Email:     payload.Email,
+		IsAdmin:   payload.IsAdmin,
+		IsTeacher: payload.IsTeacher,
 	}
 
 	err = services.UserService.Create(user)

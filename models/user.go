@@ -11,6 +11,7 @@ type User struct {
 	Email     string `sql:"size:60; unique_index"`
 	FirstName string `sql:"size:60"`
 	LastName  string `sql:"size:60"`
+	Status    int
 	IsAdmin   bool
 	IsTeacher bool
 	CreatedAt time.Time

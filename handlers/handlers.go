@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/ab22/abcd/config"
-	"github.com/ab22/abcd/models"
 	"github.com/gorilla/sessions"
 )
 
@@ -24,15 +23,15 @@ var (
 	StaticHandler = staticHandler{}
 	AuthHandler   = authHandler{}
 	UserHandler   = userHandler{}
-	RoleHandler   = roleHandler{}
 )
 
 // SessionData describes the session cookie for all users.
 type SessionData struct {
-	UserId     int
-	RoleId     int
-	Email      string
-	Privileges []models.Privilege
+	UserId    int
+	RoleId    int
+	Email     string
+	IsAdmin   bool
+	IsTeacher bool
 }
 
 // Returned by the ApiHandler functions. Contains information about the error

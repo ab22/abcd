@@ -331,6 +331,8 @@ func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Re
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
+		IsAdmin   bool   `json:"isAdmin"`
+		IsTeacher bool   `json:"isTeacher"`
 	}
 
 	user, err := services.UserService.FindById(sessionData.UserId)
@@ -353,6 +355,8 @@ func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Re
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Status:    user.Status,
+		IsAdmin:   user.IsAdmin,
+		IsTeacher: user.IsTeacher,
 	}, nil
 }
 

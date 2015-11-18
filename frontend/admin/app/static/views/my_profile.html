@@ -43,18 +43,22 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="row gray-border-bottom field-title">
-				Rol
+				Es Administrador
 			</div>
 			<div class="row">
-				<h4>{{user.roleName}}</h4>
+				<h4>
+					{{user.isAdmin ? 'Sí' : 'No'}}
+				</h4>
 			</div>
 		</div>
 		<div class="col-sm-4 col-sm-offset-1">
 			<div class="row gray-border-bottom field-title">
-				Estado
+				Es Docente
 			</div>
 			<div class="row">
-				<h4>{{statusToString(user.status)}}</h4>
+				<h4>
+					{{user.isTeacher ? 'Sí' : 'No'}}
+				</h4>
 			</div>
 		</div>
 	</div>

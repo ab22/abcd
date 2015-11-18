@@ -10,7 +10,8 @@ CREATE TABLE users
   updated_at timestamp with time zone,
   deleted_at timestamp with time zone,
   username character varying(30),
-  role_id integer,
+  is_admin boolean NOT NULL DEFAULT false,
+  is_teacher boolean NOT NULL DEFAULT false,
   CONSTRAINT users_pkey PRIMARY KEY (id),
   CONSTRAINT users_username_lowercase_ck CHECK (username::text = lower(username::text))
 )
@@ -18,10 +19,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE users
-  OWNER TO postgres;
-
-CREATE UNIQUE INDEX uix_users_email
-  ON users
-  USING btree
-  (email COLLATE pg_catalog."default");
-
+  OWNER TO abcd;

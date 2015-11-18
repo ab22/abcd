@@ -21,7 +21,6 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 		Email     string    `json:"email"`
 		FirstName string    `json:"firstName"`
 		LastName  string    `json:"lastName"`
-		RoleName  string    `json:"roleName"`
 		Status    int       `json:"status"`
 		CreatedAt time.Time `json:"createdAt"`
 	}
@@ -42,7 +41,6 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 			Email:     user.Email,
 			FirstName: user.FirstName,
 			LastName:  user.LastName,
-			RoleName:  user.Role.Name,
 			Status:    user.Status,
 			CreatedAt: user.CreatedAt,
 		})
@@ -63,7 +61,6 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
-		RoleId    int    `json:"roleId"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -94,7 +91,6 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Status:    user.Status,
-		RoleId:    user.RoleId,
 	}
 
 	return response, nil
@@ -156,7 +152,6 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 		Email     string
 		FirstName string
 		LastName  string
-		RoleId    int
 		Status    int
 	}
 	type Response struct {
@@ -178,7 +173,6 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 		Email:     payload.Email,
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
-		RoleId:    payload.RoleId,
 		Status:    payload.Status,
 	}
 
@@ -211,7 +205,6 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 		FirstName string
 		LastName  string
 		Email     string
-		RoleId    int
 	}
 	type Response struct {
 		Success      bool   `json:"success"`
@@ -232,7 +225,6 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
 		Email:     payload.Email,
-		RoleId:    payload.RoleId,
 	}
 
 	err = services.UserService.Create(user)
@@ -319,7 +311,6 @@ func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Re
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
-		RolName   string `json:"roleName"`
 	}
 
 	user, err := services.UserService.FindById(sessionData.UserId)
@@ -342,7 +333,6 @@ func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Re
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Status:    user.Status,
-		RolName:   user.Role.Name,
 	}, nil
 }
 

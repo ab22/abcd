@@ -38,7 +38,6 @@ func (s *userService) FindById(userId int) (*models.User, error) {
 
 	err := db.
 		Where("id = ?", userId).
-		Preload("Role").
 		First(user).Error
 
 	if err != nil {
@@ -117,7 +116,6 @@ func (s *userService) FindAll() ([]models.User, error) {
 
 	err = db.
 		Order("id asc").
-		Preload("Role").
 		Find(&users).Error
 
 	if err != nil {
@@ -158,7 +156,6 @@ func (s *userService) Edit(newUser *models.User) error {
 	user.FirstName = newUser.FirstName
 	user.LastName = newUser.LastName
 	user.Status = newUser.Status
-	user.RoleId = newUser.RoleId
 
 	return db.Save(&user).Error
 }

@@ -63,12 +63,16 @@
 						<input id="email" name="email" class="form-control" placeholder="Correo" type="email" ng-model="user.email" required>
 					</div>
 				</div>
-				<div class="form-group" ng-class="{'has-error': userForm.roles.$invalid && userForm.$submitted}">
-					<label for="status" class="col-sm-2 control-label">Roles</label>
+				<div class="form-group">
+					<label for="isAdmin" class="col-sm-2 control-label">Es Administrador?</label>
 					<div class="col-sm-3">
-						<select name="roles" class="form-control" ng-model="user.roleId" ng-options="role.id as role.name for role in roles" required tooltip="">
-							<option value="">Selecciona un rol...</option>
-						</select>
+						<input type="checkbox" ng-model="user.isAdmin">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="isTeacher" class="col-sm-2 control-label">Es Docente?</label>
+					<div class="col-sm-3">
+						<input type="checkbox" ng-model="user.isTeacher">
 					</div>
 				</div>
 				<div class="form-group">

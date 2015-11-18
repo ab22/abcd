@@ -1,4 +1,6 @@
--- Create the admin user
+-- Create the admin user.
+-- If used on production, this user's password must be modified as soon as
+-- possible.
 INSERT INTO users(
 	username,
 	password,

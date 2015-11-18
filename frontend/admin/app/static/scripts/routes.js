@@ -41,34 +41,12 @@
 					url: '/edit/{userId}',
 					templateUrl: viewsPath + 'users/edit.html',
 					controller: 'EditUserCtrl',
-					requiresAuthentication: true,
-					resolve: {
-						roles: ['Role', function(Role) {
-							return Role.findAll().then(function(response) {
-								return response.data;
-							},
-
-							function() {
-								return [];
-							});
-						}]
-					}
+					requiresAuthentication: true
 				}).state('main.users.create', {
 					url: '/create',
 					templateUrl: viewsPath + 'users/create.html',
 					controller: 'CreateUserCtrl',
-					requiresAuthentication: true,
-					resolve: {
-						roles: ['Role', function(Role) {
-							return Role.findAll().then(function(response) {
-								return response.data;
-							},
-
-							function() {
-								return [];
-							});
-						}]
-					}
+					requiresAuthentication: true
 				});
 		}
 	]);

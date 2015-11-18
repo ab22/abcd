@@ -151,13 +151,7 @@ func (s *userService) Edit(newUser *models.User) error {
 		}
 	}
 
-	user.Username = newUser.Username
-	user.Email = newUser.Email
-	user.FirstName = newUser.FirstName
-	user.LastName = newUser.LastName
-	user.Status = newUser.Status
-
-	return db.Save(&user).Error
+	return db.Save(&newUser).Error
 }
 
 // ChangePassword finds a user in the database by userId and changes it's

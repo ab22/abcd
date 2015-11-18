@@ -1,9 +1,8 @@
 ;(function(angular) {
 	'use strict';
 
-	angular.module('app.controllers').controller('EditUserCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'User', 'roles',
-		function($scope, $stateParams, $location, ngToast, User, roles) {
-			$scope.roles = roles;
+	angular.module('app.controllers').controller('EditUserCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'User',
+		function($scope, $stateParams, $location, ngToast, User) {
 			$scope.userNotFound = false;
 			$scope.statuses = User.statuses;
 			$scope.originalUsername = '';
@@ -13,7 +12,9 @@
 				firstName: '',
 				lastName: '',
 				email: '',
-				status: 0
+				status: 0,
+				isAdmin: false,
+				isTeacher: false
 			};
 
 			User.findById($scope.user.id).success(function(response) {

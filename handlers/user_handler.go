@@ -22,8 +22,8 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 		FirstName string    `json:"firstName"`
 		LastName  string    `json:"lastName"`
 		Status    int       `json:"status"`
-		IsAdmin   bool      `json:"isAdmin`
-		IsTeacher bool      `json:"isTeacher`
+		IsAdmin   bool      `json:"isAdmin"`
+		IsTeacher bool      `json:"isTeacher"`
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
@@ -65,8 +65,8 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
-		IsAdmin   bool   `json:"isAdmin`
-		IsTeacher bool   `json:"isTeacher`
+		IsAdmin   bool   `json:"isAdmin"`
+		IsTeacher bool   `json:"isTeacher"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -116,8 +116,8 @@ func (h *userHandler) FindByUsername(w http.ResponseWriter, r *http.Request) (in
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Status    int    `json:"status"`
-		IsAdmin   bool   `json:"isAdmin`
-		IsTeacher bool   `json:"isTeacher`
+		IsAdmin   bool   `json:"isAdmin"`
+		IsTeacher bool   `json:"isTeacher"`
 	}
 
 	decoder := json.NewDecoder(r.Body)

@@ -18,5 +18,3 @@ CREATE TABLE users
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE users
-  OWNER TO abcd;

@@ -1,8 +1,9 @@
 ;(function(angular) {
 	'use strict';
 
-	angular.module('app.controllers').controller('MainLayoutCtrl', ['$scope','$location', 'Auth',
-		function($scope, $location, Auth) {
+	angular.module('app.controllers').controller('MainLayoutCtrl', ['$scope','$location', 'Auth', 'privileges',
+		function($scope, $location, Auth, privileges) {
+			$scope.privileges = privileges;
 			$scope.window = {};
 			$scope.isCollapsed = true;
 
@@ -20,57 +21,73 @@
 						label: 'Inicio',
 						icon: 'fa-home',
 						link: '/main/home',
-						responsiveOnly: false
+						responsiveOnly: false,
+						requiresAdmin: false,
+						requiresTeacher: false
 					},
 					{
 						label: 'Asignaturas',
 						icon: 'fa-book',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: false,
+						requiresTeacher: true
 					},
 					{
 						label: 'Alumnos',
 						icon: 'fa-child',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: false,
+						requiresTeacher: true
 					},
 					{
 						label: 'Docentes',
 						icon: 'fa-male',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: false,
+						requiresTeacher: true
 					},
 					{
 						label: 'Ingreso de Notas',
 						icon: 'fa-file-text-o',
 						link: '',
-						responsiveOnly: true
-					}
-				],
-				[
+						responsiveOnly: true,
+						requiresAdmin: false,
+						requiresTeacher: true
+					},
 					{
 						label: 'Boletines',
 						icon: 'fa-bullhorn',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: false,
+						requiresTeacher: false
 					},
 					{
 						label: 'Reporte #1',
 						icon: 'fa-calendar',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: true,
+						requiresTeacher: false
 					},
 					{
 						label: 'Reporte #2',
 						icon: 'fa-edit',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: true,
+						requiresTeacher: false
 					},
 					{
 						label: 'Reporte #3',
 						icon: 'fa-area-chart',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: true,
+						requiresTeacher: false
 					}
 				],
 				[
@@ -78,32 +95,42 @@
 						label: 'Usuarios',
 						icon: 'fa-users',
 						link: '/main/users/all',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: true,
+						requiresTeacher: false
 					},
 					{
 						label: 'Roles',
 						icon: 'fa-legal',
 						link: '',
-						responsiveOnly: true
+						responsiveOnly: true,
+						requiresAdmin: true,
+						requiresTeacher: false
 					},
 					{
 						label: 'Mi Perfil',
 						icon: 'fa-user',
 						link: '/main/profile',
-						responsiveOnly: false
+						responsiveOnly: false,
+						requiresAdmin: false,
+						requiresTeacher: false
 					},
 					{
 						label: 'Configuración',
 						icon: 'fa-cogs',
 						link: '',
-						responsiveOnly: false
+						responsiveOnly: false,
+						requiresAdmin: true,
+						requiresTeacher: false
 					},
 					{
 						label: 'Cerrar Sesión',
 						icon: 'fa-sign-out',
 						link: '',
 						onClick: $scope.signOut,
-						responsiveOnly: false
+						responsiveOnly: false,
+						requiresAdmin: false,
+						requiresTeacher: false
 					}
 				]
 			];
@@ -121,6 +148,22 @@
 
 			$scope.isResponsiveMode = function() {
 				return $scope.window.width <= 767;
+			};
+
+			$scope.showSideMenuOption = function(option) {
+				if (!option.requiresAdmin && !option.requiresTeacher) {
+					console.log('Case 1', option);
+					return true;
+				} else if (option.requiresTeacher && $scope.privileges.isTeacher) {
+					console.log('Case 2', option);
+					return true;
+				} else if (option.requiresAdmin && $scope.privileges.isAdmin) {
+					console.log('Case 3', option);
+					return true;
+				} else {
+					console.log('Case 4', option);
+					return false;
+				}
 			};
 
 			function hideResponsiveMenu() {
@@ -152,7 +195,7 @@
 			}
 
 			function generateTopMenu() {
-				$scope.topMenu = $scope.menu[0].concat($scope.menu[1].concat($scope.menu[2]));
+				$scope.topMenu = $scope.menu[0].concat($scope.menu[1]);
 			}
 
 			function onLoad() {

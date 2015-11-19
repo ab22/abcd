@@ -14,8 +14,12 @@
 					requiresAuthentication: true,
 					resolve: {
 						privileges: ['User', function(User) {
-							return User.getPrivileges().then(function(response) {
-								return response;
+							return User.current.getPrivileges().then(function(response) {
+								return response.data;
+							},
+
+							function() {
+								return {};
 							});
 						}]
 					}

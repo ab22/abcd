@@ -24,6 +24,10 @@ body {
 	border-bottom: 1px #EEE solid;
 }
 
+.clickable {
+	cursor: pointer;
+}
+
 /*
 	Tables
 */

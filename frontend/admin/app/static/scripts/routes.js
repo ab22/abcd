@@ -11,7 +11,14 @@
 					url: '/main',
 					templateUrl: viewsPath + 'layout.html',
 					controller:'MainLayoutCtrl',
-					requiresAuthentication: true
+					requiresAuthentication: true,
+					resolve: {
+						privileges: ['User', function(User) {
+							return User.getPrivileges().then(function(response) {
+								return response;
+							});
+						}]
+					}
 				}).
 				state('main.home', {
 					url: '/home',

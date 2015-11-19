@@ -139,6 +139,13 @@
 				});
 			};
 
+			userService.current.getPrivileges = function() {
+				return $http({
+					url: Api.getRoute('user/current/privileges/'),
+					method: 'POST'
+				});
+			};
+
 			return userService;
 		}
 	]);

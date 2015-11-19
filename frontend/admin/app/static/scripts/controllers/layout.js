@@ -150,20 +150,22 @@
 				return $scope.window.width <= 767;
 			};
 
-			$scope.showSideMenuOption = function(option) {
+			$scope.showOption = function(option) {
 				if (!option.requiresAdmin && !option.requiresTeacher) {
-					console.log('Case 1', option);
 					return true;
 				} else if (option.requiresTeacher && $scope.privileges.isTeacher) {
-					console.log('Case 2', option);
 					return true;
 				} else if (option.requiresAdmin && $scope.privileges.isAdmin) {
-					console.log('Case 3', option);
 					return true;
 				} else {
-					console.log('Case 4', option);
 					return false;
 				}
+			};
+
+			$scope.showResponsiveOption = function(option) {
+				var showResponsive = !option.responsiveOnly || (option.responsiveOnly && $scope.isResponsiveMode());
+
+				return showResponsive && $scope.showOption(option);
 			};
 
 			function hideResponsiveMenu() {

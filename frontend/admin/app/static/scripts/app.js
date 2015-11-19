@@ -19,7 +19,7 @@
 		'ngLoadingSpinner'
 	]);
 
-	app.factory('httpInterceptor', ['$rootScope', '$q', 'ngToast', function($rootScope, $q, ngToast) {
+	app.factory('httpInterceptor', ['$rootScope', '$q', '$location', 'ngToast', function($rootScope, $q, $location, ngToast) {
 		var onRequest = function(config) {
 			return config;
 		};
@@ -31,7 +31,13 @@
 		var onError = function(rejection) {
 			var status = rejection.status;
 
-			if (status === 401 || status === 404) {
+			// If user needs to authenticate.
+			if (status === 401) {
+				$location.path('login');
+				return $q.reject(rejection);
+			}
+
+			if (status === 404) {
 				return $q.reject(rejection);
 			}
 

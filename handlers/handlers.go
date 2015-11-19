@@ -56,5 +56,7 @@ func Initialize() {
 	gob.Register(&SessionData{})
 
 	cookieStore = sessions.NewCookieStore([]byte(secretKey))
+	// Set MaxAge to 30 minutes.
+	cookieStore.MaxAge(30 * 60)
 	cachedTemplates = template.Must(template.ParseFiles(adminAppPath + "/index.html"))
 }

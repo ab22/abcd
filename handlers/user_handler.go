@@ -444,3 +444,26 @@ func (h *userHandler) ChangeFullNameForCurrentUser(w http.ResponseWriter, r *htt
 
 	return nil, nil
 }
+
+// GetUserPrivileges returns information about the current user. The response
+// includes the IsAdmin and IsTeacher booleans stored in the current session.
+//
+// Changing a user's privilege is something that will not happen very often,
+// so in this case, we load them from the session cookie to avoid hitting the
+// database everytime. If said user's privileges get changed, then the user
+// will have to relog to update the values.
+func (h *authHandler) GetPrivilegesForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
+	var err error
+	session, _ := cookieStore.Get(r, sessionCookieName)
+	sessionData := session.Values["data"].(*SessionData)
+
+	type Response struct {
+		IsAdmin   bool `json:"isAdmin"`
+		IsTeacher bool `json:"isTeacher"`
+	}
+
+	return &Response{
+		IsAdmin:   sessionData.IsAdmin,
+		IsTeacher: sessionData.IsTeacher,
+	}, nil
+}

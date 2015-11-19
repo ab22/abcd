@@ -453,7 +453,6 @@ func (h *userHandler) ChangeFullNameForCurrentUser(w http.ResponseWriter, r *htt
 // database everytime. If said user's privileges get changed, then the user
 // will have to relog to update the values.
 func (h *authHandler) GetPrivilegesForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
 	session, _ := cookieStore.Get(r, sessionCookieName)
 	sessionData := session.Values["data"].(*SessionData)
 

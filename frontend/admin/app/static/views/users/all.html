@@ -1,22 +1,36 @@
 <section>
 	<div class="row">
-		<div class="col-sm-2">
-			<div class="btn-group" role="group">
-				<a class="btn btn-primary" href="#/main/users/create">
-					<i class="fa fa-fw fa-user-plus"></i>
-					Agregar
-				</a>
-				<button type="button" class="btn btn-primary" ng-click="reloadUsers()">
-					<i class="fa fa-fw fa-refresh"></i>
-					Refrescar
-				</button>
-			</div>
-		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12 table-responsive">
 			<table class="table table-bordered table-striped table-hover" st-table="users" st-safe-src="rowCollection">
 				<thead>
+					<tr>
+						<th colspan="12">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="btn-group" role="group">
+										<a class="btn btn-sm btn-default" href="#/main/users/create">
+											<i class="fa fa-fw fa-user-plus"></i>
+											Agregar
+										</a>
+										<button type="button" class="btn btn-sm btn-default" ng-click="reloadUsers()">
+											<i class="fa fa-fw fa-refresh"></i>
+											Refrescar
+										</button>
+									</div>
+								</div>
+								<div class="col-sm-4 pull-right">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="fa fa-fw fa-search"></i>
+										</span>
+										<input type="search" st-search placeholder="Buscar..." class="input-sm form-control"/>
+									</div>
+								</div>
+							</div>
+						</th>
+					</tr>
 					<tr>
 						<th st-sort="id">Id</th>
 						<th st-sort="username">Usuario</th>

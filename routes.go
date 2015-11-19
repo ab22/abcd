@@ -127,5 +127,11 @@ var routes = Routes{
 			HandlerFunc:  handlers.UserHandler.ChangeFullNameForCurrentUser,
 			RequiresAuth: true,
 		},
+		{
+			Pattern:      "user/current/privileges/",
+			Method:       "POST",
+			HandlerFunc:  handlers.UserHandler.GetPrivilegesForCurrentUser,
+			RequiresAuth: true,
+		},
 	},
 }

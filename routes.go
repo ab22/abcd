@@ -13,6 +13,8 @@ type ApiRoute struct {
 	Method       string
 	HandlerFunc  handlers.ApiHandler
 	RequiresAuth bool
+
+	RequiredRoles []string
 }
 
 // Simple Template route structure.

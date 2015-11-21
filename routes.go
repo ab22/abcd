@@ -9,11 +9,10 @@ import (
 // Defines an API route with an ApiHandler type as HandlerFunc instead
 // of a http.HandleFunc.
 type ApiRoute struct {
-	Pattern      string
-	Method       string
-	HandlerFunc  handlers.ApiHandler
-	RequiresAuth bool
-
+	Pattern       string
+	Method        string
+	HandlerFunc   handlers.ApiHandler
+	RequiresAuth  bool
 	RequiredRoles []string
 }
 

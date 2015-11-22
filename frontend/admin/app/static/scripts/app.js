@@ -37,6 +37,16 @@
 				return $q.reject(rejection);
 			}
 
+			if (status === 403) {
+				ngToast.create({
+					className: 'danger',
+					content: 'No tienes acceso a esta función!',
+					dismissButton: true
+				});
+
+				return $q.reject(rejection);
+			}
+
 			if (status === 404) {
 				return $q.reject(rejection);
 			}

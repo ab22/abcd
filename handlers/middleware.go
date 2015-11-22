@@ -157,6 +157,7 @@ func Authorize(requiredRoles []string, h http.Handler) http.HandlerFunc {
 
 		if len(requiredRoles) == 0 {
 			h.ServeHTTP(w, r)
+			return
 		}
 
 		for _, role := range requiredRoles {

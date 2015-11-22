@@ -138,7 +138,7 @@ func GzipContent(h http.Handler) http.HandlerFunc {
 //
 // Note: It is assumed that ValidateAuth was called before this function, or at
 // least some other session check was done before this.
-func Authorize(requiredRoles []string, h http.Handler) http.HandleFunc {
+func Authorize(requiredRoles []string, h http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var sessionData *SessionData
 		var ok bool
@@ -155,11 +155,11 @@ func Authorize(requiredRoles []string, h http.Handler) http.HandleFunc {
 			return
 		}
 
-		if len(requiredRoles == 0) {
+		if len(requiredRoles) == 0 {
 			h.ServeHTTP(w, r)
 		}
 
-		for role := range requiredRoles {
+		for _, role := range requiredRoles {
 			if role == "ADMIN" && sessionData.IsAdmin {
 				h.ServeHTTP(w, r)
 				return

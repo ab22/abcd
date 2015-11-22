@@ -132,3 +132,44 @@ func GzipContent(h http.Handler) http.HandlerFunc {
 		h.ServeHTTP(grw, r)
 	})
 }
+
+// Authorize validates privileges for the current user. Each route must have
+// an array of privileges that point which users can make a call to it.
+//
+// Note: It is assumed that ValidateAuth was called before this function, or at
+// least some other session check was done before this.
+func Authorize(requiredRoles []string, h http.Handler) http.HandleFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var sessionData *SessionData
+		var ok bool
+
+		session, err := cookieStore.Get(r, sessionCookieName)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			return
+		}
+
+		if sessionData, ok = session.Values["data"].(*SessionData); !ok {
+			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
+			return
+		}
+
+		if len(requiredRoles == 0) {
+			h.ServeHTTP(w, r)
+		}
+
+		for role := range requiredRoles {
+			if role == "ADMIN" && sessionData.IsAdmin {
+				h.ServeHTTP(w, r)
+				return
+			} else if role == "TEACHER" && sessionData.IsTeacher {
+				h.ServeHTTP(w, r)
+				return
+			}
+		}
+
+		http.Error(w, http.StatusText(http.StatusForbidden), http.StatusForbidden)
+		return
+	})
+}

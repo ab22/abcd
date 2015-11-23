@@ -64,6 +64,24 @@
 						responsiveOnly: true,
 						requiresAdmin: false,
 						requiresTeacher: false
+					}
+				],
+				[
+					{
+						label: 'Usuarios',
+						icon: 'fa-users',
+						link: '/main/users/all',
+						responsiveOnly: true,
+						requiresAdmin: true,
+						requiresTeacher: false
+					},
+					{
+						label: 'Roles',
+						icon: 'fa-legal',
+						link: '',
+						responsiveOnly: true,
+						requiresAdmin: true,
+						requiresTeacher: false
 					},
 					{
 						label: 'Reporte #1',
@@ -84,24 +102,6 @@
 					{
 						label: 'Reporte #3',
 						icon: 'fa-area-chart',
-						link: '',
-						responsiveOnly: true,
-						requiresAdmin: true,
-						requiresTeacher: false
-					}
-				],
-				[
-					{
-						label: 'Usuarios',
-						icon: 'fa-users',
-						link: '/main/users/all',
-						responsiveOnly: true,
-						requiresAdmin: true,
-						requiresTeacher: false
-					},
-					{
-						label: 'Roles',
-						icon: 'fa-legal',
 						link: '',
 						responsiveOnly: true,
 						requiresAdmin: true,

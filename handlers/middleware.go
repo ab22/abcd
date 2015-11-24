@@ -136,7 +136,9 @@ func GzipContent(h http.Handler) http.HandlerFunc {
 // Authorize validates privileges for the current user. Each route must have
 // an array of privileges that point which users can make a call to it.
 //
-// Note: It is assumed that ValidateAuth was called before this function, or at
+// Note:
+//
+// It is assumed that ValidateAuth was called before this function, or at
 // least some other session check was done before this.
 func Authorize(requiredRoles []string, h http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

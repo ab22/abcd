@@ -76,14 +76,6 @@
 						requiresTeacher: false
 					},
 					{
-						label: 'Roles',
-						icon: 'fa-legal',
-						link: '',
-						responsiveOnly: true,
-						requiresAdmin: true,
-						requiresTeacher: false
-					},
-					{
 						label: 'Reporte #1',
 						icon: 'fa-calendar',
 						link: '',

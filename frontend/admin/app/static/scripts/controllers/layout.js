@@ -110,7 +110,7 @@
 					{
 						label: 'Configuración',
 						icon: 'fa-cogs',
-						link: '',
+						link: '/main/configuration',
 						responsiveOnly: false,
 						requiresAdmin: true,
 						requiresTeacher: false

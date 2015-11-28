@@ -62,7 +62,7 @@
 					url: '/students',
 					templateUrl: viewsPath + 'students/layout.html',
 					requiresAuthentication: true
-				}).state('main.users.all', {
+				}).state('main.students.all', {
 					url: '/all',
 					templateUrl: viewsPath + 'students/all.html',
 					controller: 'AllStudentsCtrl',

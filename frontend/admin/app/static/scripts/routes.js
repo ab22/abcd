@@ -35,9 +35,9 @@
 					controller:'LoginCtrl',
 					requiresAuthentication: false
 				}).state('main.configuration', {
-					url: '/systemConfiguration',
+					url: '/configuration',
 					templateUrl: viewsPath + 'configuration.html',
-					controller:'SystemConfiguratonCtrl',
+					controller:'SystemConfigurationCtrl',
 					requiresAuthentication: true
 				}).state('main.profile', {
 					url: '/profile',

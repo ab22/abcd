@@ -58,6 +58,15 @@
 					templateUrl: viewsPath + 'users/create.html',
 					controller: 'CreateUserCtrl',
 					requiresAuthentication: true
+				}).state('main.students', {
+					url: '/students',
+					templateUrl: viewsPath + 'students/layout.html',
+					requiresAuthentication: true
+				}).state('main.users.all', {
+					url: '/all',
+					templateUrl: viewsPath + 'students/all.html',
+					controller: 'AllStudentsCtrl',
+					requiresAuthentication: true
 				});
 		}
 	]);

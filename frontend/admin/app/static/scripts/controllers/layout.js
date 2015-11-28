@@ -36,7 +36,7 @@
 					{
 						label: 'Alumnos',
 						icon: 'fa-child',
-						link: '',
+						link: '/main/students/all',
 						responsiveOnly: true,
 						requiresAdmin: false,
 						requiresTeacher: true

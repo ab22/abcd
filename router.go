@@ -34,7 +34,7 @@ func registerApiRoutes(router *mux.Router) {
 		handlerFunc = handlers.GzipContent(handlerFunc)
 
 		if route.RequiresAuth {
-			if len(route.RequiredRoles) >= 0 {
+			if len(route.RequiredRoles) > 0 {
 				handlerFunc = handlers.Authorize(route.RequiredRoles, handlerFunc)
 			}
 

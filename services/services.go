@@ -38,6 +38,7 @@ func Initialize() error {
 		return err
 	}
 
+	db.DB().SetMaxIdleConns(10)
 	db.LogMode(config.DbLogMode)
 
 	return err

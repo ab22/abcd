@@ -21,16 +21,17 @@ var (
 // to the global DB instance so that every service
 // can access it.
 func Initialize() error {
-	var err error
-	dbCfg := config.EnvVariables.Db
-
-	connectionString := fmt.Sprintf(
-		"host=%v port=%v user=%v password=%v dbname=%v sslmode=disable",
-		dbCfg.Host,
-		dbCfg.Port,
-		dbCfg.User,
-		dbCfg.Password,
-		dbCfg.Name,
+	var (
+		err              error
+		dbCfg            = config.EnvVariables.Db
+		connectionString = fmt.Sprintf(
+			"host=%v port=%v user=%v password=%v dbname=%v sslmode=disable",
+			dbCfg.Host,
+			dbCfg.Port,
+			dbCfg.User,
+			dbCfg.Password,
+			dbCfg.Name,
+		)
 	)
 
 	db, err = gorm.Open("postgres", connectionString)

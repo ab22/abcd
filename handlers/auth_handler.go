@@ -24,11 +24,14 @@ func (h *authHandler) CheckAuth(w http.ResponseWriter, r *http.Request) (interfa
 //
 // If the checks pass, it sets up a session cookie.
 func (h *authHandler) Login(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	var loginForm struct {
-		Identifier string
-		Password   string
-	}
+	var (
+		err error
+
+		loginForm struct {
+			Identifier string
+			Password   string
+		}
+	)
 
 	decoder := json.NewDecoder(r.Body)
 	if err = decoder.Decode(&loginForm); err != nil {
@@ -52,14 +55,7 @@ func (h *authHandler) Login(w http.ResponseWriter, r *http.Request) (interface{}
 		}
 	}
 
-	session, err := cookieStore.Get(r, sessionCookieName)
-	if err != nil {
-		return nil, &ApiError{
-			Error:    err,
-			HttpCode: http.StatusInternalServerError,
-		}
-	}
-
+	session, _ := cookieStore.New(r, sessionCookieName)
 	session.Values["data"] = &SessionData{
 		UserId:    user.Id,
 		Email:     user.Email,

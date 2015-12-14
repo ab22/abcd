@@ -18,8 +18,10 @@ var (
 )
 
 func Initialize() error {
-	var adminAppFolder string
-	var err error
+	var (
+		adminAppFolder string
+		err            error
+	)
 
 	if err = env.Parse(&EnvVariables); err != nil {
 		return err

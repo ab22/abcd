@@ -142,8 +142,10 @@ func GzipContent(h http.Handler) http.HandlerFunc {
 // least some other session check was done before this.
 func Authorize(requiredRoles []string, h http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var sessionData *SessionData
-		var ok bool
+		var (
+			ok          bool
+			sessionData *SessionData
+		)
 
 		session, err := cookieStore.Get(r, sessionCookieName)
 		if err != nil {

@@ -50,8 +50,10 @@ type ApiHandler func(http.ResponseWriter, *http.Request) (interface{}, *ApiError
 // Initializes all global variables such as the instance for session storage
 // and loads cached templates.
 func Initialize() {
-	secretKey := config.EnvVariables.App.Secret
-	adminAppPath := config.EnvVariables.App.Frontend.Admin
+	var (
+		secretKey    = config.EnvVariables.App.Secret
+		adminAppPath = config.EnvVariables.App.Frontend.Admin
+	)
 
 	gob.Register(&SessionData{})
 

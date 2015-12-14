@@ -15,6 +15,7 @@ type userHandler struct{}
 
 func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
 	var err error
+
 	type MappedUser struct {
 		Id        int       `json:"id"`
 		Username  string    `json:"username"`
@@ -54,10 +55,14 @@ func (h *userHandler) FindAllAvailable(w http.ResponseWriter, r *http.Request) (
 }
 
 func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	var payload struct {
-		UserId int
-	}
+	var (
+		err error
+
+		payload struct {
+			UserId int
+		}
+	)
+
 	type MappedUser struct {
 		Id        int    `json:"id"`
 		Username  string `json:"username"`
@@ -105,10 +110,13 @@ func (h *userHandler) FindById(w http.ResponseWriter, r *http.Request) (interfac
 }
 
 func (h *userHandler) FindByUsername(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	var payload struct {
-		Username string
-	}
+	var (
+		err     error
+		payload struct {
+			Username string
+		}
+	)
+
 	type MappedUser struct {
 		Id        int    `json:"id"`
 		Username  string `json:"username"`
@@ -157,17 +165,21 @@ func (h *userHandler) FindByUsername(w http.ResponseWriter, r *http.Request) (in
 
 // Edit a user.
 func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	var payload struct {
-		Id        int
-		Username  string
-		Email     string
-		FirstName string
-		LastName  string
-		Status    int
-		IsAdmin   bool
-		IsTeacher bool
-	}
+	var (
+		err error
+
+		payload struct {
+			Id        int
+			Username  string
+			Email     string
+			FirstName string
+			LastName  string
+			Status    int
+			IsAdmin   bool
+			IsTeacher bool
+		}
+	)
+
 	type Response struct {
 		Success      bool   `json:"success"`
 		ErrorMessage string `json:"errorMessage"`
@@ -214,16 +226,20 @@ func (h *userHandler) Edit(w http.ResponseWriter, r *http.Request) (interface{},
 
 //Create a user.
 func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	var payload struct {
-		Username  string
-		Password  string
-		FirstName string
-		LastName  string
-		Email     string
-		IsAdmin   bool
-		IsTeacher bool
-	}
+	var (
+		err error
+
+		payload struct {
+			Username  string
+			Password  string
+			FirstName string
+			LastName  string
+			Email     string
+			IsAdmin   bool
+			IsTeacher bool
+		}
+	)
+
 	type Response struct {
 		Success      bool   `json:"success"`
 		ErrorMessage string `json:"errorMessage"`
@@ -269,11 +285,14 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) (interface{
 
 // Change a user's password.
 func (h *userHandler) ChangePassword(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	var payload struct {
-		UserId      int
-		NewPassword string
-	}
+	var (
+		err error
+
+		payload struct {
+			UserId      int
+			NewPassword string
+		}
+	)
 
 	decoder := json.NewDecoder(r.Body)
 	if err = decoder.Decode(&payload); err != nil {
@@ -296,10 +315,13 @@ func (h *userHandler) ChangePassword(w http.ResponseWriter, r *http.Request) (in
 
 // Delete user.
 func (h *userHandler) Delete(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	var payload struct {
-		UserId int
-	}
+	var (
+		err error
+
+		payload struct {
+			UserId int
+		}
+	)
 
 	decoder := json.NewDecoder(r.Body)
 	if err = decoder.Decode(&payload); err != nil {
@@ -322,8 +344,11 @@ func (h *userHandler) Delete(w http.ResponseWriter, r *http.Request) (interface{
 
 // Retrieve logged user's information.
 func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	session, _ := cookieStore.Get(r, sessionCookieName)
-	sessionData := session.Values["data"].(*SessionData)
+	var (
+		session, _  = cookieStore.Get(r, sessionCookieName)
+		sessionData = session.Values["data"].(*SessionData)
+	)
+
 	type Response struct {
 		Id        int    `json:"id"`
 		Username  string `json:"username"`
@@ -362,12 +387,15 @@ func (h *userHandler) GetProfileForCurrentUser(w http.ResponseWriter, r *http.Re
 
 // Change the logged user's password.
 func (h *userHandler) ChangePasswordForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	session, _ := cookieStore.Get(r, sessionCookieName)
-	sessionData := session.Values["data"].(*SessionData)
-	var payload struct {
-		NewPassword string
-	}
+	var (
+		err         error
+		session, _  = cookieStore.Get(r, sessionCookieName)
+		sessionData = session.Values["data"].(*SessionData)
+
+		payload struct {
+			NewPassword string
+		}
+	)
 
 	decoder := json.NewDecoder(r.Body)
 	if err = decoder.Decode(&payload); err != nil {
@@ -390,12 +418,15 @@ func (h *userHandler) ChangePasswordForCurrentUser(w http.ResponseWriter, r *htt
 
 // Change the logged user's email.
 func (h *userHandler) ChangeEmailForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	session, _ := cookieStore.Get(r, sessionCookieName)
-	sessionData := session.Values["data"].(*SessionData)
-	var payload struct {
-		NewEmail string
-	}
+	var (
+		err         error
+		session, _  = cookieStore.Get(r, sessionCookieName)
+		sessionData = session.Values["data"].(*SessionData)
+
+		payload struct {
+			NewEmail string
+		}
+	)
 
 	decoder := json.NewDecoder(r.Body)
 	if err = decoder.Decode(&payload); err != nil {
@@ -418,13 +449,16 @@ func (h *userHandler) ChangeEmailForCurrentUser(w http.ResponseWriter, r *http.R
 
 // Change the logged user's full name.
 func (h *userHandler) ChangeFullNameForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	var err error
-	session, _ := cookieStore.Get(r, sessionCookieName)
-	sessionData := session.Values["data"].(*SessionData)
-	var payload struct {
-		FirstName string
-		LastName  string
-	}
+	var (
+		err         error
+		session, _  = cookieStore.Get(r, sessionCookieName)
+		sessionData = session.Values["data"].(*SessionData)
+
+		payload struct {
+			FirstName string
+			LastName  string
+		}
+	)
 
 	decoder := json.NewDecoder(r.Body)
 	if err = decoder.Decode(&payload); err != nil {
@@ -453,8 +487,10 @@ func (h *userHandler) ChangeFullNameForCurrentUser(w http.ResponseWriter, r *htt
 // database everytime. If said user's privileges get changed, then the user
 // will have to relog to update the values.
 func (h *userHandler) GetPrivilegesForCurrentUser(w http.ResponseWriter, r *http.Request) (interface{}, *ApiError) {
-	session, _ := cookieStore.Get(r, sessionCookieName)
-	sessionData := session.Values["data"].(*SessionData)
+	var (
+		session, _  = cookieStore.Get(r, sessionCookieName)
+		sessionData = session.Values["data"].(*SessionData)
+	)
 
 	type Response struct {
 		IsAdmin   bool `json:"isAdmin"`

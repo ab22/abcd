@@ -129,7 +129,7 @@ func GzipContent(h http.Handler) http.HandlerFunc {
 			ResponseWriter: w,
 		}
 
-		h.ServeHTTP(grw, r)
+		h.ServeHTTP(&grw, r)
 	})
 }
 

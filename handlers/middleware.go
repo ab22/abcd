@@ -102,7 +102,7 @@ type gzipResponseWriter struct {
 // was set to the response, we must detect it's content type before the
 // default ResponseWriter does. If we don't, then the response will be of
 // Content-Type 'application/x-gzip'.
-func (w gzipResponseWriter) Write(b []byte) (int, error) {
+func (w *gzipResponseWriter) Write(b []byte) (int, error) {
 	if w.Header().Get("Content-Type") == "" {
 		w.Header().Set("Content-Type", http.DetectContentType(b))
 	}

@@ -124,12 +124,12 @@ func GzipContent(h http.Handler) http.HandlerFunc {
 		gw := gzip.NewWriter(w)
 		defer gw.Close()
 
-		grw := gzipResponseWriter{
+		grw := &gzipResponseWriter{
 			Writer:         gw,
 			ResponseWriter: w,
 		}
 
-		h.ServeHTTP(&grw, r)
+		h.ServeHTTP(grw, r)
 	})
 }
 

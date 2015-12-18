@@ -1,1 +1,1 @@
-go build -o abcd.exe *.go
+go build -o abcd.exe

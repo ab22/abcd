@@ -18,7 +18,12 @@ var (
 )
 
 func main() {
-	var err error
+	var (
+		err    error
+		port   int
+		router *Router
+	)
+
 	log.Println("Starting server...")
 
 	if err = abcdBootstrapper.Configure(); err != nil {
@@ -26,14 +31,15 @@ func main() {
 	}
 
 	log.Println("Setting up routes...")
-	r := registerRoutes()
+
+	router = NewRouter()
 
 	log.Println("Listening...")
 
-	port := config.EnvVariables.App.Port
+	port = config.EnvVariables.App.Port
 	err = http.ListenAndServe(
 		fmt.Sprintf(":%d", port),
-		r,
+		router,
 	)
 
 	if err != nil {

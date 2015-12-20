@@ -20,7 +20,7 @@ go get github.com/ab22/abcd
 
 It is required to have installed Postgres on the local computer. All migration
 files are saved in the migrations folder. To automatically run these queries,
-it is recommended to use the [migrate](https://trello.com/c/m0egTpLz/1953-approver-remove-second-popup-from-delete-item-workflow) tool.
+it is recommended to use the [migrate](https://github.com/mattes/migrate) tool.
 
 Console syntax to migrate all queries:
 

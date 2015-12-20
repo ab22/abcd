@@ -26,8 +26,8 @@ type TemplateRoute struct {
 
 // Routes contains a list of template routes and a list of api routes
 // to be registered with middleware as needed.
-// Template routes are just routes that lead to handlers that serve html
-// templates or static files.
+// Template routes are just routes that serve html templates or
+// static files. These might be removed by a nginx http server in the future.
 // Api Routes receive and respond json.
 type Routes struct {
 	TemplateRoutes []TemplateRoute

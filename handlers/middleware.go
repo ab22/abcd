@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+type MiddlewareFunc func(h http.Handler) http.HandlerFunc
+
 // Go's http.FileServer by default, lists the directories and files
 // of the specified folder to serve and cannot be disabled.
 // To prevent directory listing, noDirListing checks if the

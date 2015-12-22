@@ -22,24 +22,27 @@ import (
 )
 
 type Server struct {
-	port         int
-	muxRouter    *mux.Router
-	bootstrapper bootstrapper
-	cookieStore  *sessions.CookieStore
-	routers      []router.Router
-	services     *services.Services
+	cookieStore *sessions.CookieStore
+	muxRouter   *mux.Router
+	services    *services.Services
+	routers     []router.Router
+	cfg         *config.Config
 }
 
 func NewServer() *Server {
-	return &Server{
-		bootstrapper: NewBootstrapper(),
-	}
+	return &Server{}
 }
 
 func (s *Server) Configure() error {
+	var err error
+
 	log.Println("Configuring server...")
 
-	err := s.bootstrapper.Configure()
+	s.cfg = config.NewConfig()
+	s.cfg.Print()
+
+	err = s.cfg.Validate()
+
 	if err != nil {
 		return err
 	}
@@ -51,8 +54,6 @@ func (s *Server) Configure() error {
 	}
 
 	s.configureCookieStore()
-
-	s.port = config.EnvVariables.App.Port
 
 	log.Println("Setting up routes...")
 	s.createMuxRouter()
@@ -68,7 +69,7 @@ func (s *Server) Configure() error {
 
 func (s *Server) ListenAndServe() error {
 	return http.ListenAndServe(
-		fmt.Sprintf(":%d", s.port),
+		fmt.Sprintf(":%d", s.cfg.App.Port),
 		s.muxRouter,
 	)
 }
@@ -77,7 +78,7 @@ func (s *Server) createDatabaseConn() (*gorm.DB, error) {
 	var (
 		db               gorm.DB
 		err              error
-		dbCfg            = config.EnvVariables.Db
+		dbCfg            = s.cfg.Db
 		connectionString = fmt.Sprintf(
 			"host=%v port=%v user=%v password=%v dbname=%v sslmode=disable",
 			dbCfg.Host,
@@ -94,7 +95,7 @@ func (s *Server) createDatabaseConn() (*gorm.DB, error) {
 	}
 
 	db.DB().SetMaxIdleConns(10)
-	db.LogMode(config.DbLogMode)
+	db.LogMode(s.cfg.DbLogMode)
 
 	return &db, nil
 }
@@ -111,7 +112,7 @@ func (s *Server) configureServices() error {
 }
 
 func (s *Server) configureCookieStore() {
-	secretKey := config.EnvVariables.App.Secret
+	secretKey := s.cfg.App.Secret
 
 	gob.Register(&router.SessionData{})
 
@@ -124,7 +125,7 @@ func (s *Server) addRouter(r router.Router) {
 }
 
 func (s *Server) configureRouters() {
-	var appPath = config.EnvVariables.App.Frontend.Admin
+	var appPath = s.cfg.App.Frontend.Admin
 
 	s.addRouter(static.NewRouter(appPath))
 	s.addRouter(auth.NewRouter())
@@ -157,7 +158,7 @@ func (s *Server) bindRoutes() {
 
 func (s *Server) createStaticFilesServer() {
 	var (
-		adminAppPath    = config.EnvVariables.App.Frontend.Admin
+		adminAppPath    = s.cfg.App.Frontend.Admin
 		staticFilesPath = path.Join(adminAppPath, "static")
 	)
 

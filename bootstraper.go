@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/ab22/abcd/config"
-	"github.com/ab22/abcd/handlers"
+	//"github.com/ab22/abcd/handlers"
 	"github.com/ab22/abcd/services"
 )
 
@@ -14,6 +14,14 @@ type bootstrapFunc func() error
 
 // boostrapper contains all of the bootstrapper functions to be executed.
 type bootstrapper []bootstrapFunc
+
+func NewBootstrapper() bootstrapper {
+	return bootstrapper{
+		initializeConfigurationModule,
+		initializeServicesModule,
+		//initializeHandlersModule,
+	}
+}
 
 // Configure executes the bootstrapper functions. If there's an error, it
 // stops iterating over the functions and returns the error.
@@ -53,9 +61,9 @@ func initializeServicesModule() error {
 }
 
 // Configure abcd/handlers package.
-func initializeHandlersModule() error {
+/*func initializeHandlersModule() error {
 	log.Println("Initializing handlers...")
 	handlers.Initialize()
 
 	return nil
-}
+}*/

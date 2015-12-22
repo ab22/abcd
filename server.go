@@ -189,7 +189,7 @@ func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			err         error
-			handlerFunc httputils.APIHandler
+			handlerFunc httputils.ContextHandler
 
 			ctx = context.Background()
 		)
@@ -204,7 +204,7 @@ func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 	}
 }
 
-func (s *Server) handleWithMiddlewares(route router.Route) httputils.APIHandler {
+func (s *Server) handleWithMiddlewares(route router.Route) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		serverCtx := context.WithValue(ctx, "cookieStore", s.cookieStore)
 		serverCtx = context.WithValue(serverCtx, "route", route)

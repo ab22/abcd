@@ -11,7 +11,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-type MiddlewareFunc func(httputils.APIHandler) httputils.APIHandler
+type MiddlewareFunc func(httputils.ContextHandler) httputils.ContextHandler
 
 // Go's http.FileServer by default, lists the directories and files
 // of the specified folder to serve and cannot be disabled.
@@ -19,7 +19,7 @@ type MiddlewareFunc func(httputils.APIHandler) httputils.APIHandler
 // path requests ends in '/'. If it does, then the client is requesting
 // to explore a folder and we return a 404 (Not found), else, we just
 // call the http.Handler passed as parameter.
-func NoDirListing(h httputils.APIHandler) httputils.APIHandler {
+func NoDirListing(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		urlPath := r.URL.Path
 
@@ -34,7 +34,7 @@ func NoDirListing(h httputils.APIHandler) httputils.APIHandler {
 
 // Validates that the user cookie is set up before calling the handler
 // passed as parameter.
-func ValidateAuth(h httputils.APIHandler) httputils.APIHandler {
+func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		var (
 			sessionData *SessionData
@@ -69,7 +69,7 @@ func ValidateAuth(h httputils.APIHandler) httputils.APIHandler {
 }
 
 // gzipContent is a middleware function for handlers to encode content to gzip.
-func GzipContent(h httputils.APIHandler) httputils.APIHandler {
+func GzipContent(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		w.Header().Add("Vary", "Accept-Encoding")
 
@@ -95,7 +95,7 @@ func GzipContent(h httputils.APIHandler) httputils.APIHandler {
 // least some other session check was done before this.
 
 //func Authorize(requiredRoles []string, h http.Handler) http.HandlerFunc {
-func Authorize(h httputils.APIHandler) httputils.APIHandler {
+func Authorize(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		var (
 			requiredRoles []string

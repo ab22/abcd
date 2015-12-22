@@ -7,7 +7,7 @@ import (
 type Route interface {
 	Path() string
 	Method() string
-	Handler() httputils.APIHandler
+	Handler() httputils.ContextHandler
 	RequiresAuth() bool
 	RequiredRoles() []string
 	Type() httputils.RouteType
@@ -16,7 +16,7 @@ type Route interface {
 type route struct {
 	method        string
 	path          string
-	handler       httputils.APIHandler
+	handler       httputils.ContextHandler
 	requiresAuth  bool
 	requiredRoles []string
 	routeType     httputils.RouteType
@@ -30,7 +30,7 @@ func (r *route) Method() string {
 	return r.method
 }
 
-func (r *route) Handler() httputils.APIHandler {
+func (r *route) Handler() httputils.ContextHandler {
 	return r.handler
 }
 
@@ -46,7 +46,7 @@ func (r *route) Type() httputils.RouteType {
 	return r.routeType
 }
 
-func NewRoute(method, path string, handler httputils.APIHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
+func NewRoute(method, path string, handler httputils.ContextHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
 	return &route{
 		method:        method,
 		path:          path,
@@ -57,10 +57,10 @@ func NewRoute(method, path string, handler httputils.APIHandler, requiresAuth bo
 	}
 }
 
-func NewGetRoute(path string, handler httputils.APIHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
+func NewGetRoute(path string, handler httputils.ContextHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
 	return NewRoute("GET", path, handler, requiresAuth, requiredRoles, routeType)
 }
 
-func NewPostRoute(path string, handler httputils.APIHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
+func NewPostRoute(path string, handler httputils.ContextHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
 	return NewRoute("POST", path, handler, requiresAuth, requiredRoles, routeType)
 }

@@ -38,7 +38,7 @@ func (r *authRouter) initRoutes() {
 			httputils.API,
 		),
 		router.NewPostRoute(
-			"auth/logout",
+			"auth/logout/",
 			r.Logout,
 			true,
 			[]string{},

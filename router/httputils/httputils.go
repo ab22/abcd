@@ -14,10 +14,10 @@ const (
 	Static
 )
 
-// APIHandler defines how API handler functions should be defined. ApiHandler
+// ContextHandler defines how API handler functions should be defined. ApiHandler
 // functions should return any kind of value which will be turned into json
 // and an *ApiError.
-type APIHandler func(context.Context, http.ResponseWriter, *http.Request) error
+type ContextHandler func(context.Context, http.ResponseWriter, *http.Request) error
 
 func WriteError(w http.ResponseWriter, errMsg string, code int) {
 	if errMsg == "" {

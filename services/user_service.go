@@ -9,7 +9,9 @@ import (
 )
 
 // Contains all of the logic for the User model.
-type userService struct{}
+type userService struct {
+	db *gorm.DB
+}
 
 // Int type to define statuses for the User model.
 type UserStatus int
@@ -36,7 +38,7 @@ func (s *userService) SanitizeUsername(username string) string {
 func (s *userService) FindById(userId int) (*models.User, error) {
 	user := &models.User{}
 
-	err := db.
+	err := s.db.
 		Where("id = ?", userId).
 		First(user).Error
 
@@ -56,7 +58,7 @@ func (s *userService) FindByUsername(username string) (*models.User, error) {
 	user := &models.User{}
 	username = s.SanitizeUsername(username)
 
-	err := db.
+	err := s.db.
 		Where("username = ?", username).
 		First(user).Error
 
@@ -76,7 +78,7 @@ func (s *userService) FindByUsername(username string) (*models.User, error) {
 func (s *userService) FindByEmail(email string) (*models.User, error) {
 	user := &models.User{}
 
-	err := db.
+	err := s.db.
 		Where("email = ?", email).
 		First(user).Error
 
@@ -114,7 +116,7 @@ func (s *userService) FindAll() ([]models.User, error) {
 	var users []models.User
 	var err error
 
-	err = db.
+	err = s.db.
 		Order("id asc").
 		Find(&users).Error
 
@@ -159,7 +161,7 @@ func (s *userService) Edit(newUser *models.User) error {
 	user.IsAdmin = newUser.IsAdmin
 	user.IsTeacher = newUser.IsTeacher
 
-	return db.Save(&user).Error
+	return s.db.Save(&user).Error
 }
 
 // ChangePassword finds a user in the database by userId and changes it's
@@ -170,7 +172,7 @@ func (s *userService) ChangePassword(userId int, password string) error {
 		return err
 	}
 
-	err = db.
+	err = s.db.
 		Table("users").
 		Where("id = ?", userId).
 		Update("password", string(encryptedPassword)).Error
@@ -179,7 +181,7 @@ func (s *userService) ChangePassword(userId int, password string) error {
 		if err != gorm.RecordNotFound {
 			return err
 		}
-	} else if db.RowsAffected == 0 {
+	} else if s.db.RowsAffected == 0 {
 		return RecordNotFound
 	}
 
@@ -208,7 +210,7 @@ func (s *userService) Create(user *models.User) error {
 	user.Password = string(hashedPassword)
 	user.Status = int(Enabled)
 
-	err = db.Create(&user).Error
+	err = s.db.Create(&user).Error
 
 	if err != nil {
 		return err
@@ -222,7 +224,7 @@ func (s *userService) Create(user *models.User) error {
 func (s *userService) Delete(userId int) error {
 	var err error
 
-	err = db.
+	err = s.db.
 		Table("users").
 		Where("id = ?", userId).
 		Delete(models.User{}).Error
@@ -234,7 +236,7 @@ func (s *userService) Delete(userId int) error {
 func (s *userService) ChangeEmail(userId int, email string) error {
 	email = strings.Trim(email, " ")
 
-	err := db.
+	err := s.db.
 		Table("users").
 		Where("id = ?", userId).
 		Update("email", email).Error
@@ -243,7 +245,7 @@ func (s *userService) ChangeEmail(userId int, email string) error {
 		if err != gorm.RecordNotFound {
 			return err
 		}
-	} else if db.RowsAffected == 0 {
+	} else if s.db.RowsAffected == 0 {
 		return RecordNotFound
 	}
 
@@ -255,7 +257,7 @@ func (s *userService) ChangeFullName(userId int, firstName, lastName string) err
 	firstName = strings.Trim(firstName, " ")
 	lastName = strings.Trim(lastName, " ")
 
-	err := db.
+	err := s.db.
 		Table("users").
 		Where("id = ?", userId).
 		Update("first_name", firstName).
@@ -265,7 +267,7 @@ func (s *userService) ChangeFullName(userId int, firstName, lastName string) err
 		if err != gorm.RecordNotFound {
 			return err
 		}
-	} else if db.RowsAffected == 0 {
+	} else if s.db.RowsAffected == 0 {
 		return RecordNotFound
 	}
 

@@ -12,8 +12,12 @@ import (
 	"github.com/ab22/abcd/router/auth"
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/ab22/abcd/router/static"
+	"github.com/ab22/abcd/router/user"
+	"github.com/ab22/abcd/services"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 	"golang.org/x/net/context"
 )
 
@@ -23,6 +27,7 @@ type Server struct {
 	bootstrapper bootstrapper
 	cookieStore  *sessions.CookieStore
 	routers      []router.Router
+	services     *services.Services
 }
 
 func NewServer() *Server {
@@ -35,6 +40,12 @@ func (s *Server) Configure() error {
 	log.Println("Configuring server...")
 
 	err := s.bootstrapper.Configure()
+	if err != nil {
+		return err
+	}
+
+	err = s.configureServices()
+
 	if err != nil {
 		return err
 	}
@@ -62,6 +73,43 @@ func (s *Server) ListenAndServe() error {
 	)
 }
 
+func (s *Server) createDatabaseConn() (*gorm.DB, error) {
+	var (
+		db               gorm.DB
+		err              error
+		dbCfg            = config.EnvVariables.Db
+		connectionString = fmt.Sprintf(
+			"host=%v port=%v user=%v password=%v dbname=%v sslmode=disable",
+			dbCfg.Host,
+			dbCfg.Port,
+			dbCfg.User,
+			dbCfg.Password,
+			dbCfg.Name,
+		)
+	)
+
+	db, err = gorm.Open("postgres", connectionString)
+	if err != nil {
+		return nil, err
+	}
+
+	db.DB().SetMaxIdleConns(10)
+	db.LogMode(config.DbLogMode)
+
+	return &db, nil
+}
+
+func (s *Server) configureServices() error {
+	db, err := s.createDatabaseConn()
+
+	if err != nil {
+		return err
+	}
+
+	s.services = services.NewServices(db)
+	return nil
+}
+
 func (s *Server) configureCookieStore() {
 	secretKey := config.EnvVariables.App.Secret
 
@@ -80,6 +128,7 @@ func (s *Server) configureRouters() {
 
 	s.addRouter(static.NewRouter(appPath))
 	s.addRouter(auth.NewRouter())
+	s.addRouter(user.NewRouter())
 }
 
 func (s *Server) createMuxRouter() {
@@ -149,6 +198,7 @@ func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 
 		if err != nil {
 			log.Printf("Handler [%s][%s] returned error: %s", r.Method, r.URL.Path, err)
+			w.WriteHeader(http.StatusInternalServerError)
 		}
 	}
 }
@@ -157,6 +207,7 @@ func (s *Server) handleWithMiddlewares(route router.Route) httputils.APIHandler 
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		serverCtx := context.WithValue(ctx, "cookieStore", s.cookieStore)
 		serverCtx = context.WithValue(serverCtx, "route", route)
+		serverCtx = context.WithValue(serverCtx, "services", s.services)
 
 		h := route.Handler()
 		h = router.GzipContent(h)

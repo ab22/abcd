@@ -5,7 +5,7 @@ import (
 
 	"github.com/ab22/abcd/config"
 	//"github.com/ab22/abcd/handlers"
-	"github.com/ab22/abcd/services"
+	//"github.com/ab22/abcd/services"
 )
 
 // bootstrapFunc is a simple function that configures the app modules, takes
@@ -18,7 +18,7 @@ type bootstrapper []bootstrapFunc
 func NewBootstrapper() bootstrapper {
 	return bootstrapper{
 		initializeConfigurationModule,
-		initializeServicesModule,
+		//initializeServicesModule,
 		//initializeHandlersModule,
 	}
 }
@@ -50,7 +50,7 @@ func initializeConfigurationModule() error {
 }
 
 // Configure playcheck/services package.
-func initializeServicesModule() error {
+/*func initializeServicesModule() error {
 	log.Println("Initializing services...")
 
 	if err := services.Initialize(); err != nil {
@@ -58,7 +58,7 @@ func initializeServicesModule() error {
 	}
 
 	return nil
-}
+}*/
 
 // Configure abcd/handlers package.
 /*func initializeHandlersModule() error {

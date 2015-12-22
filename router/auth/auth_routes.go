@@ -25,6 +25,7 @@ func (r *authRouter) CheckAuth(ctx context.Context, w http.ResponseWriter, req *
 // If the checks pass, it sets up a session cookie.
 func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
+		s, _        = ctx.Value("services").(*services.Services)
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
 		err         error
 
@@ -39,7 +40,7 @@ func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http
 		return nil
 	}
 
-	user, err := services.AuthService.BasicAuth(loginForm.Identifier, loginForm.Password)
+	user, err := s.Auth.BasicAuth(loginForm.Identifier, loginForm.Password)
 	if err != nil {
 		httputils.WriteError(w, "", http.StatusInternalServerError)
 		return nil

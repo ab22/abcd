@@ -23,21 +23,21 @@ func (r *authRouter) Routes() []router.Route {
 
 func (r *authRouter) initRoutes() {
 	r.routes = []router.Route{
-		httputils.NewPostRoute(
+		router.NewPostRoute(
 			"auth/checkAuthentication/",
 			r.CheckAuth,
 			true,
 			[]string{},
 			httputils.API,
 		),
-		httputils.NewPostRoute(
+		router.NewPostRoute(
 			"auth/login/",
 			r.Login,
 			false,
 			[]string{},
 			httputils.API,
 		),
-		httputils.NewPostRoute(
+		router.NewPostRoute(
 			"auth/logout",
 			r.Logout,
 			true,

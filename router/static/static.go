@@ -28,7 +28,7 @@ func (r *staticRouter) Routes() []router.Route {
 
 func (r *staticRouter) initRoutes() {
 	r.routes = []router.Route{
-		httputils.NewGetRoute(
+		router.NewGetRoute(
 			"/",
 			r.Index,
 			false,

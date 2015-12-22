@@ -98,8 +98,6 @@ func (s *Server) bindRoutes() {
 				routePath = r.Path()
 			}
 
-			log.Printf("Binding route [%s][%s]\n", r.Method(), routePath)
-
 			s.muxRouter.
 				Methods(r.Method()).
 				Path(routePath).
@@ -146,12 +144,7 @@ func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 			ctx = context.Background()
 		)
 
-		if route.Type() == httputils.API {
-			handlerFunc = s.handleAPIWithGlobalMiddlewares(route)
-		} else {
-			handlerFunc = s.handleStaticWithGlobalMiddleWares(route)
-		}
-
+		handlerFunc = s.handleWithMiddlewares(route)
 		err = handlerFunc(ctx, w, r)
 
 		if err != nil {
@@ -160,39 +153,20 @@ func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 	}
 }
 
-func (s *Server) handleStaticWithGlobalMiddleWares(route router.Route) httputils.APIHandler {
+func (s *Server) handleWithMiddlewares(route router.Route) httputils.APIHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
-		middlewares := []router.MiddlewareFunc{
-			router.GzipContent,
-		}
-
 		serverCtx := context.WithValue(ctx, "cookieStore", s.cookieStore)
 		serverCtx = context.WithValue(serverCtx, "route", route)
 
 		h := route.Handler()
+		h = router.GzipContent(h)
 
-		for _, middlewareFunc := range middlewares {
-			h = middlewareFunc(h)
-		}
+		if route.RequiresAuth() {
+			if requiredRoles := route.RequiredRoles(); len(requiredRoles) > 0 {
+				h = router.Authorize(h)
+			}
 
-		return h(serverCtx, w, r)
-	}
-}
-
-func (s *Server) handleAPIWithGlobalMiddlewares(route router.Route) httputils.APIHandler {
-	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
-		middlewares := []router.MiddlewareFunc{
-			router.GzipContent,
-			router.ValidateAuth,
-		}
-
-		serverCtx := context.WithValue(ctx, "cookieStore", s.cookieStore)
-		serverCtx = context.WithValue(serverCtx, "route", route)
-
-		h := route.Handler()
-
-		for _, middlewareFunc := range middlewares {
-			h = middlewareFunc(h)
+			h = router.ValidateAuth(h)
 		}
 
 		return h(serverCtx, w, r)

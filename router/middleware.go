@@ -23,7 +23,7 @@ func NoDirListing(h httputils.APIHandler) httputils.APIHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		urlPath := r.URL.Path
 
-		if strings.HasSuffix(urlPath, "/") {
+		if urlPath == "" || strings.HasSuffix(urlPath, "/") {
 			http.NotFound(w, r)
 			return nil
 		}
@@ -67,51 +67,6 @@ func ValidateAuth(h httputils.APIHandler) httputils.APIHandler {
 		return h(authenticatedContext, w, r)
 	}
 }
-
-// JsonHandler is a middleware function for the ApiHandler type. The
-// JsonHandler sets the content type of the response as application/json. It
-// also checks if the ApiHandler returned an error. When the ApiHandler returns
-// an error, then a http.Error is filled with the error data return from the
-// ApiHandler. If there's no error, the payload that returned from the
-// ApiHandler is parsed to json (if any) and written to the
-// http.ResponseWriter.
-
-/*func JsonHandler(h ApiHandler) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-
-		payload, apiError := h(w, r)
-		if apiError != nil {
-			if apiError.Error != nil {
-				log.Println(apiError.Error)
-			}
-
-			// If no message is set, get the default error message from the
-			// http module.
-			if apiError.Message == "" {
-				apiError.Message = http.StatusText(apiError.HttpCode)
-			}
-
-			http.Error(w, apiError.Message, apiError.HttpCode)
-			return
-		}
-
-		// If nothing is to be converted to json then return
-		if payload == nil {
-			return
-		}
-
-		// Convert payload to json and return HTTP OK (200)
-		b, err := json.Marshal(payload)
-		if err != nil {
-			log.Println(err)
-			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-			return
-		}
-
-		w.Write(b)
-	})
-}*/
 
 // gzipContent is a middleware function for handlers to encode content to gzip.
 func GzipContent(h httputils.APIHandler) httputils.APIHandler {

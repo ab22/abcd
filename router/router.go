@@ -12,4 +12,5 @@ type Route interface {
 	Handler() httputils.APIHandler
 	RequiresAuth() bool
 	RequiredRoles() []string
+	Type() httputils.RouteType
 }

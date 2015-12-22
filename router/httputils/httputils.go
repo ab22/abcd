@@ -7,7 +7,14 @@ import (
 	"net/http"
 )
 
-// APIFunc defines how API handler functions should be defined. ApiHandler
+type RouteType int
+
+const (
+	API RouteType = iota
+	Static
+)
+
+// APIHandler defines how API handler functions should be defined. ApiHandler
 // functions should return any kind of value which will be turned into json
 // and an *ApiError.
 type APIHandler func(context.Context, http.ResponseWriter, *http.Request) error

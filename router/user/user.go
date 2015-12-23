@@ -72,7 +72,7 @@ func (r *userRouter) initRoutes() {
 			[]string{"ADMIN"},
 			httputils.API,
 		),
-		router.NewPostRoute(
+		router.NewGetRoute(
 			"user/profile/",
 			r.GetProfileForCurrentUser,
 			true,

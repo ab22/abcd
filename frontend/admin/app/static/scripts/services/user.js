@@ -98,7 +98,7 @@
 			userService.getProfile = function() {
 				return $http({
 					url: Api.getRoute('user/profile/'),
-					method: 'POST'
+					method: 'GET'
 				});
 			};
 

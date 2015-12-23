@@ -100,7 +100,7 @@ func (r *userRouter) initRoutes() {
 			[]string{},
 			httputils.API,
 		),
-		router.NewPostRoute(
+		router.NewGetRoute(
 			"user/current/privileges/",
 			r.GetPrivilegesForCurrentUser,
 			true,

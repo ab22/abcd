@@ -30,8 +30,8 @@ func (r *userRouter) initRoutes() {
 			[]string{"ADMIN"},
 			httputils.API,
 		),
-		router.NewPostRoute(
-			"user/findById/",
+		router.NewGetRoute(
+			"user/findById/{id:[0-9]+}",
 			r.FindById,
 			true,
 			[]string{"ADMIN"},

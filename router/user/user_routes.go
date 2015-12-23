@@ -2,12 +2,14 @@ package user
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/ab22/abcd/models"
 	"github.com/ab22/abcd/router"
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/ab22/abcd/services"
+	"github.com/gorilla/mux"
 	"golang.org/x/net/context"
 )
 
@@ -54,12 +56,10 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 
 func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
-
-		payload struct {
-			UserId int
-		}
+		err    error
+		userId int
+		s, _   = ctx.Value("services").(*services.Services)
+		vars   = mux.Vars(req)
 	)
 
 	type MappedUser struct {
@@ -73,12 +73,14 @@ func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *h
 		IsTeacher bool   `json:"isTeacher"`
 	}
 
-	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
+	userId, err = strconv.Atoi(vars["id"])
+
+	if err != nil {
 		httputils.WriteError(w, "", http.StatusBadRequest)
 		return nil
 	}
 
-	user, err := s.User.FindById(payload.UserId)
+	user, err := s.User.FindById(userId)
 	if err != nil {
 		return err
 	} else if user == nil {

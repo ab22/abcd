@@ -45,11 +45,8 @@
 
 			userService.findById = function(userId) {
 				return $http({
-					url: Api.getRoute('user/findById/'),
-					method: 'POST',
-					data: {
-						userId: userId
-					}
+					url: Api.getRoute('user/findById/' + userId),
+					method: 'GET'
 				});
 			};
 

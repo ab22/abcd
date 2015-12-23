@@ -77,7 +77,7 @@ func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *h
 
 	if err != nil {
 		httputils.WriteError(w, "", http.StatusBadRequest)
-		return nil
+		return err
 	}
 
 	user, err := s.User.FindById(userId)

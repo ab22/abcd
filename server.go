@@ -21,6 +21,7 @@ import (
 	"golang.org/x/net/context"
 )
 
+// Server contains instance details for the server.
 type Server struct {
 	cookieStore *sessions.CookieStore
 	muxRouter   *mux.Router
@@ -29,10 +30,14 @@ type Server struct {
 	cfg         *config.Config
 }
 
+// NewServer returns a new instance of the server. All server configuration
+// is done at the Configure() function.
 func NewServer() *Server {
 	return &Server{}
 }
 
+// Configure initializes all necessary data for the server, including the
+// configuration data, services and routes.
 func (s *Server) Configure() error {
 	var err error
 
@@ -67,6 +72,8 @@ func (s *Server) Configure() error {
 	return nil
 }
 
+// ListenAndServe attaches the current server to the specified configuration
+// port.
 func (s *Server) ListenAndServe() error {
 	return http.ListenAndServe(
 		fmt.Sprintf(":%d", s.cfg.App.Port),
@@ -74,6 +81,8 @@ func (s *Server) ListenAndServe() error {
 	)
 }
 
+// createDatabaseConn creates a new GORM database with the specified database
+// configuration.
 func (s *Server) createDatabaseConn() (*gorm.DB, error) {
 	var (
 		db               gorm.DB
@@ -100,6 +109,7 @@ func (s *Server) createDatabaseConn() (*gorm.DB, error) {
 	return &db, nil
 }
 
+// configureServices creates the new services for the application to use.
 func (s *Server) configureServices() error {
 	db, err := s.createDatabaseConn()
 
@@ -111,6 +121,8 @@ func (s *Server) configureServices() error {
 	return nil
 }
 
+// configureCookieStore creates the cookie store used to validate user
+// sessions.
 func (s *Server) configureCookieStore() {
 	secretKey := s.cfg.App.Secret
 
@@ -120,10 +132,12 @@ func (s *Server) configureCookieStore() {
 	s.cookieStore.MaxAge(30 * 60)
 }
 
+// addRouter appends a router to the server's router.
 func (s *Server) addRouter(r router.Router) {
 	s.routers = append(s.routers, r)
 }
 
+// configureRouters adds all routers to the server.
 func (s *Server) configureRouters() {
 	var appPath = s.cfg.App.Frontend.Admin
 
@@ -132,10 +146,12 @@ func (s *Server) configureRouters() {
 	s.addRouter(user.NewRouter())
 }
 
+// createMuxRouter initializes the server's router.
 func (s *Server) createMuxRouter() {
 	s.muxRouter = mux.NewRouter().StrictSlash(true)
 }
 
+// bindRoutes adds all routes to the server's router.
 func (s *Server) bindRoutes() {
 	for _, route := range s.routers {
 		for _, r := range route.Routes() {
@@ -156,6 +172,8 @@ func (s *Server) bindRoutes() {
 	}
 }
 
+// createStaticFilesServer creates a static file server to server all of the
+// frontend files (html, js, css, etc).
 func (s *Server) createStaticFilesServer() {
 	var (
 		adminAppPath    = s.cfg.App.Frontend.Admin
@@ -185,6 +203,7 @@ func (s *Server) createStaticFilesServer() {
 		Handler(http.StripPrefix("/static/", handler))
 }
 
+// makeHttpHandler creates a http.HandlerFunc from a httputils.ContextHandler.
 func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
@@ -204,6 +223,10 @@ func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 	}
 }
 
+// handleWithMiddlewares applies all middlewares to the specified route. Some
+// middleware functions are applied depending on the route's properties, such
+// as ValidateAuth and Authorize middlewares. These last 2 functions require
+// that the route RequiresAuth() and that RequiredRoles() > 0.
 func (s *Server) handleWithMiddlewares(route router.Route) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		serverCtx := context.WithValue(ctx, "cookieStore", s.cookieStore)

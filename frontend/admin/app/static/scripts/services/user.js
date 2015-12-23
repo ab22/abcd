@@ -52,11 +52,8 @@
 
 			userService.findByUsername = function(username) {
 				return $http({
-					url: Api.getRoute('user/findByUsername/'),
-					method: 'POST',
-					data: {
-						username: username
-					}
+					url: Api.getRoute('user/findByUsername/' + username),
+					method: 'GET'
 				});
 			};
 

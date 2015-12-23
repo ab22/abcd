@@ -104,12 +104,10 @@ func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *h
 
 func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
-
-		payload struct {
-			Username string
-		}
+		err      error
+		s, _     = ctx.Value("services").(*services.Services)
+		vars     = mux.Vars(req)
+		username = vars["username"]
 	)
 
 	type MappedUser struct {
@@ -123,12 +121,7 @@ func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, 
 		IsTeacher bool   `json:"isTeacher"`
 	}
 
-	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
-		return nil
-	}
-
-	user, err := s.User.FindByUsername(payload.Username)
+	user, err := s.User.FindByUsername(username)
 	if err != nil {
 		return err
 	} else if user == nil {

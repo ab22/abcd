@@ -93,8 +93,6 @@ func GzipContent(h httputils.ContextHandler) httputils.ContextHandler {
 //
 // It is assumed that ValidateAuth was called before this function, or at
 // least some other session check was done before this.
-
-//func Authorize(requiredRoles []string, h http.Handler) http.HandlerFunc {
 func Authorize(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		var (

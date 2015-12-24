@@ -1,5 +1,8 @@
 # env
 
+[![Build Status](https://travis-ci.org/ab22/env.svg)](https://travis-ci.org/ab22/env)
+[![GoDoc](https://godoc.org/github.com/ab22/env?status.svg)](https://godoc.org/github.com/ab22/env)
+
 Use tag structures to parse environment variables into structure fields.
 
 Having structs inside structs parsed is now possible. Updated the example below with fully working code.
@@ -56,4 +59,17 @@ func main() {
 	env.Parse(config)
 	config.Print()
 }
+```
+The example above prints:
+```
+2015/11/01 18:01:13 ----------------------------------
+2015/11/01 18:01:13 Application Port: 1337
+2015/11/01 18:01:13      Environment: PRODUCTION
+2015/11/01 18:01:13        SMTP Host: smtp.mandrillapp.com
+2015/11/01 18:01:13        SMTP User: app32793597@heroku.com
+2015/11/01 18:01:13        SMTP Port: 587
+2015/11/01 18:01:13    Database Host: localhost
+2015/11/01 18:01:13    Database Port: 5432
+2015/11/01 18:01:13    Database Name: lol_db
+2015/11/01 18:01:13 ----------------------------------
 ```

@@ -1,15 +1,15 @@
-package auth
+package student
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/ab22/abcd/services"
-	"github.com/gorilla/sessions"
 	"golang.org/x/net/context"
 )
 
-func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err  error
 		s, _ = ctx.Value("services").(*services.Services)
@@ -29,16 +29,16 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 		return err
 	}
 
-	response := make([]MappedUser, 0, len(students))
+	response := make([]MappedStudent, 0, len(students))
 
 	for _, student := range students {
 		response = append(response, MappedStudent{
-			Id:        user.Id,
-			Email:     user.Email,
-			FirstName: user.FirstName,
-			LastName:  user.LastName,
-			Status:    user.Status,
-			CreatedAt: user.CreatedAt,
+			Id:        student.Id,
+			Email:     student.Email,
+			FirstName: student.FirstName,
+			LastName:  student.LastName,
+			Status:    student.Status,
+			CreatedAt: student.CreatedAt,
 		})
 	}
 

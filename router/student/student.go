@@ -1,4 +1,4 @@
-package auth
+package student
 
 import (
 	"github.com/ab22/abcd/router"
@@ -21,13 +21,13 @@ func (r *studentRouter) Routes() []router.Route {
 	return r.routes
 }
 
-func (r *authRouter) initRoutes() {
+func (r *studentRouter) initRoutes() {
 	r.routes = []router.Route{
 		router.NewGetRoute(
 			"student/findAll",
 			r.FindAllAvailable,
-			false,
-			[]string{},
+			true,
+			[]string{"ADMIN"},
 			httputils.API,
 		),
 	}

@@ -19,7 +19,7 @@ const (
 // and an *ApiError.
 type ContextHandler func(context.Context, http.ResponseWriter, *http.Request) error
 
-func WriteError(w http.ResponseWriter, errMsg string, code int) {
+func WriteError(w http.ResponseWriter, code int, errMsg string) {
 	if errMsg == "" {
 		errMsg = http.StatusText(code)
 	}
@@ -27,7 +27,7 @@ func WriteError(w http.ResponseWriter, errMsg string, code int) {
 	http.Error(w, errMsg, code)
 }
 
-func WriteJSON(w http.ResponseWriter, data interface{}, statusCode int) error {
+func WriteJSON(w http.ResponseWriter, statusCode int, data interface{}) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 

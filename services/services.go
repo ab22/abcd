@@ -5,8 +5,9 @@ import (
 )
 
 type Services struct {
-	Auth *authService
-	User *userService
+	Auth    *authService
+	User    *userService
+	Student *studentService
 }
 
 func NewServices(db *gorm.DB) *Services {
@@ -19,6 +20,10 @@ func NewServices(db *gorm.DB) *Services {
 	s.Auth = &authService{
 		db:          db,
 		userService: s.User,
+	}
+
+	s.Student = &studentService{
+		db: db,
 	}
 
 	return s

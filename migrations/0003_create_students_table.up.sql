@@ -8,7 +8,7 @@ CREATE TABLE students
   created_at timestamp with time zone,
   updated_at timestamp with time zone,
   deleted_at timestamp with time zone,
-  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT students_pkey PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE

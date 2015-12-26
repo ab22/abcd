@@ -51,7 +51,7 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 		})
 	}
 
-	return httputils.WriteJSON(w, response, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, response)
 }
 
 func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
@@ -76,7 +76,7 @@ func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *h
 	userId, err = strconv.Atoi(vars["id"])
 
 	if err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return err
 	}
 
@@ -84,7 +84,7 @@ func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *h
 	if err != nil {
 		return err
 	} else if user == nil {
-		httputils.WriteError(w, "", http.StatusNotFound)
+		httputils.WriteError(w, http.StatusNotFound, "")
 		return nil
 	}
 
@@ -99,7 +99,7 @@ func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *h
 		IsTeacher: user.IsTeacher,
 	}
 
-	return httputils.WriteJSON(w, response, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, response)
 }
 
 func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
@@ -125,7 +125,7 @@ func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, 
 	if err != nil {
 		return err
 	} else if user == nil {
-		httputils.WriteError(w, "", http.StatusNotFound)
+		httputils.WriteError(w, http.StatusNotFound, "")
 		return nil
 	}
 
@@ -140,7 +140,7 @@ func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, 
 		IsTeacher: user.IsTeacher,
 	}
 
-	return httputils.WriteJSON(w, response, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, response)
 }
 
 // Edit a user.
@@ -167,7 +167,7 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 	}
 
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
@@ -185,18 +185,18 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 	err = s.User.Edit(user)
 	if err != nil {
 		if err == services.DuplicateUsernameError {
-			return httputils.WriteJSON(w, &Response{
+			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El nombre de usuario ya existe!",
-			}, http.StatusOK)
+			})
 		}
 
 		return err
 	}
 
-	return httputils.WriteJSON(w, &Response{
+	return httputils.WriteJSON(w, http.StatusOK, &Response{
 		Success: true,
-	}, http.StatusOK)
+	})
 }
 
 //Create a user.
@@ -222,7 +222,7 @@ func (r *userRouter) Create(ctx context.Context, w http.ResponseWriter, req *htt
 	}
 
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
@@ -239,18 +239,18 @@ func (r *userRouter) Create(ctx context.Context, w http.ResponseWriter, req *htt
 	err = s.User.Create(user)
 	if err != nil {
 		if err == services.DuplicateUsernameError {
-			return httputils.WriteJSON(w, &Response{
+			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El nombre de usuario ya existe!",
-			}, http.StatusOK)
+			})
 		}
 
 		return err
 	}
 
-	return httputils.WriteJSON(w, &Response{
+	return httputils.WriteJSON(w, http.StatusOK, &Response{
 		Success: true,
-	}, http.StatusOK)
+	})
 }
 
 // Change a user's password.
@@ -266,7 +266,7 @@ func (r *userRouter) ChangePassword(ctx context.Context, w http.ResponseWriter, 
 	)
 
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
@@ -275,7 +275,7 @@ func (r *userRouter) ChangePassword(ctx context.Context, w http.ResponseWriter, 
 		return err
 	}
 
-	return httputils.WriteJSON(w, nil, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, nil)
 }
 
 // Delete user.
@@ -290,7 +290,7 @@ func (r *userRouter) Delete(ctx context.Context, w http.ResponseWriter, req *htt
 	)
 
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
@@ -299,7 +299,7 @@ func (r *userRouter) Delete(ctx context.Context, w http.ResponseWriter, req *htt
 		return err
 	}
 
-	return httputils.WriteJSON(w, nil, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, nil)
 }
 
 // Retrieve logged user's information.
@@ -325,7 +325,7 @@ func (r *userRouter) GetProfileForCurrentUser(ctx context.Context, w http.Respon
 	if err != nil {
 		return err
 	} else if user == nil {
-		httputils.WriteError(w, "", http.StatusNotFound)
+		httputils.WriteError(w, http.StatusNotFound, "")
 		return nil
 	}
 
@@ -340,7 +340,7 @@ func (r *userRouter) GetProfileForCurrentUser(ctx context.Context, w http.Respon
 		IsTeacher: user.IsTeacher,
 	}
 
-	return httputils.WriteJSON(w, response, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, response)
 }
 
 // Change the logged user's password.
@@ -356,7 +356,7 @@ func (r *userRouter) ChangePasswordForCurrentUser(ctx context.Context, w http.Re
 	)
 
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
@@ -365,7 +365,7 @@ func (r *userRouter) ChangePasswordForCurrentUser(ctx context.Context, w http.Re
 		return err
 	}
 
-	return httputils.WriteJSON(w, nil, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, nil)
 }
 
 // Change the logged user's email.
@@ -381,7 +381,7 @@ func (r *userRouter) ChangeEmailForCurrentUser(ctx context.Context, w http.Respo
 	)
 
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
@@ -391,7 +391,7 @@ func (r *userRouter) ChangeEmailForCurrentUser(ctx context.Context, w http.Respo
 		return err
 	}
 
-	return httputils.WriteJSON(w, nil, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, nil)
 }
 
 // Change the logged user's full name.
@@ -408,7 +408,7 @@ func (r *userRouter) ChangeFullNameForCurrentUser(ctx context.Context, w http.Re
 	)
 
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
@@ -418,7 +418,7 @@ func (r *userRouter) ChangeFullNameForCurrentUser(ctx context.Context, w http.Re
 		return err
 	}
 
-	return httputils.WriteJSON(w, nil, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, nil)
 }
 
 // GetUserPrivileges returns information about the current user. The response
@@ -443,5 +443,5 @@ func (r *userRouter) GetPrivilegesForCurrentUser(ctx context.Context, w http.Res
 		IsTeacher: sessionData.IsTeacher,
 	}
 
-	return httputils.WriteJSON(w, response, http.StatusOK)
+	return httputils.WriteJSON(w, http.StatusOK, response)
 }

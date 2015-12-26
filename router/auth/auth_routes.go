@@ -36,16 +36,16 @@ func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http
 	)
 
 	if err = httputils.DecodeJSON(req.Body, &loginForm); err != nil {
-		httputils.WriteError(w, "", http.StatusBadRequest)
+		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
 
 	user, err := s.Auth.BasicAuth(loginForm.Identifier, loginForm.Password)
 	if err != nil {
-		httputils.WriteError(w, "", http.StatusInternalServerError)
+		httputils.WriteError(w, http.StatusInternalServerError, "")
 		return nil
 	} else if user == nil {
-		httputils.WriteError(w, "Usuario/clave inválidos", http.StatusUnauthorized)
+		httputils.WriteError(w, http.StatusUnauthorized, "Usuario/clave inválidos")
 		return nil
 	}
 
@@ -71,8 +71,8 @@ func (r *authRouter) Logout(ctx context.Context, w http.ResponseWriter, req *htt
 	session, err := cookieStore.Get(req, router.SessionCookieName)
 
 	if err != nil {
-		httputils.WriteError(w, err.Error(), http.StatusUnauthorized)
-		return nil
+		httputils.WriteError(w, http.StatusUnauthorized, "")
+		return err
 	}
 
 	session.Options.MaxAge = -1

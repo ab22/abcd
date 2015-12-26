@@ -1,18 +1,23 @@
 package main
 
 import (
+	// Standard libs
 	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
 	"path"
 
+	// Routes
+	"github.com/ab22/abcd/router/auth"
+	"github.com/ab22/abcd/router/static"
+	"github.com/ab22/abcd/router/student"
+	"github.com/ab22/abcd/router/user"
+
+	// Misc.
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/router"
-	"github.com/ab22/abcd/router/auth"
 	"github.com/ab22/abcd/router/httputils"
-	"github.com/ab22/abcd/router/static"
-	"github.com/ab22/abcd/router/user"
 	"github.com/ab22/abcd/services"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -144,6 +149,7 @@ func (s *Server) configureRouters() {
 	s.addRouter(static.NewRouter(appPath))
 	s.addRouter(auth.NewRouter())
 	s.addRouter(user.NewRouter())
+	s.addRouter(student.NewRouter())
 }
 
 // createMuxRouter initializes the server's router.

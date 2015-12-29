@@ -7,7 +7,7 @@
 
 			studentService.findAll = function() {
 				return $http({
-					url: Api.getRoute('user/findAll/'),
+					url: Api.getRoute('student/findAll/'),
 					method: 'GET'
 				});
 			};

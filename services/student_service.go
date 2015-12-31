@@ -33,7 +33,7 @@ func (s *studentService) FindAll() ([]models.Student, error) {
 }
 
 // Search student by id
-func (s *studentService) FindById(studnetId int) (*models.Student, error) {
+func (s *studentService) FindById(studentId int) (*models.Student, error) {
 	student := &models.Student{}
 
 	err := s.db.

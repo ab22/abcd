@@ -34,7 +34,7 @@ func (s *userService) SanitizeUsername(username string) string {
 	return sanitizedString
 }
 
-// Search user by id
+// Search user by id.
 func (s *userService) FindById(userId int) (*models.User, error) {
 	user := &models.User{}
 

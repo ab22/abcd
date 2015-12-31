@@ -30,5 +30,12 @@ func (r *studentRouter) initRoutes() {
 			[]string{"ADMIN"},
 			httputils.API,
 		),
+		router.NewGetRoute(
+			"student/findById/{id:[0-9]+}",
+			r.FindById,
+			true,
+			[]string{"ADMIN"},
+			httputils.API,
+		),
 	}
 }

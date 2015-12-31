@@ -2,10 +2,12 @@ package student
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/ab22/abcd/services"
+	"github.com/gorilla/mux"
 	"golang.org/x/net/context"
 )
 
@@ -73,7 +75,7 @@ func (r *studentRouter) FindById(ctx context.Context, w http.ResponseWriter, req
 	student, err := s.Student.FindById(studentId)
 	if err != nil {
 		return err
-	} else if user == nil {
+	} else if student == nil {
 		httputils.WriteError(w, http.StatusNotFound, "")
 		return nil
 	}

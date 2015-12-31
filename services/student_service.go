@@ -31,3 +31,22 @@ func (s *studentService) FindAll() ([]models.Student, error) {
 
 	return students, nil
 }
+
+// Search student by id
+func (s *studentService) FindById(studnetId int) (*models.Student, error) {
+	student := &models.Student{}
+
+	err := s.db.
+		Where("id = ?", studentId).
+		First(student).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return nil, err
+		}
+
+		return nil, nil
+	}
+
+	return student, nil
+}

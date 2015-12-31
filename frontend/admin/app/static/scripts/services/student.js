@@ -12,6 +12,13 @@
 				});
 			};
 
+			studentService.FindByUser =	function(id){
+				return $htpp({
+					url: Api.getRoute('student/findById/'+id),
+					method: 'POST'
+				});
+			};
+
 			return studentService;
 		}
 	]);

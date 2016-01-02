@@ -201,6 +201,7 @@ func (s *Server) createStaticFilesServer() {
 
 		if err != nil {
 			log.Printf("static file handler [%s][%s] returned error: %s", req.Method, req.URL.Path, err)
+			httputils.WriteError(w, http.StatusInternalServerError, "")
 		}
 	})
 

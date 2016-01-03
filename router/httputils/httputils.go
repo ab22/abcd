@@ -2,9 +2,10 @@ package httputils
 
 import (
 	"encoding/json"
-	"golang.org/x/net/context"
 	"io"
 	"net/http"
+
+	"golang.org/x/net/context"
 )
 
 type RouteType int

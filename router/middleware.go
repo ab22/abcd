@@ -134,3 +134,18 @@ func Authorize(h httputils.ContextHandler) httputils.ContextHandler {
 		return nil
 	}
 }
+
+// HandleError sets the appropriate headers to the response if a http handler
+// returned an error. This might be used in the future if different types of
+// errors are returned.
+func HandleHttpError(h httputils.ContextHandler) httputils.ContextHandler {
+	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+		err := h(ctx, w, r)
+
+		if err != nil {
+			httputils.WriteError(w, http.StatusInternalServerError, "")
+		}
+
+		return err
+	}
+}

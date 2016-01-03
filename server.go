@@ -225,7 +225,6 @@ func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
 
 		if err != nil {
 			log.Printf("Handler [%s][%s] returned error: %s", r.Method, r.URL.Path, err)
-			w.WriteHeader(http.StatusInternalServerError)
 		}
 	}
 }
@@ -241,6 +240,7 @@ func (s *Server) handleWithMiddlewares(route router.Route) httputils.ContextHand
 		serverCtx = context.WithValue(serverCtx, "services", s.services)
 
 		h := route.Handler()
+		h = router.HandleHttpError(h)
 		h = router.GzipContent(h)
 
 		if route.RequiresAuth() {

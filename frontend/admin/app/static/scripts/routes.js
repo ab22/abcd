@@ -72,6 +72,10 @@
 					templateUrl: viewsPath + 'students/all.html',
 					controller: 'AllStudentsCtrl',
 					requiresAuthentication: true
+				}).state('main.students.create', {
+					url:'/create',
+					templateUrl: viewsPath+'students/create.html',
+					requiresAuthentication: true
 				});
 		}
 	]);

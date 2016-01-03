@@ -12,10 +12,10 @@
 				});
 			};
 
-			studentService.FindByUser =	function(id){
+			studentService.findById = function(userId){
 				return $htpp({
-					url: Api.getRoute('student/findById/'+id),
-					method: 'POST'
+					url: Api.getRoute('student/findById/'+userId),
+					method: 'GET'
 				});
 			};
 

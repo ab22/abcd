@@ -84,13 +84,12 @@
 				});
 			};
 
-			userService.delete = function(userId, newPassword) {
+			userService.delete = function(userId) {
 				return $http({
 					url: Api.getRoute('user/delete/'),
 					method: 'POST',
 					data: {
-						userId: userId,
-						newPassword: newPassword
+						userId: userId
 					}
 				});
 			};

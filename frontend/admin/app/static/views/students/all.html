@@ -38,6 +38,8 @@
 						<th class="clickable" st-sort="email">Correo</th>
 						<th class="clickable" st-sort="createdAt">Fecha de Creación</th>
 						<th>Estado</th>
+						<th></th>
+						<th></th>
 
 					</tr>
 				</thead>
@@ -48,11 +50,18 @@
 						<td>{{u.lastName}}</td>
 						<td>{{u.email}}</td>
 						<td>{{u.createdAt | date:'dd/MM/yyyy h:mma'}}</td>
+						<td>{{statusToString(u.status)}} </td>
 						<td>
-							<button type="button" class="btn btn-xs btn-danger" ng-click="deleteUser(u.id, u.lastName)" title="Eliminar">
+							<a class="btn btn-xs btn-info" ng-href="#/main/users/edit/{{u.id}}" title="Editar">
+								<i class="fa fa-fw fa-pencil"></i>
+							</a>
+						</td>
+						<td>
+							<button type="button" class="btn btn-xs btn-danger" ng-click="deleteStudent (u.id, u.lastName)" title="Eliminar">
 								<i class="fa fa-fw fa-remove"></i>
 							</button>
 						</td>
+
 					</tr>
 				</tbody>
 				<tfoot>

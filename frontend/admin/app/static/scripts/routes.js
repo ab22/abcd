@@ -76,6 +76,10 @@
 					url:'/create',
 					templateUrl: viewsPath+'students/create.html',
 					requiresAuthentication: true
+				}).state('main.students.edit',{
+					url:'edit',
+					templateUrl: viewsPath+'students/edit.html',
+					requiresAuthentication:true
 				});
 		}
 	]);

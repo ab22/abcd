@@ -27,10 +27,9 @@
 
 					if (student.id === studentId) {
 						students.splice(i, 1);
-                    }
+					}
 				}
 			}
-
 
 			$scope.deleteStudent = function(studentId, studentname) {
 				var modalData = {

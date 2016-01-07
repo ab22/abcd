@@ -3,6 +3,75 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12 table-responsive">
+			<table class="table table-bordered table-striped table-hover" st-table="students" st-safe-src="rowCollection">
+				<thead>
+					<tr>
+						<th colspan="12">
+							<div class="row">
+								<div class="col-sm-2 pull-left">
+									<div class="btn-group" role="group">
+										<a class="btn btn-sm btn-default" href="#/main/students/create">
+											<i class="fa fa-fw fa-user-plus"></i>
+											Agregar
+										</a>
+										<button type="button" class="btn btn-sm btn-default" ng-click="reloadStudents()">
+											<i class="fa fa-fw fa-refresh"></i>
+											Refrescar
+										</button>
+									</div>
+								</div>
+								<div class="col-sm-4 pull-right">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="fa fa-fw fa-search"></i>
+										</span>
+										<input type="search" st-search placeholder="Buscar..." class="input-sm form-control"/>
+									</div>
+								</div>
+							</div>
+						</th>
+					</tr>
+					<tr>
+						<th class="clickable" st-sort="id">Id</th>
+						<th class="clickable" st-sort="firstName">Nombres</th>
+						<th class="clickable" st-sort="lastName">Apellidos</th>
+						<th class="clickable" st-sort="email">Correo</th>
+						<th class="clickable" st-sort="createdAt">Fecha de Creación</th>
+						<th>Estado</th>
+						<th></th>
+						<th></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="u in students">
+						<td>{{u.id}}</td>
+						<td>{{u.firstName}}</td>
+						<td>{{u.lastName}}</td>
+						<td>{{u.email}}</td>
+						<td>{{u.createdAt | date:'dd/MM/yyyy h:mma'}}</td>
+						<td>{{statusToString(u.status)}} </td>
+						<td>
+							<a class="btn btn-xs btn-info" ng-href="#/main/users/edit/{{u.id}}" title="Editar">
+								<i class="fa fa-fw fa-pencil"></i>
+							</a>
+						</td>
+						<td>
+							<button type="button" class="btn btn-xs btn-danger" ng-click="deleteStudent (u.id, u.lastName)" title="Eliminar">
+								<i class="fa fa-fw fa-remove"></i>
+							</button>
+						</td>
+
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="12" class="text-center">
+							<div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
 		</div>
 	</div>
 </section>

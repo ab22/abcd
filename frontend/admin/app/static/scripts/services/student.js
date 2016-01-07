@@ -5,6 +5,17 @@
 		function($http, Api) {
 			var studentService = {};
 
+			studentService.statuses = [
+				{
+					id: 0,
+					name: 'Habilitado'
+				},
+				{
+					id: 1,
+					name: 'Deshabilitado'
+				}
+			];
+
 			studentService.findAll = function() {
 				return $http({
 					url: Api.getRoute('student/findAll/'),
@@ -12,10 +23,35 @@
 				});
 			};
 
-			studentService.FindByUser =	function(id){
-				return $htpp({
-					url: Api.getRoute('student/findById/'+id),
-					method: 'POST'
+			studentService.findById = function(userId) {
+				return $http({
+					url: Api.getRoute('student/findById/' + userId),
+					method: 'GET'
+				});
+
+			};
+
+			studentService.statusToString = function(statusId) {
+				var statuses = studentService.statuses;
+
+				for (var i in statuses) {
+					var status = statuses[i];
+
+					if (status.id === statusId) {
+						return status.name;
+					}
+				}
+
+				return '';
+			};
+
+			studentService.delete = function(studentId) {
+				return $http({
+					url: Api.getRoute('student/delete/'),
+					method: 'POST',
+					data: {
+						studentId: studentId
+					}
 				});
 			};
 

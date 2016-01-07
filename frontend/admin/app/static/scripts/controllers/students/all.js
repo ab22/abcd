@@ -23,14 +23,13 @@
 				var students = $scope.students;
 
 				for (var i in students) {
-					var students = students[i];
+					var student = students[i];
 
-					if (students.id === studentId) {
+					if (student.id === studentId) {
 						students.splice(i, 1);
-					}
+                    }
 				}
 			}
-
 
 
 			$scope.deleteStudent = function(studentId, studentname) {

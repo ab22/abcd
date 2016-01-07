@@ -23,12 +23,14 @@
 				});
 			};
 
-			studentService.findById = function(userId){
-				return $htpp({
-					url: Api.getRoute('student/findById/'+userId),
+			studentService.findById = function(userId) {
+				return $http({
+					url: Api.getRoute('student/findById/' + userId),
 					method: 'GET'
 				});
+
 			};
+
 			studentService.statusToString = function(statusId) {
 				var statuses = studentService.statuses;
 

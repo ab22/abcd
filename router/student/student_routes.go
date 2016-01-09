@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/ab22/abcd/models"
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/ab22/abcd/services"
 	"github.com/gorilla/mux"
@@ -90,4 +91,41 @@ func (r *studentRouter) FindById(ctx context.Context, w http.ResponseWriter, req
 	}
 
 	return httputils.WriteJSON(w, http.StatusOK, response)
+}
+
+//Create a student.
+func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+	var (
+		err  error
+		s, _ = ctx.Value("services").(*services.Services)
+
+		payload struct {
+			FirstName string
+			LastName  string
+			Status    int
+		}
+	)
+
+	type Response struct {
+		Success      bool   `json:"success"`
+		ErrorMessage string `json:"errorMessage"`
+	}
+
+	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
+		httputils.WriteError(w, http.StatusBadRequest, "")
+		return nil
+	}
+
+	student := &models.Student{
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Status:    payload.Status,
+	}
+
+	err = s.Student.Create(student)
+	if err != nil {
+		return err
+	}
+
+	return httputils.WriteJSON(w, http.StatusOK, nil)
 }

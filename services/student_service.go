@@ -50,3 +50,26 @@ func (s *studentService) FindById(studentId int) (*models.Student, error) {
 
 	return student, nil
 }
+
+// Creates a new student.
+func (s *studentService) Create(student *models.Student) error {
+	return s.db.Create(student).Error
+}
+
+// Edit an existing student
+func (s *studentService) Edit(newStudent *models.Student) error {
+	student, err := s.FindById(newStudent.Id)
+
+	if err != nil {
+		return err
+	} else if student == nil {
+		return nil
+	}
+
+	student.FirstName = newStudent.FirstName
+	student.LastName = newStudent.LastName
+	student.Email = newStudent.Email
+	student.Status = newStudent.Status
+
+	return s.db.Save(&student).Error
+}

@@ -37,5 +37,19 @@ func (r *studentRouter) initRoutes() {
 			[]string{"ADMIN"},
 			httputils.API,
 		),
+		router.NewPostRoute(
+			"student/edit/",
+			r.Edit,
+			true,
+			[]string{"ADMIN"},
+			httputils.API,
+		),
+		router.NewPostRoute(
+			"student/create/",
+			r.Create,
+			true,
+			[]string{"ADMIN"},
+			httputils.API,
+		),
 	}
 }

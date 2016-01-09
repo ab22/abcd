@@ -106,11 +106,6 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 		}
 	)
 
-	type Response struct {
-		Success      bool   `json:"success"`
-		ErrorMessage string `json:"errorMessage"`
-	}
-
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
@@ -123,6 +118,40 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 	}
 
 	err = s.Student.Create(student)
+	if err != nil {
+		return err
+	}
+
+	return httputils.WriteJSON(w, http.StatusOK, nil)
+}
+
+// Edit a student
+func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+	var (
+		err  error
+		s, _ = ctx.Value("services").(*services.Services)
+
+		payload struct {
+			Id        int
+			FirstName string
+			LastName  string
+			Status    int
+		}
+	)
+
+	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
+		httputils.WriteError(w, http.StatusBadRequest, "")
+		return nil
+	}
+
+	student := &models.Student{
+		Id:        payload.Id,
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Status:    payload.Status,
+	}
+
+	err = s.Student.Edit(student)
 	if err != nil {
 		return err
 	}

@@ -21,11 +21,11 @@
 
 
 				//missing request to backend
-			*/
+
 			};
 
 			$scope.createStudent = function() {
-
+					console.log("entro");
 
 				Student.create($scope.student).success(function(response) {
 					if (!response.success) {
@@ -41,7 +41,7 @@
 					$scope.student = {
 						firstName: '',
 						lastName: '',
-						status: 1
+						status: 0
 					};
 				});
 			};

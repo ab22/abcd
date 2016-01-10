@@ -1,7 +1,7 @@
 ;(function(angular) {
 	'use strict';
 
-	angular.module('app.controllers').controller('CreateStudentCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'Student',
+	angular.module('app.controllers').controller('CreateStudentsCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'Student',
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.statuses = Student.statuses;
 			$scope.checkStatus = false;
@@ -12,9 +12,10 @@
 			};
 
 			$scope.setStatus = function(){
-				if(checkStatus)
-					status = 1;
-				status = 0;
+				if($scope.checkStatus)
+					$scope.status = 1;
+				$scope.status = 0;
+			console.log($scope.status);
 			}
 
 			$scope.onStudentIdChange = function() {

@@ -75,6 +75,7 @@
 				}).state('main.students.create', {
 					url:'/create',
 					templateUrl: viewsPath + 'students/create.html',
+					controller: 'CreateStudentsCtrl',
 					requiresAuthentication: true
 				}).state('main.students.edit', {
 					url:'edit',

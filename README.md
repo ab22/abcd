@@ -1,5 +1,7 @@
 # A.B.C.D.
 
+[![Join the chat at https://gitter.im/ab22/abcd](https://badges.gitter.im/ab22/abcd.svg)](https://gitter.im/ab22/abcd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Main repository for the Go web API and frontend applications for A.B.C.D.
 
 ![Login](http://i.imgur.com/esdXYyA.png)

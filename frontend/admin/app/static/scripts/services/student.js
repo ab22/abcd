@@ -63,6 +63,14 @@
 				});
 			};
 
+			userService.edit = function(studentInfo) {
+				return $http({
+					url: Api.getRoute('student/edit/'),
+					method: 'POST',
+					data: studentInfo
+				});
+			};
+
 			return studentService;
 		}
 	]);

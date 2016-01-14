@@ -78,8 +78,9 @@
 					controller: 'CreateStudentsCtrl',
 					requiresAuthentication: true
 				}).state('main.students.edit', {
-					url:'edit',
+					url:'/edit/{studentId}',
 					templateUrl: viewsPath + 'students/edit.html',
+					controller: 'EditStudentCtrl',
 					requiresAuthentication:true
 				});
 		}

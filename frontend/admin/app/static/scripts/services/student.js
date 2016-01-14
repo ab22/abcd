@@ -25,7 +25,7 @@
 
 			studentService.findById = function(studentId) {
 				return $http({
-					url: Api.getRoute('student/findById/' + userId),
+					url: Api.getRoute('student/findById/' + studentId),
 					method: 'GET'
 				});
 
@@ -63,7 +63,7 @@
 				});
 			};
 
-			userService.edit = function(studentInfo) {
+			studentService.edit = function(studentInfo) {
 				return $http({
 					url: Api.getRoute('student/edit/'),
 					method: 'POST',

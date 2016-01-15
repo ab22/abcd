@@ -35,7 +35,6 @@
 						<th class="clickable" st-sort="id">Id</th>
 						<th class="clickable" st-sort="firstName">Nombres</th>
 						<th class="clickable" st-sort="lastName">Apellidos</th>
-						<th class="clickable" st-sort="email">Correo</th>
 						<th class="clickable" st-sort="createdAt">Fecha de Creación</th>
 						<th>Estado</th>
 						<th></th>
@@ -48,7 +47,6 @@
 						<td>{{u.id}}</td>
 						<td>{{u.firstName}}</td>
 						<td>{{u.lastName}}</td>
-						<td>{{u.email}}</td>
 						<td>{{u.createdAt | date:'dd/MM/yyyy h:mma'}}</td>
 						<td>{{statusToString(u.status)}} </td>
 						<td>

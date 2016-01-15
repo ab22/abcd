@@ -19,7 +19,6 @@
 			};
 
 			$scope.createStudent = function() {
-					console.log("entro");
 
 				Student.create($scope.student).success(function(response) {
 					if (!response.success) {
@@ -29,6 +28,7 @@
 							dismissButton: true
 						});
 						return;
+
 					}
 					ngToast.create('El estudiante se ha creado!');
 

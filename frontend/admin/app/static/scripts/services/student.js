@@ -55,7 +55,7 @@
 				});
 			};
 
-			studentService.create = function(student){
+			studentService.create = function(student) {
 				return $http({
 					url: Api.getRoute('student/create/'),
 					method: 'POST',

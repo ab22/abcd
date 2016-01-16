@@ -12,14 +12,10 @@
 			};
 
 			$scope.onStudentIdChange = function() {
-
-
 				//missing request to backend
-
 			};
 
 			$scope.createStudent = function() {
-
 				Student.create($scope.student).success(function(response) {
 					if (!response.success) {
 						ngToast.create({
@@ -27,9 +23,10 @@
 							content: response.errorMessage,
 							dismissButton: true
 						});
-						return;
 
+						return;
 					}
+
 					ngToast.create('El estudiante se ha creado!');
 
 					$scope.student = {

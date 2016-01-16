@@ -3,9 +3,7 @@
 
 	angular.module('app.controllers').controller('EditStudentCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'Student',
 		function($scope, $stateParams, $location, ngToast, Student) {
-
 			$scope.studentNotFound = false;
-
 			$scope.student = {
 				id: parseInt($stateParams.studentId) || 0,
 				email:'',
@@ -13,7 +11,6 @@
 				lastname: '',
 				status: 0
 			};
-
 
 			Student.findById($scope.student.id).success(function(response) {
 				$scope.checkStatus = $scope.student.status;
@@ -36,6 +33,7 @@
 							content: response.errorMessage,
 							dismissButton: true
 						});
+
 						return;
 					}
 

@@ -20,10 +20,12 @@ func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWri
 
 	type MappedStudent struct {
 		Id        int       `json:"id"`
+		IdNumber  string    `json:"idNumber`
 		Email     string    `json:"email"`
 		FirstName string    `json:"firstName"`
 		LastName  string    `json:"lastName"`
 		Status    int       `json:"status"`
+		Birthdate time.Time `json:"birthdate"`
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
@@ -37,10 +39,12 @@ func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWri
 	for _, student := range students {
 		response = append(response, MappedStudent{
 			Id:        student.Id,
+			IdNumber:  student.IdNumber,
 			Email:     student.Email,
 			FirstName: student.FirstName,
 			LastName:  student.LastName,
 			Status:    student.Status,
+			Birthdate: student.Birthdate,
 			CreatedAt: student.CreatedAt,
 		})
 	}

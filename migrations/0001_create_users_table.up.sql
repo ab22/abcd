@@ -9,7 +9,7 @@ CREATE TABLE users
 	created_at timestamp with time zone,
 	updated_at timestamp with time zone,
 	deleted_at timestamp with time zone,
-	username character varying(30),
+	username character varying(30) NOT NULL,
 	is_admin boolean NOT NULL DEFAULT false,
 	is_teacher boolean NOT NULL DEFAULT false,
 	CONSTRAINT users_pkey PRIMARY KEY (id),

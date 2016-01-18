@@ -59,7 +59,7 @@
 				return $http({
 					url: Api.getRoute('student/create/'),
 					method: 'POST',
-					data:student
+					data: student
 				});
 			};
 

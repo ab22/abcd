@@ -16,8 +16,8 @@ CREATE TABLE users
 	CONSTRAINT users_username_lowercase_ck CHECK (username::text = lower(username::text))
 )
 WITH (
-	  OIDS=FALSE
-  );
+	OIDS=FALSE
+);
 
 CREATE UNIQUE INDEX username_unique_idx
 	ON users

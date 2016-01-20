@@ -9,7 +9,7 @@ CREATE TABLE students
 	place_of_birth character varying(60),
 	address character varying(100),
 	birthdate date,
-	gender character varying(3),
+	gender boolean DEFAULT 0,
 	nationality character varying(30),
 	phone_number character varying(40),
 	created_at timestamp with time zone,

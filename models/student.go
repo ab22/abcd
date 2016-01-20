@@ -14,7 +14,7 @@ type Student struct {
 	PlaceOfBirth string
 	Address      string
 	Birthdate    time.Time
-	Gender       rune
+	Gender       bool
 	Nationality  string
 	PhoneNumber  string
 	CreatedAt    time.Time

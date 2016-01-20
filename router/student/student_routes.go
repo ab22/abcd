@@ -132,7 +132,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 		PlaceOfBirth: payload.PlaceOfBirth,
 		Address:      payload.Address,
 		Birthdate:    payload.Birthdate,
-		Gender:       payload.Gender,
+		Gender:       rune(payload.Gender[0]),
 		Nationality:  payload.Nationality,
 		PhoneNumber:  payload.PhoneNumber,
 	}
@@ -182,7 +182,7 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 		PlaceOfBirth: payload.PlaceOfBirth,
 		Address:      payload.Address,
 		Birthdate:    payload.Birthdate,
-		Gender:       payload.Gender,
+		Gender:       rune(payload.Gender[0]),
 		Nationality:  payload.Nationality,
 		PhoneNumber:  payload.PhoneNumber,
 	}

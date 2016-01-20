@@ -104,9 +104,17 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 		s, _ = ctx.Value("services").(*services.Services)
 
 		payload struct {
-			FirstName string
-			LastName  string
-			Status    int
+			IdNumber     string
+			FirstName    string
+			LastName     string
+			Email        string
+			Status       int
+			PlaceOfBirth string
+			Address      string
+			Birthdate    time.Time
+			Gender       string
+			Nationality  string
+			PhoneNumber  string
 		}
 	)
 
@@ -116,9 +124,17 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 	}
 
 	student := &models.Student{
-		FirstName: payload.FirstName,
-		LastName:  payload.LastName,
-		Status:    payload.Status,
+		IdNumber:     payload.IdNumber,
+		FirstName:    payload.FirstName,
+		LastName:     payload.LastName,
+		Email:        payload.Email,
+		Status:       payload.Status,
+		PlaceOfBirth: payload.PlaceOfBirth,
+		Address:      payload.Address,
+		Birthdate:    payload.Birthdate,
+		Gender:       payload.Gender,
+		Nationality:  payload.Nationality,
+		PhoneNumber:  payload.PhoneNumber,
 	}
 
 	err = s.Student.Create(student)
@@ -136,10 +152,18 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 		s, _ = ctx.Value("services").(*services.Services)
 
 		payload struct {
-			Id        int
-			FirstName string
-			LastName  string
-			Status    int
+			Id           int
+			IdNumber     string
+			FirstName    string
+			LastName     string
+			Email        string
+			Status       int
+			PlaceOfBirth string
+			Address      string
+			Birthdate    time.Time
+			Gender       string
+			Nationality  string
+			PhoneNumber  string
 		}
 	)
 
@@ -149,10 +173,18 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 	}
 
 	student := &models.Student{
-		Id:        payload.Id,
-		FirstName: payload.FirstName,
-		LastName:  payload.LastName,
-		Status:    payload.Status,
+		Id:           payload.Id,
+		IdNumber:     payload.IdNumber,
+		FirstName:    payload.FirstName,
+		LastName:     payload.LastName,
+		Email:        payload.Email,
+		Status:       payload.Status,
+		PlaceOfBirth: payload.PlaceOfBirth,
+		Address:      payload.Address,
+		Birthdate:    payload.Birthdate,
+		Gender:       payload.Gender,
+		Nationality:  payload.Nationality,
+		PhoneNumber:  payload.PhoneNumber,
 	}
 
 	err = s.Student.Edit(student)

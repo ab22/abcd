@@ -112,7 +112,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 			PlaceOfBirth string
 			Address      string
 			Birthdate    time.Time
-			Gender       string
+			Gender       bool
 			Nationality  string
 			PhoneNumber  string
 		}
@@ -132,7 +132,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 		PlaceOfBirth: payload.PlaceOfBirth,
 		Address:      payload.Address,
 		Birthdate:    payload.Birthdate,
-		Gender:       rune(payload.Gender[0]),
+		Gender:       payload.Gender,
 		Nationality:  payload.Nationality,
 		PhoneNumber:  payload.PhoneNumber,
 	}
@@ -161,7 +161,7 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 			PlaceOfBirth string
 			Address      string
 			Birthdate    time.Time
-			Gender       string
+			Gender       bool
 			Nationality  string
 			PhoneNumber  string
 		}
@@ -182,7 +182,7 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 		PlaceOfBirth: payload.PlaceOfBirth,
 		Address:      payload.Address,
 		Birthdate:    payload.Birthdate,
-		Gender:       rune(payload.Gender[0]),
+		Gender:       payload.Gender,
 		Nationality:  payload.Nationality,
 		PhoneNumber:  payload.PhoneNumber,
 	}

@@ -10,6 +10,7 @@
 				password: '',
 				firstName: '',
 				lastName: '',
+				email: '',
 				isAdmin: false,
 				isTeacher: false
 			};
@@ -61,7 +62,7 @@
 						return;
 					}
 
-					ngToast.create('Se actualizó el usuario!');
+					ngToast.create('Se creó el usuario!');
 					$scope.userForm.$setPristine();
 					$scope.userForm.$setUntouched();
 					$scope.passwordRepeat = '';

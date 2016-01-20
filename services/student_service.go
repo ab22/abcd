@@ -103,6 +103,16 @@ func (s *studentService) Edit(newStudent *models.Student) error {
 		return nil
 	}
 
+	if student.IdNumber != newStudent.IdNumber {
+		duplicateUser, err := s.FindByIdNumber(newStudent.IdNumber)
+
+		if err != nil {
+			return err
+		} else if duplicateUser != nil {
+			return DuplicateStudentIdNumberError
+		}
+	}
+
 	student.IdNumber = newStudent.IdNumber
 	student.FirstName = newStudent.FirstName
 	student.LastName = newStudent.LastName

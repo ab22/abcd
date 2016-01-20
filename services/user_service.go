@@ -146,6 +146,7 @@ func (s *userService) Edit(newUser *models.User) error {
 
 	if user.Username != newUser.Username {
 		duplicateUser, err := s.FindByUsername(newUser.Username)
+
 		if err != nil {
 			return err
 		} else if duplicateUser != nil {

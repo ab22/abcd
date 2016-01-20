@@ -1,6 +1,8 @@
 package services
 
 import (
+	"strings"
+
 	"github.com/ab22/abcd/models"
 	"github.com/jinzhu/gorm"
 )
@@ -8,6 +10,10 @@ import (
 // Contains all logic to handle students in the database.
 type studentService struct {
 	db *gorm.DB
+}
+
+func (s *studentService) SanitizeIdNumber(idNumber string) string {
+	return strings.Trim(idNumber, " ")
 }
 
 // Finds all active students in the database.
@@ -51,8 +57,39 @@ func (s *studentService) FindById(studentId int) (*models.Student, error) {
 	return student, nil
 }
 
+// Search student by Id Number/Passport
+func (s *studentService) FindByIdNumber(idNumber string) (*models.Student, error) {
+	student := &models.Student{}
+	idNumber = s.SanitizeIdNumber(idNumber)
+
+	err := s.db.
+		Where("id_number = ?", idNumber).
+		First(student).Error
+
+	if err != nil {
+		if err != gorm.RecordNotFound {
+			return nil, err
+		}
+
+		return nil, nil
+	}
+
+	return student, nil
+}
+
 // Creates a new student.
 func (s *studentService) Create(student *models.Student) error {
+	var err error
+	student.IdNumber = s.SanitizeIdNumber(student.IdNumber)
+
+	result, err := s.FindByIdNumber(student.IdNumber)
+
+	if err != nil {
+		return err
+	} else if result != nil {
+		return DuplicateStudentIdNumberError
+	}
+
 	return s.db.Create(student).Error
 }
 

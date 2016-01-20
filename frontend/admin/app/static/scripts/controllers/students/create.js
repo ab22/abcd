@@ -6,11 +6,20 @@
 			$scope.statuses = Student.statuses;
 
 			$scope.student = {
+				id =0;
+				idNumber: '',
 				firstName: '',
 				lastName: '',
-				status: 0
+				email: '',
+				status: '',
+				placeOfBirth: '',
+				address: '',
+				birthdate: '',
+				gender: false,
+				nationality: '',
+				phoneNumber: ''
 			};
-
+			sweetAlert("Oops...", "Something went wrong!", "error");
 			$scope.onStudentIdChange = function() {
 				//missing request to backend
 			};
@@ -30,10 +39,18 @@
 					ngToast.create('El estudiante se ha creado!');
 
 					$scope.student = {
-						firstName: '',
-						lastName: '',
-						status: 0
-					};
+							Id =0;
+							firstName: '',
+							lastName: '',
+							email: '',
+							status: '',
+							placeOfBirth: '',
+							address: '',
+							birthdate: '',
+							gender: false,
+							nationality: '',
+							phoneNumber: ''
+						};
 				});
 			};
 		}

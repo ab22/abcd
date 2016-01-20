@@ -66,9 +66,17 @@ func (s *studentService) Edit(newStudent *models.Student) error {
 		return nil
 	}
 
+	student.IdNumber = newStudent.IdNumber
 	student.FirstName = newStudent.FirstName
 	student.LastName = newStudent.LastName
+	student.Email = newStudent.Email
 	student.Status = newStudent.Status
+	student.PlaceOfBirth = newStudent.PlaceOfBirth
+	student.Address = newStudent.Address
+	student.Birthdate = newStudent.Birthdate
+	student.Gender = newStudent.Gender
+	student.Nationality = newStudent.Nationality
+	student.PhoneNumber = newStudent.PhoneNumber
 
 	return s.db.Save(&student).Error
 }

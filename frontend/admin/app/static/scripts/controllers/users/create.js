@@ -62,7 +62,6 @@
 					}
 
 					ngToast.create('Se actualizó el usuario!');
-					sweetAlert("Oops...", "Something went wrong!", "error");
 					$scope.userForm.$setPristine();
 					$scope.userForm.$setUntouched();
 					$scope.passwordRepeat = '';

@@ -6,7 +6,7 @@
 			$scope.statuses = Student.statuses;
 
 			$scope.student = {
-				id =0;
+				id :0,
 				idNumber: '',
 				firstName: '',
 				lastName: '',
@@ -39,7 +39,7 @@
 					ngToast.create('El estudiante se ha creado!');
 
 					$scope.student = {
-							Id =0;
+							Id: 0,
 							firstName: '',
 							lastName: '',
 							email: '',

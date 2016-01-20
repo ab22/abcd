@@ -222,3 +222,60 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 		Success: true,
 	})
 }
+
+func (r *studentRouter) FindByIdNumber(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+	var (
+		err      error
+		idNumber string
+		s, _     = ctx.Value("services").(*services.Services)
+		vars     = mux.Vars(req)
+	)
+
+	type MappedStudent struct {
+		Id           int       `json:"id"`
+		IdNumber     string    `json:"idNumber"`
+		FirstName    string    `json:"firstName"`
+		LastName     string    `json:"lastName"`
+		Email        string    `json:"email"`
+		Status       int       `json:"status"`
+		PlaceOfBirth string    `json:"placeOfBirth"`
+		Address      string    `json:"address"`
+		Birthdate    time.Time `json:"birthdate"`
+		Gender       bool      `json:"gender"`
+		Nationality  string    `json:"nationality"`
+		PhoneNumber  string    `json:"phoneNumber"`
+	}
+
+	idNumber = vars["idNumber"]
+
+	if idNumber == "" {
+		httputils.WriteError(w, http.StatusBadRequest, "")
+		return err
+	}
+
+	student, err := s.Student.FindByIdNumber(idNumber)
+
+	if err != nil {
+		return err
+	} else if student == nil {
+		httputils.WriteError(w, http.StatusNotFound, "")
+		return nil
+	}
+
+	response := &MappedStudent{
+		Id:           student.Id,
+		IdNumber:     student.IdNumber,
+		FirstName:    student.FirstName,
+		LastName:     student.LastName,
+		Email:        student.Email,
+		Status:       student.Status,
+		PlaceOfBirth: student.PlaceOfBirth,
+		Address:      student.Address,
+		Birthdate:    student.Birthdate,
+		Gender:       student.Gender,
+		Nationality:  student.Nationality,
+		PhoneNumber:  student.PhoneNumber,
+	}
+
+	return httputils.WriteJSON(w, http.StatusOK, response)
+}

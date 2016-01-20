@@ -118,6 +118,11 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 		}
 	)
 
+	type Response struct {
+		Success      bool   `json:"success"`
+		ErrorMessage string `json:"errorMessage"`
+	}
+
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
@@ -139,10 +144,19 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 
 	err = s.Student.Create(student)
 	if err != nil {
+		if err == services.DuplicateStudentIdNumberError {
+			return httputils.WriteJSON(w, http.StatusOK, &Response{
+				Success:      false,
+				ErrorMessage: "El número de cédula o pasaporte ya existe!",
+			})
+		}
+
 		return err
 	}
 
-	return httputils.WriteJSON(w, http.StatusOK, nil)
+	return httputils.WriteJSON(w, http.StatusOK, &Response{
+		Success: true,
+	})
 }
 
 // Edit a student
@@ -167,6 +181,11 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 		}
 	)
 
+	type Response struct {
+		Success      bool   `json:"success"`
+		ErrorMessage string `json:"errorMessage"`
+	}
+
 	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
@@ -189,8 +208,17 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 
 	err = s.Student.Edit(student)
 	if err != nil {
+		if err == services.DuplicateStudentIdNumberError {
+			return httputils.WriteJSON(w, http.StatusOK, &Response{
+				Success:      false,
+				ErrorMessage: "El número de cédula o pasaporte ya existe!",
+			})
+		}
+
 		return err
 	}
 
-	return httputils.WriteJSON(w, http.StatusOK, nil)
+	return httputils.WriteJSON(w, http.StatusOK, &Response{
+		Success: true,
+	})
 }

@@ -14,12 +14,11 @@
 				status: '',
 				placeOfBirth: '',
 				address: '',
-				birthdate: '',
-				gender: false,
+				birthdate: new Data(),
+				gender: null,
 				nationality: '',
 				phoneNumber: ''
 			};
-			sweetAlert("Oops...", "Something went wrong!", "error");
 			$scope.onStudentIdChange = function() {
 				//missing request to backend
 			};
@@ -46,8 +45,8 @@
 							status: '',
 							placeOfBirth: '',
 							address: '',
-							birthdate: '',
-							gender: false,
+							birthdate: new Data(),
+							gender: null,
 							nationality: '',
 							phoneNumber: ''
 						};

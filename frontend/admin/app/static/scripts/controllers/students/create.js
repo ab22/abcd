@@ -5,6 +5,11 @@
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.statuses = Student.statuses;
 
+			$scope.gender = {
+				male : null,
+				female: null
+			};
+
 			$scope.student = {
 				id :0,
 				idNumber: '',
@@ -22,7 +27,7 @@
 
 
 			$scope.datetimePickers = {
-				startDate: {
+				birthDate: {
 					opened: false,
 					date: new Date(),
 				},
@@ -31,6 +36,14 @@
 				},
 
 				format: 'dd/MM/yyyy'
+			};
+
+
+			$scope.handleOfGender = function (gender){
+				if($scope.gender.male)
+					$scope.student.gender = true;
+				else
+					$scope.student.gender = false;
 			};
 
 			$scope.onStudentIdChange = function() {

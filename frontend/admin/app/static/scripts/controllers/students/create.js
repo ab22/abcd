@@ -19,6 +19,20 @@
 				nationality: '',
 				phoneNumber: ''
 			};
+
+
+			$scope.datetimePickers = {
+				statDate: {
+					opened: false,
+					date: new Date(),
+				},
+				open: function(datetimePicker) {
+					datetimePicker.opened = true;
+				},
+
+				format: 'dd/MM/yyyy'
+			};
+
 			$scope.onStudentIdChange = function() {
 				//missing request to backend
 			};

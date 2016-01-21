@@ -39,12 +39,12 @@
 						<input id="email" name="email" class="form-control" placeholder="Correo" type="text" ng-model="student.email" required>
 					</div>
 				</div>
-				<div class="form-group" ng-class="{'has-error': (createEventForm.$submitted || createEventForm.startDate.$touched) && createEventForm.startDate.$invalid}">
-					<label for="eventStartDate" class="col-sm-2 control-label">Fecha de Inicio:</label>
+				<div class="form-group" ng-class="{'has-error': (studentForm.$submitted || studentForm.startDate.$touched) && studentFormm.startDate.$invalid}">
+					<label for="eventStartDate" class="col-sm-2 control-label">Fecha de Nacimiento:</label>
 					<div class="row vertical-align">
 						<div class="col-sm-5">
 							<div class="input-group">
-								<input name="startDate" type="text" class="form-control" ng-model="datetimePickers.startDate.date" datepicker-popup="{{datetimePickers.format}}" is-open="datetimePickers.startDate.opened" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" ng-change="joinStartDate()" disabled required />
+								<input name="startDate" type="text" class="form-control" ng-model="datetimePickers.startDate.date" datepicker-popup="{{datetimePickers.format}}" is-open="datetimePickers.startDate.opened" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" disabled required />
 								 <span class="input-group-btn">
 									<button type="button" class="btn btn-default" ng-click="datetimePickers.open(datetimePickers.startDate)">
 										<i class="glyphicon glyphicon-calendar"></i>

@@ -22,7 +22,7 @@
 
 
 			$scope.datetimePickers = {
-				statDate: {
+				startDate: {
 					opened: false,
 					date: new Date(),
 				},

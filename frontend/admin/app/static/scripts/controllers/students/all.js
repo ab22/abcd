@@ -15,6 +15,7 @@
 
 					$scope.students.forEach(function(student) {
 						$scope.rowCollection.push(student);
+						console.log(student);
 					});
 				});
 			}

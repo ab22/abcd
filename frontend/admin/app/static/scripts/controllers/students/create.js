@@ -14,7 +14,7 @@
 				status: '',
 				placeOfBirth: '',
 				address: '',
-				birthdate: new Data(),
+				birthdate: new Date(),
 				gender: null,
 				nationality: '',
 				phoneNumber: ''

@@ -57,7 +57,7 @@ func (s *studentService) FindById(studentId int) (*models.Student, error) {
 	return student, nil
 }
 
-// Search student by Id Number/Passport
+// Search student by Id Number/Passport.
 func (s *studentService) FindByIdNumber(idNumber string) (*models.Student, error) {
 	student := &models.Student{}
 	idNumber = s.SanitizeIdNumber(idNumber)
@@ -93,7 +93,7 @@ func (s *studentService) Create(student *models.Student) error {
 	return s.db.Create(student).Error
 }
 
-// Edit an existing student
+// Edit an existing student.
 func (s *studentService) Edit(newStudent *models.Student) error {
 	student, err := s.FindById(newStudent.Id)
 

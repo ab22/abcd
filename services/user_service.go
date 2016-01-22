@@ -150,7 +150,7 @@ func (s *userService) Edit(newUser *models.User) error {
 		if err != nil {
 			return err
 		} else if duplicateUser != nil {
-			return DuplicateUsernameError
+			return DuplicatedUsernameError
 		}
 	}
 
@@ -200,7 +200,7 @@ func (s *userService) Create(user *models.User) error {
 	if err != nil {
 		return err
 	} else if result != nil {
-		return DuplicateUsernameError
+		return DuplicatedUsernameError
 	}
 
 	hashedPassword, err := s.EncryptPassword(user.Password)

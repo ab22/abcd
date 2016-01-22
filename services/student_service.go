@@ -87,7 +87,7 @@ func (s *studentService) Create(student *models.Student) error {
 	if err != nil {
 		return err
 	} else if result != nil {
-		return DuplicateStudentIdNumberError
+		return DuplicatedStudentIdNumberError
 	}
 
 	return s.db.Create(student).Error
@@ -109,7 +109,7 @@ func (s *studentService) Edit(newStudent *models.Student) error {
 		if err != nil {
 			return err
 		} else if duplicateUser != nil {
-			return DuplicateStudentIdNumberError
+			return DuplicatedStudentIdNumberError
 		}
 	}
 

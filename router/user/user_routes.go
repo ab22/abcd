@@ -184,7 +184,7 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 
 	err = s.User.Edit(user)
 	if err != nil {
-		if err == services.DuplicateUsernameError {
+		if err == services.DuplicatedUsernameError {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El nombre de usuario ya existe!",
@@ -238,7 +238,7 @@ func (r *userRouter) Create(ctx context.Context, w http.ResponseWriter, req *htt
 
 	err = s.User.Create(user)
 	if err != nil {
-		if err == services.DuplicateUsernameError {
+		if err == services.DuplicatedUsernameError {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El nombre de usuario ya existe!",

@@ -38,11 +38,7 @@
 						<th class="clickable" st-sort="lastName">Apellidos</th>
 						<th class="clickable" st-sort="email">Correo</th>
 						<th class="clickable" st-sort="status">Estado</th>
-						<th class="clickable" st-sort="placeOfBirth"> Lugar de nacimiento</th>
-						<th class="clickable" st-sort="address">Direccion</th>
 						<th class="clickable" st-sort="birthdate">Fecha de nacimiento</th>
-						<th class="clickable" st-sort="nationality">Nacionalidad</th>
-						<th class="clickable" st-sort="phoneNumber">Telefono personal</th>
 						<th></th>
 						<th></th>
 
@@ -56,11 +52,7 @@
 						<td>{{u.lastName}}</td>
 						<td>{{u.email}}</td>
 						<td>{{statusToString(u.status)}} </td>
-						<td>{{u.placeOfBirth}}</td>
-						<td>{{u.address}}</td>
 						<td>{{u.birthdate}}</td>
-						<td>{{u.nationality}}</td>
-						<td>{{phoneNumber}}</td>
 						<td>
 							<a class="btn btn-xs btn-info" ng-href="#/main/students/edit/{{u.idNumber}}" title="Edita">
 								<i class="fa fa-fw fa-pencil"></i>

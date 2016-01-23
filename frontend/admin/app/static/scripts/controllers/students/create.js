@@ -5,27 +5,55 @@
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.statuses = Student.statuses;
 
+			$scope.gender = {
+				male : false,
+				female: false
+			};
+
 			$scope.student = {
-				id :0,
 				idNumber: '',
 				firstName: '',
 				lastName: '',
 				email: '',
-				status: '',
+				status: 1,
 				placeOfBirth: '',
 				address: '',
-				birthdate: '',
+				birthdate: new Date(),
 				gender: false,
 				nationality: '',
 				phoneNumber: ''
 			};
-			sweetAlert("Oops...", "Something went wrong!", "error");
+
+
+			$scope.datetimePickers = {
+				birthDate: {
+					opened: false,
+					date: new Date(),
+				},
+				open: function(datetimePicker) {
+					datetimePicker.opened = true;
+				},
+
+				format: 'dd/MM/yyyy'
+			};
+
+
+			$scope.handleOfGender = function (gender){
+				console.log("entre");
+				if($scope.gender.male)
+					$scope.student.gender = true;
+				if($scope.gender.female)
+					$scope.student.gender = true;
+			};
+
 			$scope.onStudentIdChange = function() {
 				//missing request to backend
 			};
 
 			$scope.createStudent = function() {
+				console.log($scope.student);
 				Student.create($scope.student).success(function(response) {
+
 					if (!response.success) {
 						ngToast.create({
 							className: 'danger',
@@ -39,15 +67,15 @@
 					ngToast.create('El estudiante se ha creado!');
 
 					$scope.student = {
-							Id: 0,
+							idNumber: '',
 							firstName: '',
 							lastName: '',
 							email: '',
-							status: '',
+							status: 0,
 							placeOfBirth: '',
 							address: '',
-							birthdate: '',
-							gender: false,
+							birthdate: new Data(),
+							gender: null,
 							nationality: '',
 							phoneNumber: ''
 						};

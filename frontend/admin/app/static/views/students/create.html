@@ -15,6 +15,12 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<form name="studentForm" class="form-horizontal form-bordered" novalidate>
+				<div class="form-group" ng-class="{'has-error': studentForm.idNumber.$invalid && (studentForm.idNumber.$dirty || studentForm.$submitted)}">
+					<label for="idNumber" class="col-sm-2 control-label">Numero de Identidad o Passaporte</label>
+					<div class="col-sm-8">
+						<input id="idNumber" name="idNumber" class="form-control" placeholder="identidad" type="text" ng-model="student.idNumber" required>
+					</div>
+				</div>
 				<div class="form-group" ng-class="{'has-error': studentForm.firstName.$invalid && (studentForm.firstName.$dirty || studentForm.$submitted)}">
 					<label for="firstName" class="col-sm-2 control-label">Nombres</label>
 					<div class="col-sm-8">
@@ -27,12 +33,62 @@
 						<input id="lastName" name="lastName" class="form-control" placeholder="Apellido" type="text" ng-model="student.lastName" required>
 					</div>
 				</div>
-				<div class="form-group" >
-					<label for="status" class="col-sm-2 control-label">Status</label>
-					<div class="col-sm-3">
-						<input type="checkbox" ng-model="student.status"  >
+				<div class="form-group" ng-class="{'has-error': studentForm.email.$invalid && (studentForm.email.$dirty || studentForm.$submitted)}">
+					<label for="email" class="col-sm-2 control-label">Correo Electronico</label>
+					<div class="col-sm-8">
+						<input id="email" name="email" class="form-control" placeholder="Correo" type="text" ng-model="student.email" required>
 					</div>
 				</div>
+				<div class="form-group" ng-class="{'has-error': (studentForm.$submitted || studentForm.birthDate.$touched) && studentFormm.birthDate.$invalid}">
+					<label for="eventStartDate" class="col-sm-2 control-label">Fecha de Nacimiento:</label>
+					<div class="row vertical-align">
+						<div class="col-sm-5">
+							<div class="input-group">
+								<input name="birthDate" type="text" class="form-control" ng-model="datetimePickers.birthDate.date" datepicker-popup="{{datetimePickers.format}}" is-open="datetimePickers.birthDate.opened" clear-text="Limpiar" close-text="Cerrar" disabled required />
+								 <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="datetimePickers.open(datetimePickers.birthDate)">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': studentForm.placeOfBirth.$invalid && (studentForm.placeOfBirth.$dirty || studentForm.$submitted)}">
+					<label for="placeOfBirth" class="col-sm-2 control-label">Lugar de Nacimiento</label>
+					<div class="col-sm-8">
+						<input id="placeOfBirth" name="placeOfBirth" class="form-control" placeholder="Lugare nacimiento" type="text" ng-model="student.placeOfBirth" required>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': studentForm.address.$invalid && (studentForm.address.$dirty || studentForm.$submitted)}">
+					<label for="address" class="col-sm-2 control-label">Direccion</label>
+					<div class="col-sm-8">
+						<input id="address" name="address" class="form-control" placeholder="Direccion" type="text" ng-model="student.address" required>
+					</div>
+				</div>
+				<div class="form-group" >
+					  <label for="address" class="col-sm-2 control-label">Genero</label>
+					  <input type="radio" name="sex" id="male" ng-model="gender.male" ng-change="handleOfGender()">
+					  <label for="sex-m">Masculino</label>
+					  <input type="radio" name="sex" id="female" ng-model="gender.female" ng-change="handleOfGender()">
+					  <label for="sex-f">Femenino</label>
+				</div>
+				<div class="form-group" ng-class="{'has-error': studentForm.nationality.$invalid && (studentForm.nationality.$dirty || studentForm.$submitted)}">
+					<label for="nationality" class="col-sm-2 control-label">Nacionalidad</label>
+					<div class="col-sm-8">
+						<input id="nationality" name="nationality" class="form-control" placeholder="Direccion" type="text" ng-model="student.nationality" required>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': studentForm.phoneNumber.$invalid && (studentForm.phoneNumber.$dirty || studentForm.$submitted)}">
+					<label for="phoneNumber" class="col-sm-2 control-label">Numero de telefono</label>
+					<div class="col-sm-8">
+						<input id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Numero de telefono" type="text" ng-model="student.phoneNumber" required>
+					</div>
+				</div>
+
+
+				</div>
+
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-2">
 						<button type="submit" class="btn btn-primary" ng-click="studentForm.$valid && createStudent()">Aceptar</button>

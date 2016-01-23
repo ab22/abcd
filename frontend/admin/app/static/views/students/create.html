@@ -68,9 +68,9 @@
 				</div>
 				<div class="form-group" >
 					  <label for="address" class="col-sm-2 control-label">Genero</label>
-					  <input type="radio" name="sex" id="sex-m" value="m">
+					  <input type="radio" name="sex" id="male" ng-model="gender.male" ng-change="handleOfGender()">
 					  <label for="sex-m">Masculino</label>
-					  <input type="radio" name="sex" id="sex-f" value="f">
+					  <input type="radio" name="sex" id="female" ng-model="gender.female" ng-change="handleOfGender()">
 					  <label for="sex-f">Femenino</label>
 				</div>
 				<div class="form-group" ng-class="{'has-error': studentForm.nationality.$invalid && (studentForm.nationality.$dirty || studentForm.$submitted)}">
@@ -89,12 +89,6 @@
 
 				</div>
 
-				<div class="form-group" >
-					<label for="status" class="col-sm-2 control-label">Status</label>
-					<div class="col-sm-3">
-						<input type="checkbox" ng-model="student.status"  >
-					</div>
-				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-2">
 						<button type="submit" class="btn btn-primary" ng-click="studentForm.$valid && createStudent()">Aceptar</button>

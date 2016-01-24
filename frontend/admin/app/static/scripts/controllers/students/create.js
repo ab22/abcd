@@ -43,11 +43,22 @@
 				if($scope.gender.male)
 					$scope.student.gender = true;
 				if($scope.gender.female)
-					$scope.student.gender = true;
+					$scope.student.gender = false;
 			};
 
 			$scope.onStudentIdChange = function() {
-				//missing request to backend
+				if ($scope.student.idNumber === '') {
+					$scope.studentForm.idNumber.$setValidity('available', true);
+					return;
+				}
+
+				Student.findByIdNumber($scope.student.idNumber).success(function() {
+					$scope.studentForm.idNumber.$setValidity('available', false);
+					console.log("estudiante ya existe");
+				}).error(function(response, status) {
+					$scope.studentForm.idNumber.$setValidity('available', status === 404);
+					console.log("estudiante no existe");
+				});
 			};
 
 			$scope.createStudent = function() {
@@ -66,6 +77,8 @@
 
 					ngToast.create('El estudiante se ha creado!');
 
+					$scope.studentForm.$setPristine();
+					$scope.studentForm.$setUntouched();
 					$scope.student = {
 							idNumber: '',
 							firstName: '',

@@ -39,7 +39,6 @@
 
 
 			$scope.handleOfGender = function (gender){
-				console.log("entre");
 				if($scope.gender.male)
 					$scope.student.gender = true;
 				if($scope.gender.female)
@@ -54,10 +53,13 @@
 
 				Student.findByIdNumber($scope.student.idNumber).success(function() {
 					$scope.studentForm.idNumber.$setValidity('available', false);
-					console.log("estudiante ya existe");
+					ngToast.create({
+							className: 'danger',
+							content: 'Numero de identidad ya existente',
+							dismissButton: true
+						});
 				}).error(function(response, status) {
 					$scope.studentForm.idNumber.$setValidity('available', status === 404);
-					console.log("estudiante no existe");
 				});
 			};
 

@@ -31,12 +31,13 @@
 
 			};
 
-			studentService.findByIdNumber =  function(studentIdNumber){
+			studentService.findByIdNumber = function(studentIdNumber){
+				console.log("quiero este estudiante loco"+studentIdNumber);
 				return $http({
 					url: Api.getRoute('student/findByIdNumber/'+studentIdNumber),
 					method: 'GET'
 
-				})
+				});
 			};
 
 			studentService.statusToString = function(statusId) {

@@ -6,10 +6,13 @@
 			$scope.statuses = Student.statuses;
 
 			$scope.gender = {
-				male : false,
-				female: false
+				 male : true,
+				 female: false
 			};
 
+			$scope.algo;
+
+			console.log($scope.gender.male);
 			$scope.student = {
 				idNumber: '',
 				firstName: '',
@@ -38,10 +41,12 @@
 			};
 
 
-			$scope.handleOfGender = function (gender){
+			$scope.handleOfGender = function (){
+				console.log($scope.gender.male);
+				console.log($scope.gender.female);
 				if($scope.gender.male)
 					$scope.student.gender = true;
-				if($scope.gender.female)
+				else
 					$scope.student.gender = false;
 			};
 
@@ -86,11 +91,11 @@
 							firstName: '',
 							lastName: '',
 							email: '',
-							status: 0,
+							status: 1,
 							placeOfBirth: '',
 							address: '',
-							birthdate: new Data(),
-							gender: null,
+							birthdate: new Date(),
+							gender: false,
 							nationality: '',
 							phoneNumber: ''
 						};

@@ -5,14 +5,8 @@
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.statuses = Student.statuses;
 
-			$scope.gender = {
-				 male : true,
-				 female: false
-			};
+			$scope.gender = '';
 
-			$scope.algo;
-
-			console.log($scope.gender.male);
 			$scope.student = {
 				idNumber: '',
 				firstName: '',
@@ -42,9 +36,8 @@
 
 
 			$scope.handleOfGender = function (){
-				console.log($scope.gender.male);
-				console.log($scope.gender.female);
-				if($scope.gender.male)
+				console.log($scope.gender);
+				if($scope.gender=="1")
 					$scope.student.gender = true;
 				else
 					$scope.student.gender = false;

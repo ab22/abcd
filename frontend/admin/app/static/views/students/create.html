@@ -68,9 +68,9 @@
 				</div>
 				<div class="form-group" >
 					  <label for="address" class="col-sm-2 control-label">Genero</label>
-					  <input type="radio" name="sex" id="male"   ng-model="$gender.male" ng-change="handleOfGender()">
+					  <input type="radio" name="sex" id="male" value="1"  ng-model="gender" ng-change="handleOfGender()">
 					  <label for="sexm">Masculino</label>
-					  <input type="radio" name="sex" id="female" ng-model="gender.female" ng-change="handleOfGender()">
+					  <input type="radio" name="sex" id="female" value="0" ng-model="gender" ng-change="handleOfGender()">
 					  <label for="sexf">Femenino</label>
 				</div>
 				<div class="form-group" ng-class="{'has-error': studentForm.nationality.$invalid && (studentForm.nationality.$dirty || studentForm.$submitted)}">

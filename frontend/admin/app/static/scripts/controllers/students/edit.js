@@ -5,6 +5,8 @@
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.studentNotFound = false;
 
+			$scope.gender = '';
+
 			$scope.student = {
 				id: 0,
 				idNumber: $stateParams.studentIdNumber,
@@ -44,6 +46,15 @@
 				$scope.studentNotFound  = response.status === 404;
 			});
 
+
+
+			$scope.handleOfGender = function (){
+				console.log($scope.gender);
+				if($scope.gender=="1")
+					$scope.student.gender = true;
+				else
+					$scope.student.gender = false;
+			};
 
 			$scope.onStudentIdChange = function() {
 				if ($scope.student.idNumber === '') {

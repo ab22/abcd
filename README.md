@@ -24,6 +24,8 @@ It is required to have installed Postgres on the local computer. All migration
 files are saved in the migrations folder. To automatically run these queries,
 it is recommended to use the [migrate](https://github.com/mattes/migrate) tool.
 
+MinGW32/64bit is required to install it on Windows!
+
 ```shell
 go get github.com/mattes/migrate
 ```

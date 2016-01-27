@@ -28,14 +28,14 @@ it is recommended to use the [migrate](https://github.com/mattes/migrate) tool.
 go get github.com/mattes/migrate
 ```
 
-Note: It is required to have MinGW32/64bit installed on Windows!
-
 Console syntax to migrate all queries:
 
 ```shell
 cd github.com/ab22/abcd/
 migrate -url postgres://user:pass@host:port/dbname?sslmode=disable -path ./migrations up
 ```
+
+Note: It is required to have MinGW32/64bit installed on Windows!
 
 ### Compiling and Running
 

@@ -4,18 +4,39 @@
 	angular.module('app.controllers').controller('EditStudentCtrl', ['$scope', '$stateParams', '$location', 'ngToast', 'Student',
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.studentNotFound = false;
+
+			$scope.gender = '';
+
 			$scope.student = {
-				id: parseInt($stateParams.studentId) || 0,
-				email:'',
-				firstname: '',
-				lastname: '',
-				status: 0
+				id: 0,
+				idNumber: $stateParams.studentIdNumber,
+				firstName: '',
+				lastName:'',
+				status: '',
+				placeOfBirth: '',
+				address: '',
+				birthdate: new Date(),
+				gender: false,
+				nationality: '',
+				phoneNumber: ''
 			};
 
-			Student.findById($scope.student.id).success(function(response) {
-				$scope.checkStatus = $scope.student.status;
+			$scope.datetimePickers = {
+				birthDate: {
+					opened: false,
+					date: new Date(),
+				},
+				open: function(datetimePicker) {
+					datetimePicker.opened = true;
+				},
+
+				format: 'dd/MM/yyyy'
+			};
+
+			Student.findByIdNumber($scope.student.idNumber).success(function(response) {
 				$scope.student = response;
 				$scope.checkStatus = $scope.student.status;
+				console.log(response);
 			}).error(function(response) {
 				ngToast.create({
 					className: 'danger',
@@ -24,6 +45,34 @@
 				});
 				$scope.studentNotFound  = response.status === 404;
 			});
+
+
+
+			$scope.handleOfGender = function (){
+				console.log($scope.gender);
+				if($scope.gender=="1")
+					$scope.student.gender = true;
+				else
+					$scope.student.gender = false;
+			};
+
+			$scope.onStudentIdChange = function() {
+				if ($scope.student.idNumber === '') {
+					$scope.studentForm.idNumber.$setValidity('available', true);
+					return;
+				}
+
+				Student.findByIdNumber($scope.student.idNumber).success(function() {
+					$scope.studentForm.idNumber.$setValidity('available', false);
+					ngToast.create({
+							className: 'danger',
+							content: 'Numero de identidad ya existente',
+							dismissButton: true
+						});
+				}).error(function(response, status) {
+					$scope.studentForm.idNumber.$setValidity('available', status === 404);
+				});
+			};
 
 			$scope.editStudent = function() {
 				Student.edit($scope.student).success(function(response) {

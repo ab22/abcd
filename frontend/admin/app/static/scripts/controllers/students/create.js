@@ -5,10 +5,7 @@
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.statuses = Student.statuses;
 
-			$scope.gender = {
-				male : false,
-				female: false
-			};
+			$scope.gender = '';
 
 			$scope.student = {
 				idNumber: '',
@@ -38,16 +35,30 @@
 			};
 
 
-			$scope.handleOfGender = function (gender){
-				console.log("entre");
-				if($scope.gender.male)
+			$scope.handleOfGender = function (){
+				console.log($scope.gender);
+				if($scope.gender=="1")
 					$scope.student.gender = true;
-				if($scope.gender.female)
-					$scope.student.gender = true;
+				else
+					$scope.student.gender = false;
 			};
 
 			$scope.onStudentIdChange = function() {
-				//missing request to backend
+				if ($scope.student.idNumber === '') {
+					$scope.studentForm.idNumber.$setValidity('available', true);
+					return;
+				}
+
+				Student.findByIdNumber($scope.student.idNumber).success(function() {
+					$scope.studentForm.idNumber.$setValidity('available', false);
+					ngToast.create({
+							className: 'danger',
+							content: 'Numero de identidad ya existente',
+							dismissButton: true
+						});
+				}).error(function(response, status) {
+					$scope.studentForm.idNumber.$setValidity('available', status === 404);
+				});
 			};
 
 			$scope.createStudent = function() {
@@ -66,16 +77,18 @@
 
 					ngToast.create('El estudiante se ha creado!');
 
+					$scope.studentForm.$setPristine();
+					$scope.studentForm.$setUntouched();
 					$scope.student = {
 							idNumber: '',
 							firstName: '',
 							lastName: '',
 							email: '',
-							status: 0,
+							status: 1,
 							placeOfBirth: '',
 							address: '',
-							birthdate: new Data(),
-							gender: null,
+							birthdate: new Date(),
+							gender: false,
 							nationality: '',
 							phoneNumber: ''
 						};

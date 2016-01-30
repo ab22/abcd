@@ -36,7 +36,6 @@
 			Student.findByIdNumber($scope.student.idNumber).success(function(response) {
 				$scope.student = response;
 				$scope.checkStatus = $scope.student.status;
-				console.log(response);
 			}).error(function(response) {
 				ngToast.create({
 					className: 'danger',
@@ -49,11 +48,11 @@
 
 
 			$scope.handleOfGender = function (){
-				console.log($scope.gender);
-				if($scope.gender=="1")
+				if ($scope.gender === "1") {
 					$scope.student.gender = true;
-				else
+				} else {
 					$scope.student.gender = false;
+				}
 			};
 
 			$scope.onStudentIdChange = function() {

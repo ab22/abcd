@@ -36,11 +36,11 @@
 
 
 			$scope.handleOfGender = function (){
-				console.log($scope.gender);
-				if($scope.gender=="1")
+				if ($scope.gender === "1") {
 					$scope.student.gender = true;
-				else
+				} else {
 					$scope.student.gender = false;
+				}
 			};
 
 			$scope.onStudentIdChange = function() {
@@ -62,7 +62,6 @@
 			};
 
 			$scope.createStudent = function() {
-				console.log($scope.student);
 				Student.create($scope.student).success(function(response) {
 
 					if (!response.success) {

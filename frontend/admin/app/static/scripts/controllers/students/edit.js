@@ -75,7 +75,7 @@
 					}
 
 					ngToast.create('Se actualizó el usuario!');
-					$location.path('/main/student/all');
+					$location.path('/main/students/all');
 				});
 			};
 

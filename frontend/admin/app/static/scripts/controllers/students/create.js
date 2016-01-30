@@ -21,12 +21,12 @@
 				phoneNumber: ''
 			};
 
-
 			$scope.datetimePickers = {
 				birthDate: {
 					opened: false,
-					date: new Date(),
+					date: new Date()
 				},
+
 				open: function(datetimePicker) {
 					datetimePicker.opened = true;
 				},
@@ -34,9 +34,8 @@
 				format: 'dd/MM/yyyy'
 			};
 
-
-			$scope.handleOfGender = function (){
-				if ($scope.gender === "1") {
+			$scope.handleOfGender = function() {
+				if ($scope.gender === '1') {
 					$scope.student.gender = true;
 				} else {
 					$scope.student.gender = false;

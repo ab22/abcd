@@ -31,9 +31,9 @@
 
 			};
 
-			studentService.findByIdNumber = function(studentIdNumber){
+			studentService.findByIdNumber = function(studentIdNumber) {
 				return $http({
-					url: Api.getRoute('student/findByIdNumber/'+studentIdNumber),
+					url: Api.getRoute('student/findByIdNumber/' + studentIdNumber),
 					method: 'GET'
 				});
 			};
@@ -77,7 +77,6 @@
 					data: studentInfo
 				});
 			};
-
 
 			return studentService;
 		}

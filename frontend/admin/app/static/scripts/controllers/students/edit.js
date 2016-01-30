@@ -24,8 +24,9 @@
 			$scope.datetimePickers = {
 				birthDate: {
 					opened: false,
-					date: new Date(),
+					date: new Date()
 				},
+
 				open: function(datetimePicker) {
 					datetimePicker.opened = true;
 				},
@@ -45,10 +46,8 @@
 				$scope.studentNotFound  = response.status === 404;
 			});
 
-
-
-			$scope.handleOfGender = function (){
-				if ($scope.gender === "1") {
+			$scope.handleOfGender = function() {
+				if ($scope.gender === '1') {
 					$scope.student.gender = true;
 				} else {
 					$scope.student.gender = false;

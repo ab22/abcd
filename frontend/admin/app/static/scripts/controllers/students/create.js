@@ -5,8 +5,6 @@
 		function($scope, $stateParams, $location, ngToast, Student) {
 			$scope.statuses = Student.statuses;
 
-			$scope.gender = '';
-
 			$scope.student = {
 				idNumber: '',
 				firstName: '',

@@ -108,7 +108,6 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 			FirstName    string
 			LastName     string
 			Email        string
-			Status       int
 			PlaceOfBirth string
 			Address      string
 			Birthdate    time.Time
@@ -133,7 +132,6 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 		FirstName:    payload.FirstName,
 		LastName:     payload.LastName,
 		Email:        payload.Email,
-		Status:       payload.Status,
 		PlaceOfBirth: payload.PlaceOfBirth,
 		Address:      payload.Address,
 		Birthdate:    payload.Birthdate,
@@ -171,7 +169,6 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 			FirstName    string
 			LastName     string
 			Email        string
-			Status       int
 			PlaceOfBirth string
 			Address      string
 			Birthdate    time.Time
@@ -197,7 +194,6 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 		FirstName:    payload.FirstName,
 		LastName:     payload.LastName,
 		Email:        payload.Email,
-		Status:       payload.Status,
 		PlaceOfBirth: payload.PlaceOfBirth,
 		Address:      payload.Address,
 		Birthdate:    payload.Birthdate,

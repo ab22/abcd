@@ -52,7 +52,7 @@
 						<td>{{u.lastName}}</td>
 						<td>{{u.email}}</td>
 						<td>{{statusToString(u.status)}} </td>
-						<td>{{u.birthdate}}</td>
+						<td>{{u.birthdate | date:'dd/MM/yyyy'}}</td>
 						<td>
 							<a class="btn btn-xs btn-info" ng-href="#/main/students/edit/{{u.IdNumber}}" title="Editar">
 								<i class="fa fa-fw fa-pencil"></i>

@@ -10,7 +10,6 @@
 				firstName: '',
 				lastName: '',
 				email: '',
-				status: 1,
 				placeOfBirth: '',
 				address: '',
 				birthdate: new Date(),
@@ -30,14 +29,6 @@
 				},
 
 				format: 'dd/MM/yyyy'
-			};
-
-			$scope.handleOfGender = function() {
-				if ($scope.gender === '1') {
-					$scope.student.gender = true;
-				} else {
-					$scope.student.gender = false;
-				}
 			};
 
 			$scope.onStudentIdChange = function() {

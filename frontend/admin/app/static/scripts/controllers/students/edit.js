@@ -10,7 +10,6 @@
 				idNumber: $stateParams.studentIdNumber,
 				firstName: '',
 				lastName:'',
-				status: '',
 				placeOfBirth: '',
 				address: '',
 				birthdate: new Date(),
@@ -34,7 +33,6 @@
 
 			Student.findByIdNumber($scope.student.idNumber).success(function(response) {
 				$scope.student = response;
-				$scope.checkStatus = $scope.student.status;
 			}).error(function(response) {
 				ngToast.create({
 					className: 'danger',

@@ -158,7 +158,7 @@ func (s *userService) Edit(newUser *models.User) error {
 	user.FirstName = newUser.FirstName
 	user.LastName = newUser.LastName
 	user.Email = newUser.Email
-	user.Status = newUser.Status
+	// user.Status = newUser.Status
 	user.IsAdmin = newUser.IsAdmin
 	user.IsTeacher = newUser.IsTeacher
 

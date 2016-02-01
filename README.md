@@ -50,7 +50,7 @@ the Windows firewall will ask for permissions to run it. So to avoid that popup
 to show everytime, you can instead run:
 
 ```shell
-build.sh && run.sh
+go build && abcd.exe
 ```
 
 ## TODO

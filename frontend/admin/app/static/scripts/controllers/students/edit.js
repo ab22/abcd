@@ -20,8 +20,7 @@
 
 			$scope.datetimePickers = {
 				birthDate: {
-					opened: false,
-					date: new Date()
+					opened: false
 				},
 
 				open: function(datetimePicker) {

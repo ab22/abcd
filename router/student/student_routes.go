@@ -12,6 +12,7 @@ import (
 	"golang.org/x/net/context"
 )
 
+// Returns all available students.
 func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err  error
@@ -157,7 +158,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 	})
 }
 
-// Edit a student
+// Edit a student.
 func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err  error

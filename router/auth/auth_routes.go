@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/router"
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/ab22/abcd/services"
@@ -26,8 +27,9 @@ func (r *authRouter) CheckAuth(ctx context.Context, w http.ResponseWriter, req *
 // If the checks pass, it sets up a session cookie.
 func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
-		s, _        = ctx.Value("services").(*services.Services)
+		s           = ctx.Value("services").(*services.Services)
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
+		cfg         = ctx.Value("config").(*config.Config)
 		err         error
 
 		loginForm struct {
@@ -56,7 +58,7 @@ func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http
 		Email:     user.Email,
 		IsAdmin:   user.IsAdmin,
 		IsTeacher: user.IsTeacher,
-		ExpiresAt: time.Now().Add(time.Minute * 1),
+		ExpiresAt: time.Now().Add(cfg.SessionLifeTime),
 	}
 	session.Save(req, w)
 

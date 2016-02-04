@@ -83,7 +83,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 			return fmt.Errorf("validate auth: error casting config object", ctx.Value("config"))
 		}
 
-		sessionData.ExpiresAt = time.Now().Add(time.Second * time.Duration(cfg.SessionLifeTime))
+		sessionData.ExpiresAt = time.Now().Add(cfg.SessionLifeTime)
 		session.Save(r, w)
 
 		authenticatedContext := context.WithValue(ctx, "sessionData", sessionData)

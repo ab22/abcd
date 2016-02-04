@@ -21,11 +21,11 @@
 						<input id="username" name="username" class="form-control" placeholder="Usuario" type="text" ng-model="user.username" ng-change="onUsernameChange()" ng-model-options="{debounce:500}" required autofocus>
 						<label class="control-label" ng-show="userForm.username.$error.available">
 							<i class="fa fa-remove"></i>
-							El estudiante ya existe!
+							El usuario ya existe!
 						</label>
 						<label class="control-label" ng-show="userForm.username.$valid && !userForm.username.$error.available">
 							<i class="fa fa-check-square-o"></i>
-							estudiante disponible!
+							Usuario disponible!
 						</label>
 					</div>
 				</div>

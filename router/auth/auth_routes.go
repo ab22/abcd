@@ -58,7 +58,7 @@ func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http
 		Email:     user.Email,
 		IsAdmin:   user.IsAdmin,
 		IsTeacher: user.IsTeacher,
-		ExpiresAt: time.Now().Add(cfg.SessionLifeTime),
+		ExpiresAt: time.Now().Add(time.Second * time.Duration(cfg.SessionLifeTime)),
 	}
 	session.Save(req, w)
 

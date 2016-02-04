@@ -238,7 +238,7 @@ func (s *Server) handleWithMiddlewares(route router.Route) httputils.ContextHand
 		serverCtx := context.WithValue(ctx, "cookieStore", s.cookieStore)
 		serverCtx = context.WithValue(serverCtx, "route", route)
 		serverCtx = context.WithValue(serverCtx, "services", s.services)
-		serverCtsx = context.WithVAlue(serverCtx, "config", s.cfg)
+		serverCtx = context.WithValue(serverCtx, "config", s.cfg)
 
 		h := route.Handler()
 		h = router.HandleHttpError(h)

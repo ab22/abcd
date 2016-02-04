@@ -13,6 +13,7 @@ import (
 	"golang.org/x/net/context"
 )
 
+// Find alls available users.
 func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err  error
@@ -54,6 +55,7 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 	return httputils.WriteJSON(w, http.StatusOK, response)
 }
 
+// Find single user by UserId.
 func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err    error
@@ -102,6 +104,7 @@ func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *h
 	return httputils.WriteJSON(w, http.StatusOK, response)
 }
 
+// Find User by Username
 func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err      error
@@ -199,7 +202,7 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 	})
 }
 
-//Create a user.
+// Create a user.
 func (r *userRouter) Create(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err  error

@@ -34,16 +34,12 @@ func NoDirListing(h httputils.ContextHandler) httputils.ContextHandler {
 	}
 }
 
-// extendSessionLifetime extends the session's lifetime only if the
-// session is half way to the sessionLifeTime. Returns true if the session was
-// extended.
+// extendSessionLifetime determines if the session's lifetime needs to be
+// extended. Session's lifetime should be extended only if the session's
+// current lifetime is below sessionLifeTime/2. Returns true if the session
+// needs to be extended.
 func extendSessionLifetime(sessionData *SessionData, sessionLifeTime time.Duration) bool {
-	if sessionData.ExpiresAt.Sub(time.Now()) <= sessionLifeTime/2 {
-		sessionData.ExpiresAt = time.Now().Add(sessionLifeTime)
-		return true
-	}
-
-	return false
+	return sessionData.ExpiresAt.Sub(time.Now()) <= sessionLifeTime/2
 }
 
 // Validates that the user cookie is set up before calling the handler
@@ -97,6 +93,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 
 		// Save session only if the session was extended.
 		if extendSessionLifetime(sessionData, cfg.SessionLifeTime) {
+			sessionData.ExpiresAt = time.Now().Add(cfg.SessionLifeTime)
 			session.Save(r, w)
 		}
 

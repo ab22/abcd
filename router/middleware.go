@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/gorilla/sessions"
 	"golang.org/x/net/context"
@@ -43,6 +44,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 			ok          bool
 			cookieStore *sessions.CookieStore
 			session     *sessions.Session
+			cfg         *config.Config
 		)
 
 		cookieStore, ok = ctx.Value("cookieStore").(*sessions.CookieStore)
@@ -73,7 +75,13 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 		}
 
 		// Extend the session's lifetime.
-		sessionData.ExpiresAt = time.Now().Add(time.Minute * 30)
+		cfg, ok = ctx.Value("config").(*config.Config)
+
+		if !ok {
+			return fmt.Errorf("validate auth: error casting config object", ctx.Value("config"))
+		}
+
+		sessionData.ExpiresAt = time.Now().Add(cfg.SessionLifeTime)
 
 		session.Save(r, w)
 

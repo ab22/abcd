@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"path"
+	"time"
 
 	"github.com/ab22/env"
 )
@@ -14,7 +15,7 @@ import (
 type Config struct {
 	DbLogMode       bool
 	NoReplyEmail    string
-	SessionLifeTime int // Session's lifetime in seconds.
+	SessionLifeTime time.Duration
 
 	App struct {
 		HostUrl string `env:"HOST_URL" envDefault:"http://localhost:1337/"`
@@ -44,7 +45,7 @@ func NewConfig() *Config {
 		cfg = &Config{
 			DbLogMode:       false,
 			NoReplyEmail:    "noreply@abcd.com",
-			SessionLifeTime: 30 * 60, // 30 minutes.
+			SessionLifeTime: time.Minute * 30,
 		}
 	)
 

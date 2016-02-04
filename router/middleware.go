@@ -50,6 +50,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 		cookieStore, ok = ctx.Value("cookieStore").(*sessions.CookieStore)
 
 		if !ok {
+			httputils.WriteError(w, http.StatusInternalServerError, "")
 			return fmt.Errorf("validate auth: could not cast value as cookie store:", ctx.Value("cookieStore"))
 		}
 
@@ -78,6 +79,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 		cfg, ok = ctx.Value("config").(*config.Config)
 
 		if !ok {
+			httputils.WriteError(w, http.StatusInternalServerError, "")
 			return fmt.Errorf("validate auth: error casting config object", ctx.Value("config"))
 		}
 
@@ -127,12 +129,14 @@ func Authorize(h httputils.ContextHandler) httputils.ContextHandler {
 		sessionData, ok = ctx.Value("sessionData").(*SessionData)
 
 		if !ok {
+			httputils.WriteError(w, http.StatusInternalServerError, "")
 			return fmt.Errorf("authorize: could not cast value as session data:", ctx.Value("sessionData"))
 		}
 
 		route, ok = ctx.Value("route").(Route)
 
 		if !ok {
+			httputils.WriteError(w, http.StatusInternalServerError, "")
 			return fmt.Errorf("authorize: could not cast value as route:", ctx.Value("route"))
 		}
 

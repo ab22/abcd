@@ -19,8 +19,17 @@
 					<label for="idNumber" class="col-sm-2 control-label">Numero de Identidad o Passaporte</label>
 					<div class="col-sm-8">
 						<input id="idNumber" name="idNumber" class="form-control" placeholder="identidad" type="text" ng-model="student.idNumber" ng-change="onStudentIdChange()" ng-model-options="{debounce:500}" required>
+						<label class="control-label" ng-show="studentForm.idNumber.$error.available">
+							<i class="fa fa-remove"></i>
+							El usuario ya existe!
+						</label>
+						<label class="control-label" ng-show="userForm.username.$valid && !userForm.username.$error.available">
+							<i class="fa fa-check-square-o"></i>
+							Usuario disponible!
+						</label>
 					</div>
 				</div>
+
 				<div class="form-group" ng-class="{'has-error': studentForm.firstName.$invalid && (studentForm.firstName.$dirty || studentForm.$submitted)}">
 					<label for="firstName" class="col-sm-2 control-label">Nombres</label>
 					<div class="col-sm-8">
@@ -36,7 +45,7 @@
 				<div class="form-group" ng-class="{'has-error': studentForm.email.$invalid && (studentForm.email.$dirty || studentForm.$submitted)}">
 					<label for="email" class="col-sm-2 control-label">Correo Electronico</label>
 					<div class="col-sm-8">
-						<input id="email" name="email" class="form-control" placeholder="Correo" type="text" ng-model="student.email" required>
+						<input id="email" name="email" class="form-control" placeholder="Correo" type="text" ng-model="student.email" >
 					</div>
 				</div>
 				<div class="form-group" ng-class="{'has-error': (studentForm.$submitted || studentForm.birthDate.$touched) && studentFormm.birthDate.$invalid}">
@@ -57,13 +66,13 @@
 				<div class="form-group" ng-class="{'has-error': studentForm.placeOfBirth.$invalid && (studentForm.placeOfBirth.$dirty || studentForm.$submitted)}">
 					<label for="placeOfBirth" class="col-sm-2 control-label">Lugar de Nacimiento</label>
 					<div class="col-sm-8">
-						<input id="placeOfBirth" name="placeOfBirth" class="form-control" placeholder="Lugar de nacimiento" type="text" ng-model="student.placeOfBirth" required>
+						<input id="placeOfBirth" name="placeOfBirth" class="form-control" placeholder="Lugar de nacimiento" type="text" ng-model="student.placeOfBirth">
 					</div>
 				</div>
 				<div class="form-group" ng-class="{'has-error': studentForm.address.$invalid && (studentForm.address.$dirty || studentForm.$submitted)}">
 					<label for="address" class="col-sm-2 control-label">Dirección</label>
 					<div class="col-sm-8">
-						<input id="address" name="address" class="form-control" placeholder="Dirección" type="text" ng-model="student.address" required>
+						<input id="address" name="address" class="form-control" placeholder="Dirección" type="text" ng-model="student.address" >
 					</div>
 				</div>
 				<div class="form-group">
@@ -82,13 +91,13 @@
 				<div class="form-group" ng-class="{'has-error': studentForm.nationality.$invalid && (studentForm.nationality.$dirty || studentForm.$submitted)}">
 					<label for="nationality" class="col-sm-2 control-label">Nacionalidad</label>
 					<div class="col-sm-8">
-						<input id="nationality" name="nationality" class="form-control" placeholder="Nacionalidad" type="text" ng-model="student.nationality" required>
+						<input id="nationality" name="nationality" class="form-control" placeholder="Nacionalidad" type="text" ng-model="student.nationality" >
 					</div>
 				</div>
 				<div class="form-group" ng-class="{'has-error': studentForm.phoneNumber.$invalid && (studentForm.phoneNumber.$dirty || studentForm.$submitted)}">
 					<label for="phoneNumber" class="col-sm-2 control-label">Numero de telefono</label>
 					<div class="col-sm-8">
-						<input id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Numero de telefono" type="text" ng-model="student.phoneNumber" required>
+						<input id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Numero de telefono" type="text" ng-model="student.phoneNumber" >
 					</div>
 				</div>
 

@@ -12,8 +12,9 @@ import (
 // Struct that contains all of the configuration variables
 // that are set up in the environment.
 type Config struct {
-	DbLogMode    bool
-	NoReplyEmail string
+	DbLogMode       bool
+	NoReplyEmail    string
+	SessionLifeTime int // Session's lifetime in seconds.
 
 	App struct {
 		HostUrl string `env:"HOST_URL" envDefault:"http://localhost:1337/"`
@@ -41,8 +42,9 @@ func NewConfig() *Config {
 		err            error
 
 		cfg = &Config{
-			DbLogMode:    false,
-			NoReplyEmail: "noreply@abcd.com",
+			DbLogMode:       false,
+			NoReplyEmail:    "noreply@abcd.com",
+			SessionLifeTime: 30 * 60, // 30 minutes.
 		}
 	)
 

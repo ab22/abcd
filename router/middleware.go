@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/ab22/abcd/router/httputils"
 	"github.com/gorilla/sessions"
@@ -63,7 +64,18 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 		if !ok {
 			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 			return nil
+		} else if time.Now().After(sessionData.ExpiresAt) {
+			session.Options.MaxAge = -1
+			session.Save(r, w)
+			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
+
+			return nil
 		}
+
+		// Extend the session's lifetime.
+		sessionData.ExpiresAt = time.Now().Add(time.Minute * 30)
+
+		session.Save(r, w)
 
 		authenticatedContext := context.WithValue(ctx, "sessionData", sessionData)
 		return h(authenticatedContext, w, r)

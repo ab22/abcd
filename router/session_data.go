@@ -1,5 +1,7 @@
 package router
 
+import "time"
+
 const (
 	SessionCookieName = "_session"
 )
@@ -11,4 +13,5 @@ type SessionData struct {
 	Email     string
 	IsAdmin   bool
 	IsTeacher bool
+	ExpiresAt time.Time
 }

@@ -134,7 +134,7 @@ func (s *Server) configureCookieStore() {
 	gob.Register(&router.SessionData{})
 
 	s.cookieStore = sessions.NewCookieStore([]byte(secretKey))
-	s.cookieStore.MaxAge(30 * 60)
+	s.cookieStore.MaxAge(0)
 }
 
 // addRouter appends a router to the server's router.

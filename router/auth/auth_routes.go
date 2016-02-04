@@ -2,6 +2,7 @@ package auth
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/ab22/abcd/router"
 	"github.com/ab22/abcd/router/httputils"
@@ -55,6 +56,7 @@ func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http
 		Email:     user.Email,
 		IsAdmin:   user.IsAdmin,
 		IsTeacher: user.IsTeacher,
+		ExpiresAt: time.Now().Add(time.Minute * 1),
 	}
 	session.Save(req, w)
 

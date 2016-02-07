@@ -18,12 +18,12 @@
 				<div class="form-group" ng-class="{'has-error': studentForm.idNumber.$invalid && (studentForm.idNumber.$dirty || studentForm.$submitted),'has-success': student.idNumber !== '' && !studentForm.idNumber.$error.available}">
 					<label for="idNumber" class="col-sm-2 control-label">Numero de Identidad o Passaporte</label>
 					<div class="col-sm-8">
-						<input id="idNumber" name="idNumber" class="form-control" placeholder="identidad" type="text" ng-model="student.idNumber" ng-change="onStudentIdChange()" ng-model-options="{debounce:500}" required>
-						<label class="control-label" ng-show="userForm.username.$error.available">
+						<input id="idNumber" name="idNumber" class="form-control" placeholder="identidad" type="text" ng-model="student.idNumber" ng-change="onStudentIdChange()" ng-model-options="{debounce:500}" required autofocus>
+						<label class="control-label" ng-show="studentForm.idNumber.$error.available">
 							<i class="fa fa-remove"></i>
 							El estudiante ya existe!
 						</label>
-						<label class="control-label" ng-show="userForm.username.$valid && !userForm.username.$error.available">
+						<label class="control-label" ng-show="studentForm.idNumber.$valid && !studentForm.idNumber.$error.available">
 							<i class="fa fa-check-square-o"></i>
 							Estudiante disponible!
 						</label>

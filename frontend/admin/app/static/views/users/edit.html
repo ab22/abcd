@@ -23,6 +23,10 @@
 							<i class="fa fa-remove"></i>
 							El usuario ya existe!
 						</label>
+						<label class="control-label" ng-show="userForm.username.$valid && !userForm.username.$error.available">
+							<i class="fa fa-check-square-o"></i>
+							Usuario disponible!
+						</label>
 					</div>
 				</div>
 				<div class="form-group" ng-class="{'has-error': userForm.firstName.$invalid && (userForm.firstName.$dirty || userForm.$submitted)}">

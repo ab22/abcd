@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// User model.
 type User struct {
 	Id        int
 	Username  string `sql:"size:30; unique_index; not null"`

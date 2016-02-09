@@ -187,7 +187,7 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 
 	err = s.User.Edit(user)
 	if err != nil {
-		if err == services.DuplicatedUsernameError {
+		if err == services.ErrDuplicatedUsername {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El nombre de usuario ya existe!",
@@ -241,7 +241,7 @@ func (r *userRouter) Create(ctx context.Context, w http.ResponseWriter, req *htt
 
 	err = s.User.Create(user)
 	if err != nil {
-		if err == services.DuplicatedUsernameError {
+		if err == services.ErrDuplicatedUsername {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El nombre de usuario ya existe!",
@@ -274,7 +274,7 @@ func (r *userRouter) ChangePassword(ctx context.Context, w http.ResponseWriter, 
 	}
 
 	err = s.User.ChangePassword(payload.UserId, payload.NewPassword)
-	if err != nil && err != services.RecordNotFound {
+	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
 
@@ -364,7 +364,7 @@ func (r *userRouter) ChangePasswordForCurrentUser(ctx context.Context, w http.Re
 	}
 
 	err = s.User.ChangePassword(sessionData.UserId, payload.NewPassword)
-	if err != nil && err != services.RecordNotFound {
+	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
 
@@ -390,7 +390,7 @@ func (r *userRouter) ChangeEmailForCurrentUser(ctx context.Context, w http.Respo
 
 	err = s.User.ChangeEmail(sessionData.UserId, payload.NewEmail)
 
-	if err != nil && err != services.RecordNotFound {
+	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
 
@@ -417,7 +417,7 @@ func (r *userRouter) ChangeFullNameForCurrentUser(ctx context.Context, w http.Re
 
 	err = s.User.ChangeFullName(sessionData.UserId, payload.FirstName, payload.LastName)
 
-	if err != nil && err != services.RecordNotFound {
+	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
 

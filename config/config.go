@@ -17,7 +17,7 @@ type Config struct {
 	SessionLifeTime time.Duration
 
 	App struct {
-		HostUrl string `env:"HOST_URL" envDefault:"http://localhost:1337/"`
+		HostURL string `env:"HOST_URL" envDefault:"http://localhost:1337/"`
 		Secret  string `env:"SECRET_KEY" envDefault:"SOME-VERY-SECRET-AND-RANDOM-KEY"`
 		Port    int    `env:"PORT" envDefault:"1337"`
 		Env     string `env:"ENV" envDefault:"DEV"`
@@ -70,7 +70,7 @@ func (c *Config) Validate() error {
 	var errorMsg = "config: field [%v] was not set!"
 
 	// App validation
-	if c.App.HostUrl == "" {
+	if c.App.HostURL == "" {
 		return fmt.Errorf(errorMsg, "App.HostURL")
 	}
 

@@ -150,7 +150,7 @@ func (s *userService) Edit(newUser *models.User) error {
 		if err != nil {
 			return err
 		} else if duplicatedUser != nil {
-			return DuplicatedUsernameError
+			return ErrDuplicatedUsername
 		}
 	}
 
@@ -183,7 +183,7 @@ func (s *userService) ChangePassword(userId int, password string) error {
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
-		return RecordNotFound
+		return ErrRecordNotFound
 	}
 
 	return nil
@@ -200,7 +200,7 @@ func (s *userService) Create(user *models.User) error {
 	if err != nil {
 		return err
 	} else if result != nil {
-		return DuplicatedUsernameError
+		return ErrDuplicatedUsername
 	}
 
 	hashedPassword, err := s.EncryptPassword(user.Password)
@@ -247,7 +247,7 @@ func (s *userService) ChangeEmail(userId int, email string) error {
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
-		return RecordNotFound
+		return ErrRecordNotFound
 	}
 
 	return nil
@@ -269,7 +269,7 @@ func (s *userService) ChangeFullName(userId int, firstName, lastName string) err
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
-		return RecordNotFound
+		return ErrRecordNotFound
 	}
 
 	return nil

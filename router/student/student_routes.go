@@ -143,7 +143,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 
 	err = s.Student.Create(student)
 	if err != nil {
-		if err == services.DuplicatedStudentIdNumberError {
+		if err == services.ErrDuplicatedStudentIDNumber {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El número de cédula o pasaporte ya existe!",
@@ -205,7 +205,7 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 
 	err = s.Student.Edit(student)
 	if err != nil {
-		if err == services.DuplicatedStudentIdNumberError {
+		if err == services.ErrDuplicatedStudentIDNumber {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
 				Success:      false,
 				ErrorMessage: "El número de cédula o pasaporte ya existe!",

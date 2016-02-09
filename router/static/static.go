@@ -13,7 +13,7 @@ type staticRouter struct {
 	routes          []router.Route
 }
 
-// NewRouter creates a new router for the authRouter.
+// NewRouter creates a new router for the staticRouter.
 func NewRouter(templatesPath string) router.Router {
 	r := &staticRouter{}
 

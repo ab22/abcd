@@ -9,6 +9,7 @@ type authRouter struct {
 	routes []router.Route
 }
 
+// NewRouter creates a new router for the authRouter.
 func NewRouter() router.Router {
 	r := &authRouter{}
 

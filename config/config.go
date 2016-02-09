@@ -10,7 +10,7 @@ import (
 	"github.com/ab22/env"
 )
 
-// Struct that contains all of the configuration variables
+// Config struct that contains all of the configuration variables
 // that are set up in the environment.
 type Config struct {
 	DbLogMode       bool
@@ -37,6 +37,7 @@ type Config struct {
 	}
 }
 
+// NewConfig initializes a new Config structure.
 func NewConfig() *Config {
 	var (
 		adminAppFolder string

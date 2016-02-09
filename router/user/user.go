@@ -9,6 +9,7 @@ type userRouter struct {
 	routes []router.Route
 }
 
+// NewRouter creates a new router for the userRouter.
 func NewRouter() router.Router {
 	r := &userRouter{}
 

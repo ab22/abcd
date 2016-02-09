@@ -3,6 +3,8 @@ package router
 import "time"
 
 const (
+	// SessionCookieName is the name used to read the session cookie from the
+	// client.
 	SessionCookieName = "_session"
 )
 

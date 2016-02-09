@@ -4,6 +4,7 @@ import (
 	"github.com/ab22/abcd/router/httputils"
 )
 
+// Route defines the required methods for handlers to implement.
 type Route interface {
 	Path() string
 	Method() string
@@ -46,6 +47,7 @@ func (r *route) Type() httputils.RouteType {
 	return r.routeType
 }
 
+// NewRoute is a wrapper method to create a new router.
 func NewRoute(method, path string, handler httputils.ContextHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
 	return &route{
 		method:        method,
@@ -57,10 +59,12 @@ func NewRoute(method, path string, handler httputils.ContextHandler, requiresAut
 	}
 }
 
+// NewGetRoute is a wrapper method to create a Get route.
 func NewGetRoute(path string, handler httputils.ContextHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
 	return NewRoute("GET", path, handler, requiresAuth, requiredRoles, routeType)
 }
 
+// NewPostRoute is a wrapper method to create a Post route.
 func NewPostRoute(path string, handler httputils.ContextHandler, requiresAuth bool, requiredRoles []string, routeType httputils.RouteType) *route {
 	return NewRoute("POST", path, handler, requiresAuth, requiredRoles, routeType)
 }

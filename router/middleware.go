@@ -13,8 +13,15 @@ import (
 	"golang.org/x/net/context"
 )
 
+// MiddlewareFunc describes a function that takes a ContextHandler and
+// returns a ContextHandler.
+//
+// The idea of a middleware function is to validate/read/modify data before or
+// after calling the next middleware function.
 type MiddlewareFunc func(httputils.ContextHandler) httputils.ContextHandler
 
+// NoDirListing is a middleware function to avoid listing folder directories.
+//
 // Go's http.FileServer by default, lists the directories and files
 // of the specified folder to serve and cannot be disabled.
 // To prevent directory listing, noDirListing checks if the
@@ -42,8 +49,8 @@ func extendSessionLifetime(sessionData *SessionData, sessionLifeTime time.Durati
 	return sessionData.ExpiresAt.Sub(time.Now()) <= sessionLifeTime/2
 }
 
-// Validates that the user cookie is set up before calling the handler
-// passed as parameter.
+// ValidateAuth validates that the user cookie is set up before calling the
+// handler passed as parameter.
 func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		var (
@@ -102,7 +109,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 	}
 }
 
-// gzipContent is a middleware function for handlers to encode content to gzip.
+// GzipContent is a middleware function for handlers to encode content to gzip.
 func GzipContent(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		w.Header().Add("Vary", "Accept-Encoding")
@@ -169,9 +176,9 @@ func Authorize(h httputils.ContextHandler) httputils.ContextHandler {
 	}
 }
 
-// HandleError sets the appropriate headers to the response if a http handler
-// returned an error. This might be used in the future if different types of
-// errors are returned.
+// HandleHttpError sets the appropriate headers to the response if a http
+// handler returned an error. This might be used in the future if different
+// types of errors are returned.
 func HandleHttpError(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		err := h(ctx, w, r)

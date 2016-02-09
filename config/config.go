@@ -72,32 +72,32 @@ func (c *Config) Validate() error {
 
 	// App validation
 	if c.App.HostUrl == "" {
-		return errors.New(fmt.Sprintf(errorMsg, "App.HostURL"))
+		return fmt.Errorf(errorMsg, "App.HostURL")
 	}
 
 	if c.App.Secret == "" {
-		return errors.New(fmt.Sprintf(errorMsg, "App.Secret"))
+		return fmt.Errorf(errorMsg, "App.Secret")
 	}
 
 	//Db validation
 	if c.Db.Host == "" {
-		return errors.New(fmt.Sprintf(errorMsg, "Db.Host"))
+		return fmt.Errorf(errorMsg, "Db.Host")
 	}
 
 	if c.Db.Port == 0 {
-		return errors.New(fmt.Sprintf(errorMsg, "Db.Port"))
+		return fmt.Errorf(errorMsg, "Db.Port")
 	}
 
 	if c.Db.User == "" {
-		return errors.New(fmt.Sprintf(errorMsg, "Db.User"))
+		return fmt.Errorf(errorMsg, "Db.User")
 	}
 
 	if c.Db.Password == "" {
-		return errors.New(fmt.Sprintf(errorMsg, "Db.Password"))
+		return fmt.Errorf(errorMsg, "Db.Password")
 	}
 
 	if c.Db.Name == "" {
-		return errors.New(fmt.Sprintf(errorMsg, "Db.Name"))
+		return fmt.Errorf(errorMsg, "Db.Name")
 	}
 
 	return nil

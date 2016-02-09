@@ -162,7 +162,7 @@ func (s *Server) bindRoutes() {
 	for _, route := range s.routers {
 		for _, r := range route.Routes() {
 			var routePath string
-			httpHandler := s.makeHttpHandler(r)
+			httpHandler := s.makeHTTPHandler(r)
 
 			if r.Type() == httputils.API {
 				routePath = "/api/" + r.Path()
@@ -210,8 +210,8 @@ func (s *Server) createStaticFilesServer() {
 		Handler(http.StripPrefix("/static/", handler))
 }
 
-// makeHttpHandler creates a http.HandlerFunc from a httputils.ContextHandler.
-func (s *Server) makeHttpHandler(route router.Route) http.HandlerFunc {
+// makeHTTPHandler creates a http.HandlerFunc from a httputils.ContextHandler.
+func (s *Server) makeHTTPHandler(route router.Route) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			err         error
@@ -241,7 +241,7 @@ func (s *Server) handleWithMiddlewares(route router.Route) httputils.ContextHand
 		serverCtx = context.WithValue(serverCtx, "config", s.cfg)
 
 		h := route.Handler()
-		h = router.HandleHttpError(h)
+		h = router.HandleHTTPError(h)
 		h = router.GzipContent(h)
 
 		if route.RequiresAuth() {

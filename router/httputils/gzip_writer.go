@@ -6,11 +6,16 @@ import (
 	"net/http"
 )
 
+// A GzipResponseWriter is a handy implementation of io.WriteCloser
+// used on top of http.ResponseWriter to GZip all of the content that is
+// written to the http.ResponseWriter.
 type GzipResponseWriter struct {
 	io.WriteCloser
 	http.ResponseWriter
 }
 
+// NewGzipResponseWriter creates a new instance of GzipResponseWriter with a
+// underlying gzip writer and a specified ResponseWriter.
 func NewGzipResponseWriter(w http.ResponseWriter) *GzipResponseWriter {
 	return &GzipResponseWriter{
 		WriteCloser:    gzip.NewWriter(w),
@@ -30,6 +35,7 @@ func (w *GzipResponseWriter) Write(b []byte) (int, error) {
 	return w.WriteCloser.Write(b)
 }
 
+// Close closes the underlying gzip writer.
 func (w *GzipResponseWriter) Close() {
 	w.WriteCloser.Close()
 }

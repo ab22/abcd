@@ -8,10 +8,14 @@ import (
 	"golang.org/x/net/context"
 )
 
+// A RouteType is used to differentiate requests to the API from the statics
+// file server.
 type RouteType int
 
 const (
+	// API type call.
 	API RouteType = iota
+	// Static type call.
 	Static
 )
 
@@ -20,6 +24,9 @@ const (
 // and an *ApiError.
 type ContextHandler func(context.Context, http.ResponseWriter, *http.Request) error
 
+// WriteError writes an error to the ResponseWriter. If no message is
+// specified, then we retrieve the default status text from the specified
+// code parameter.
 func WriteError(w http.ResponseWriter, code int, errMsg string) {
 	if errMsg == "" {
 		errMsg = http.StatusText(code)
@@ -28,6 +35,7 @@ func WriteError(w http.ResponseWriter, code int, errMsg string) {
 	http.Error(w, errMsg, code)
 }
 
+// WriteJSON writes the specified data as json.
 func WriteJSON(w http.ResponseWriter, statusCode int, data interface{}) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
@@ -35,6 +43,7 @@ func WriteJSON(w http.ResponseWriter, statusCode int, data interface{}) error {
 	return json.NewEncoder(w).Encode(data)
 }
 
+// DecodeJSON is a handy method to decode json into a interface{}.
 func DecodeJSON(r io.Reader, v interface{}) error {
 	return json.NewDecoder(r).Decode(v)
 }

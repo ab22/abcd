@@ -13,7 +13,7 @@ type userService struct {
 	db *gorm.DB
 }
 
-// Int type to define statuses for the User model.
+// UserStatus defines an int type to define statuses for the User model.
 type UserStatus int
 
 // Defines all user statuses.

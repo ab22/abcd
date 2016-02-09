@@ -12,7 +12,8 @@ type studentService struct {
 	db *gorm.DB
 }
 
-func (s *studentService) SanitizeIdNumber(idNumber string) string {
+// SanitizeIDNumber trims spaces in the string.
+func (s *studentService) SanitizeIDNumber(idNumber string) string {
 	return strings.Trim(idNumber, " ")
 }
 
@@ -60,7 +61,7 @@ func (s *studentService) FindById(studentId int) (*models.Student, error) {
 // Search student by Id Number/Passport.
 func (s *studentService) FindByIdNumber(idNumber string) (*models.Student, error) {
 	student := &models.Student{}
-	idNumber = s.SanitizeIdNumber(idNumber)
+	idNumber = s.SanitizeIDNumber(idNumber)
 
 	err := s.db.
 		Where("id_number = ?", idNumber).
@@ -80,7 +81,7 @@ func (s *studentService) FindByIdNumber(idNumber string) (*models.Student, error
 // Creates a new student.
 func (s *studentService) Create(student *models.Student) error {
 	var err error
-	student.IdNumber = s.SanitizeIdNumber(student.IdNumber)
+	student.IdNumber = s.SanitizeIDNumber(student.IdNumber)
 
 	result, err := s.FindByIdNumber(student.IdNumber)
 

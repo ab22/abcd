@@ -21,7 +21,7 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 	)
 
 	type MappedUser struct {
-		Id        int       `json:"id"`
+		ID        int       `json:"id"`
 		Username  string    `json:"username"`
 		Email     string    `json:"email"`
 		FirstName string    `json:"firstName"`
@@ -40,7 +40,7 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 	response := make([]MappedUser, 0, len(users))
 	for _, user := range users {
 		response = append(response, MappedUser{
-			Id:        user.ID,
+			ID:        user.ID,
 			Username:  user.Username,
 			Email:     user.Email,
 			FirstName: user.FirstName,
@@ -59,13 +59,13 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 func (r *userRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err    error
-		userId int
+		userID int
 		s, _   = ctx.Value("services").(*services.Services)
 		vars   = mux.Vars(req)
 	)
 
 	type MappedUser struct {
-		Id        int    `json:"id"`
+		ID        int    `json:"id"`
 		Username  string `json:"username"`
 		Email     string `json:"email"`
 		FirstName string `json:"firstName"`
@@ -75,14 +75,14 @@ func (r *userRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *h
 		IsTeacher bool   `json:"isTeacher"`
 	}
 
-	userId, err = strconv.Atoi(vars["id"])
+	userID, err = strconv.Atoi(vars["id"])
 
 	if err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
 		return err
 	}
 
-	user, err := s.User.FindById(userId)
+	user, err := s.User.FindById(userID)
 	if err != nil {
 		return err
 	} else if user == nil {
@@ -91,7 +91,7 @@ func (r *userRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *h
 	}
 
 	response := &MappedUser{
-		Id:        user.ID,
+		ID:        user.ID,
 		Username:  user.Username,
 		Email:     user.Email,
 		FirstName: user.FirstName,
@@ -114,7 +114,7 @@ func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, 
 	)
 
 	type MappedUser struct {
-		Id        int    `json:"id"`
+		ID        int    `json:"id"`
 		Username  string `json:"username"`
 		Email     string `json:"email"`
 		FirstName string `json:"firstName"`
@@ -133,7 +133,7 @@ func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, 
 	}
 
 	response := &MappedUser{
-		Id:        user.ID,
+		ID:        user.ID,
 		Username:  user.Username,
 		Email:     user.Email,
 		FirstName: user.FirstName,
@@ -153,7 +153,7 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 		s, _ = ctx.Value("services").(*services.Services)
 
 		payload struct {
-			Id        int
+			ID        int
 			Username  string
 			Email     string
 			FirstName string
@@ -175,7 +175,7 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 	}
 
 	user := &models.User{
-		ID:        payload.Id,
+		ID:        payload.ID,
 		Username:  payload.Username,
 		Email:     payload.Email,
 		FirstName: payload.FirstName,
@@ -263,7 +263,7 @@ func (r *userRouter) ChangePassword(ctx context.Context, w http.ResponseWriter, 
 		s, _ = ctx.Value("services").(*services.Services)
 
 		payload struct {
-			UserId      int
+			UserID      int
 			NewPassword string
 		}
 	)
@@ -273,7 +273,7 @@ func (r *userRouter) ChangePassword(ctx context.Context, w http.ResponseWriter, 
 		return nil
 	}
 
-	err = s.User.ChangePassword(payload.UserId, payload.NewPassword)
+	err = s.User.ChangePassword(payload.UserID, payload.NewPassword)
 	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
@@ -288,7 +288,7 @@ func (r *userRouter) Delete(ctx context.Context, w http.ResponseWriter, req *htt
 		s, _ = ctx.Value("services").(*services.Services)
 
 		payload struct {
-			UserId int
+			UserID int
 		}
 	)
 
@@ -297,7 +297,7 @@ func (r *userRouter) Delete(ctx context.Context, w http.ResponseWriter, req *htt
 		return nil
 	}
 
-	err = s.User.Delete(payload.UserId)
+	err = s.User.Delete(payload.UserID)
 	if err != nil {
 		return err
 	}
@@ -313,7 +313,7 @@ func (r *userRouter) GetProfileForCurrentUser(ctx context.Context, w http.Respon
 	)
 
 	type Response struct {
-		Id        int    `json:"id"`
+		ID        int    `json:"id"`
 		Username  string `json:"username"`
 		Email     string `json:"email"`
 		FirstName string `json:"firstName"`
@@ -333,7 +333,7 @@ func (r *userRouter) GetProfileForCurrentUser(ctx context.Context, w http.Respon
 	}
 
 	response := &Response{
-		Id:        user.ID,
+		ID:        user.ID,
 		Username:  user.Username,
 		Email:     user.Email,
 		FirstName: user.FirstName,

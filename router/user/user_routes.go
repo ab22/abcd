@@ -82,7 +82,7 @@ func (r *userRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *h
 		return err
 	}
 
-	user, err := s.User.FindById(userID)
+	user, err := s.User.FindByID(userID)
 	if err != nil {
 		return err
 	} else if user == nil {
@@ -323,7 +323,7 @@ func (r *userRouter) GetProfileForCurrentUser(ctx context.Context, w http.Respon
 		IsTeacher bool   `json:"isTeacher"`
 	}
 
-	user, err := s.User.FindById(sessionData.UserId)
+	user, err := s.User.FindByID(sessionData.UserId)
 
 	if err != nil {
 		return err

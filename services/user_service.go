@@ -35,11 +35,11 @@ func (s *userService) SanitizeUsername(username string) string {
 }
 
 // Search user by id.
-func (s *userService) FindById(userId int) (*models.User, error) {
+func (s *userService) FindByID(userID int) (*models.User, error) {
 	user := &models.User{}
 
 	err := s.db.
-		Where("id = ?", userId).
+		Where("id = ?", userID).
 		First(user).Error
 
 	if err != nil {
@@ -135,7 +135,7 @@ func (s *userService) FindAll() ([]models.User, error) {
 // if the username changed and if it needs to check if the username is already
 // taken.
 func (s *userService) Edit(newUser *models.User) error {
-	user, err := s.FindById(newUser.ID)
+	user, err := s.FindByID(newUser.ID)
 	newUser.Username = s.SanitizeUsername(newUser.Username)
 
 	if err != nil {
@@ -167,7 +167,7 @@ func (s *userService) Edit(newUser *models.User) error {
 
 // ChangePassword finds a user in the database by userId and changes it's
 // password.
-func (s *userService) ChangePassword(userId int, password string) error {
+func (s *userService) ChangePassword(userID int, password string) error {
 	encryptedPassword, err := s.EncryptPassword(password)
 	if err != nil {
 		return err
@@ -175,7 +175,7 @@ func (s *userService) ChangePassword(userId int, password string) error {
 
 	err = s.db.
 		Table("users").
-		Where("id = ?", userId).
+		Where("id = ?", userID).
 		Update("password", string(encryptedPassword)).Error
 
 	if err != nil {
@@ -222,24 +222,24 @@ func (s *userService) Create(user *models.User) error {
 
 // Delete User sets the DeletedAt time for the user which just hides
 // the record from any other select query.
-func (s *userService) Delete(userId int) error {
+func (s *userService) Delete(userID int) error {
 	var err error
 
 	err = s.db.
 		Table("users").
-		Where("id = ?", userId).
+		Where("id = ?", userID).
 		Delete(models.User{}).Error
 
 	return err
 }
 
 // Change email for the specified user by user id.
-func (s *userService) ChangeEmail(userId int, email string) error {
+func (s *userService) ChangeEmail(userID int, email string) error {
 	email = strings.Trim(email, " ")
 
 	err := s.db.
 		Table("users").
-		Where("id = ?", userId).
+		Where("id = ?", userID).
 		Update("email", email).Error
 
 	if err != nil {
@@ -254,13 +254,13 @@ func (s *userService) ChangeEmail(userId int, email string) error {
 }
 
 // Change the full name of the user.
-func (s *userService) ChangeFullName(userId int, firstName, lastName string) error {
+func (s *userService) ChangeFullName(userID int, firstName, lastName string) error {
 	firstName = strings.Trim(firstName, " ")
 	lastName = strings.Trim(lastName, " ")
 
 	err := s.db.
 		Table("users").
-		Where("id = ?", userId).
+		Where("id = ?", userID).
 		Update("first_name", firstName).
 		Update("last_name", lastName).Error
 

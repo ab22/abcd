@@ -33,7 +33,7 @@
 					</tr>
 					<tr>
 						<th class="clickable" st-sort="Id">Id</th>
-						<th class="clickable" st-sort="idNumber">Id number </th>
+						<th class="clickable" st-sort="idNumber">Id number</th>
 						<th class="clickable" st-sort="firstName">Nombres</th>
 						<th class="clickable" st-sort="lastName">Apellidos</th>
 						<th class="clickable" st-sort="email">Correo</th>
@@ -47,14 +47,14 @@
 				<tbody>
 					<tr ng-repeat="u in students">
 						<td>{{u.id}}</td>
-						<td>{{u.IdNumber}}</td>
+						<td>{{u.idNumber}}</td>
 						<td>{{u.firstName}}</td>
 						<td>{{u.lastName}}</td>
 						<td>{{u.email}}</td>
 						<td>{{statusToString(u.status)}} </td>
 						<td>{{u.birthdate | date:'dd/MM/yyyy'}}</td>
 						<td>
-							<a class="btn btn-xs btn-info" ng-href="#/main/students/edit/{{u.IdNumber}}" title="Editar">
+							<a class="btn btn-xs btn-info" ng-href="#/main/students/edit/{{u.idNumber}}" title="Editar">
 								<i class="fa fa-fw fa-pencil"></i>
 							</a>
 						</td>

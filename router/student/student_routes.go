@@ -54,7 +54,7 @@ func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWri
 }
 
 // Find Student by Id.
-func (r *studentRouter) FindById(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+func (r *studentRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err       error
 		studentId int
@@ -221,7 +221,7 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 }
 
 // Find student by honduran Id number or passport number.
-func (r *studentRouter) FindByIdNumber(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+func (r *studentRouter) FindByIDNumber(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err      error
 		idNumber string

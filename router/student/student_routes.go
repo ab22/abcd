@@ -20,8 +20,8 @@ func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWri
 	)
 
 	type MappedStudent struct {
-		Id        int       `json:"id"`
-		IdNumber  string    `json:"idNumber`
+		ID        int       `json:"id"`
+		IDNumber  string    `json:"idNumber"`
 		Email     string    `json:"email"`
 		FirstName string    `json:"firstName"`
 		LastName  string    `json:"lastName"`
@@ -39,8 +39,8 @@ func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWri
 
 	for _, student := range students {
 		response = append(response, MappedStudent{
-			Id:        student.ID,
-			IdNumber:  student.IDNumber,
+			ID:        student.ID,
+			IDNumber:  student.IDNumber,
 			Email:     student.Email,
 			FirstName: student.FirstName,
 			LastName:  student.LastName,
@@ -57,13 +57,13 @@ func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWri
 func (r *studentRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err       error
-		studentId int
+		studentID int
 		s, _      = ctx.Value("services").(*services.Services)
 		vars      = mux.Vars(req)
 	)
 
 	type MappedStudent struct {
-		Id        int       `json:"id"`
+		ID        int       `json:"id"`
 		Email     string    `json:"email"`
 		FirstName string    `json:"firstName"`
 		LastName  string    `json:"lastName"`
@@ -71,14 +71,14 @@ func (r *studentRouter) FindByID(ctx context.Context, w http.ResponseWriter, req
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
-	studentId, err = strconv.Atoi(vars["id"])
+	studentID, err = strconv.Atoi(vars["id"])
 
 	if err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
 		return err
 	}
 
-	student, err := s.Student.FindByID(studentId)
+	student, err := s.Student.FindByID(studentID)
 	if err != nil {
 		return err
 	} else if student == nil {
@@ -87,7 +87,7 @@ func (r *studentRouter) FindByID(ctx context.Context, w http.ResponseWriter, req
 	}
 
 	response := &MappedStudent{
-		Id:        student.ID,
+		ID:        student.ID,
 		Email:     student.Email,
 		FirstName: student.FirstName,
 		LastName:  student.LastName,
@@ -105,7 +105,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 		s, _ = ctx.Value("services").(*services.Services)
 
 		payload struct {
-			IdNumber     string
+			IDNumber     string
 			FirstName    string
 			LastName     string
 			Email        string
@@ -129,7 +129,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 	}
 
 	student := &models.Student{
-		IDNumber:     payload.IdNumber,
+		IDNumber:     payload.IDNumber,
 		FirstName:    payload.FirstName,
 		LastName:     payload.LastName,
 		Email:        payload.Email,
@@ -165,8 +165,8 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 		s, _ = ctx.Value("services").(*services.Services)
 
 		payload struct {
-			Id           int
-			IdNumber     string
+			ID           int
+			IDNumber     string
 			FirstName    string
 			LastName     string
 			Email        string
@@ -190,8 +190,8 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 	}
 
 	student := &models.Student{
-		ID:           payload.Id,
-		IDNumber:     payload.IdNumber,
+		ID:           payload.ID,
+		IDNumber:     payload.IDNumber,
 		FirstName:    payload.FirstName,
 		LastName:     payload.LastName,
 		Email:        payload.Email,
@@ -230,8 +230,8 @@ func (r *studentRouter) FindByIDNumber(ctx context.Context, w http.ResponseWrite
 	)
 
 	type MappedStudent struct {
-		Id           int       `json:"id"`
-		IdNumber     string    `json:"idNumber"`
+		ID           int       `json:"id"`
+		IDNumber     string    `json:"idNumber"`
 		FirstName    string    `json:"firstName"`
 		LastName     string    `json:"lastName"`
 		Email        string    `json:"email"`
@@ -261,8 +261,8 @@ func (r *studentRouter) FindByIDNumber(ctx context.Context, w http.ResponseWrite
 	}
 
 	response := &MappedStudent{
-		Id:           student.ID,
-		IdNumber:     student.IDNumber,
+		ID:           student.ID,
+		IDNumber:     student.IDNumber,
 		FirstName:    student.FirstName,
 		LastName:     student.LastName,
 		Email:        student.Email,

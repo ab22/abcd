@@ -33,7 +33,7 @@ func (r *studentRouter) initRoutes() {
 		),
 		router.NewGetRoute(
 			"student/findById/{id:[0-9]+}",
-			r.FindById,
+			r.FindByID,
 			true,
 			[]string{"ADMIN"},
 			httputils.API,
@@ -54,7 +54,7 @@ func (r *studentRouter) initRoutes() {
 		),
 		router.NewGetRoute(
 			"student/findByIdNumber/{idNumber:[0-9A-Za-z-]+}",
-			r.FindByIdNumber,
+			r.FindByIDNumber,
 			true,
 			[]string{"ADMIN"},
 			httputils.API,

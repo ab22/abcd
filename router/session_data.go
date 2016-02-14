@@ -10,8 +10,8 @@ const (
 
 // SessionData describes the session cookie for all users.
 type SessionData struct {
-	UserId    int
-	RoleId    int
+	UserID    int
+	RoleID    int
 	Email     string
 	IsAdmin   bool
 	IsTeacher bool

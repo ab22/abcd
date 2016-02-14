@@ -323,7 +323,7 @@ func (r *userRouter) GetProfileForCurrentUser(ctx context.Context, w http.Respon
 		IsTeacher bool   `json:"isTeacher"`
 	}
 
-	user, err := s.User.FindByID(sessionData.UserId)
+	user, err := s.User.FindByID(sessionData.UserID)
 
 	if err != nil {
 		return err
@@ -363,7 +363,7 @@ func (r *userRouter) ChangePasswordForCurrentUser(ctx context.Context, w http.Re
 		return nil
 	}
 
-	err = s.User.ChangePassword(sessionData.UserId, payload.NewPassword)
+	err = s.User.ChangePassword(sessionData.UserID, payload.NewPassword)
 	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
@@ -388,7 +388,7 @@ func (r *userRouter) ChangeEmailForCurrentUser(ctx context.Context, w http.Respo
 		return nil
 	}
 
-	err = s.User.ChangeEmail(sessionData.UserId, payload.NewEmail)
+	err = s.User.ChangeEmail(sessionData.UserID, payload.NewEmail)
 
 	if err != nil && err != services.ErrRecordNotFound {
 		return err
@@ -415,7 +415,7 @@ func (r *userRouter) ChangeFullNameForCurrentUser(ctx context.Context, w http.Re
 		return nil
 	}
 
-	err = s.User.ChangeFullName(sessionData.UserId, payload.FirstName, payload.LastName)
+	err = s.User.ChangeFullName(sessionData.UserID, payload.FirstName, payload.LastName)
 
 	if err != nil && err != services.ErrRecordNotFound {
 		return err

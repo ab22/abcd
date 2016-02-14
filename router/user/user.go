@@ -33,7 +33,7 @@ func (r *userRouter) initRoutes() {
 		),
 		router.NewGetRoute(
 			"user/findById/{id:[0-9]+}",
-			r.FindById,
+			r.FindByID,
 			true,
 			[]string{"ADMIN"},
 			httputils.API,

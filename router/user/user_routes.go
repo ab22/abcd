@@ -40,7 +40,7 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 	response := make([]MappedUser, 0, len(users))
 	for _, user := range users {
 		response = append(response, MappedUser{
-			Id:        user.Id,
+			Id:        user.ID,
 			Username:  user.Username,
 			Email:     user.Email,
 			FirstName: user.FirstName,
@@ -91,7 +91,7 @@ func (r *userRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *h
 	}
 
 	response := &MappedUser{
-		Id:        user.Id,
+		Id:        user.ID,
 		Username:  user.Username,
 		Email:     user.Email,
 		FirstName: user.FirstName,
@@ -133,7 +133,7 @@ func (r *userRouter) FindByUsername(ctx context.Context, w http.ResponseWriter, 
 	}
 
 	response := &MappedUser{
-		Id:        user.Id,
+		Id:        user.ID,
 		Username:  user.Username,
 		Email:     user.Email,
 		FirstName: user.FirstName,
@@ -175,7 +175,7 @@ func (r *userRouter) Edit(ctx context.Context, w http.ResponseWriter, req *http.
 	}
 
 	user := &models.User{
-		Id:        payload.Id,
+		ID:        payload.Id,
 		Username:  payload.Username,
 		Email:     payload.Email,
 		FirstName: payload.FirstName,
@@ -333,7 +333,7 @@ func (r *userRouter) GetProfileForCurrentUser(ctx context.Context, w http.Respon
 	}
 
 	response := &Response{
-		Id:        user.Id,
+		Id:        user.ID,
 		Username:  user.Username,
 		Email:     user.Email,
 		FirstName: user.FirstName,

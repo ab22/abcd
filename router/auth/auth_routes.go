@@ -54,7 +54,7 @@ func (r *authRouter) Login(ctx context.Context, w http.ResponseWriter, req *http
 
 	session, _ := cookieStore.New(req, router.SessionCookieName)
 	session.Values["data"] = &router.SessionData{
-		UserId:    user.Id,
+		UserId:    user.ID,
 		Email:     user.Email,
 		IsAdmin:   user.IsAdmin,
 		IsTeacher: user.IsTeacher,

@@ -135,7 +135,7 @@ func (s *userService) FindAll() ([]models.User, error) {
 // if the username changed and if it needs to check if the username is already
 // taken.
 func (s *userService) Edit(newUser *models.User) error {
-	user, err := s.FindById(newUser.Id)
+	user, err := s.FindById(newUser.ID)
 	newUser.Username = s.SanitizeUsername(newUser.Username)
 
 	if err != nil {

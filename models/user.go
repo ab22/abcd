@@ -6,7 +6,7 @@ import (
 
 // User model.
 type User struct {
-	Id        int
+	ID        int
 	Username  string `sql:"size:30; unique_index; not null"`
 	Password  string
 	Email     string `sql:"size:60; unique_index"`

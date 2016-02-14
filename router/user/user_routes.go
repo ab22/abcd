@@ -56,7 +56,7 @@ func (r *userRouter) FindAllAvailable(ctx context.Context, w http.ResponseWriter
 }
 
 // Find single user by UserId.
-func (r *userRouter) FindById(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+func (r *userRouter) FindByID(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
 	var (
 		err    error
 		userId int

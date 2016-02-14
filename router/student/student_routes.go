@@ -78,7 +78,7 @@ func (r *studentRouter) FindByID(ctx context.Context, w http.ResponseWriter, req
 		return err
 	}
 
-	student, err := s.Student.FindById(studentId)
+	student, err := s.Student.FindByID(studentId)
 	if err != nil {
 		return err
 	} else if student == nil {
@@ -251,7 +251,7 @@ func (r *studentRouter) FindByIDNumber(ctx context.Context, w http.ResponseWrite
 		return err
 	}
 
-	student, err := s.Student.FindByIdNumber(idNumber)
+	student, err := s.Student.FindByIDNumber(idNumber)
 
 	if err != nil {
 		return err

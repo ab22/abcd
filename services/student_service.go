@@ -40,11 +40,11 @@ func (s *studentService) FindAll() ([]models.Student, error) {
 }
 
 // Search student by id
-func (s *studentService) FindById(studentId int) (*models.Student, error) {
+func (s *studentService) FindByID(studentID int) (*models.Student, error) {
 	student := &models.Student{}
 
 	err := s.db.
-		Where("id = ?", studentId).
+		Where("id = ?", studentID).
 		First(student).Error
 
 	if err != nil {
@@ -59,7 +59,7 @@ func (s *studentService) FindById(studentId int) (*models.Student, error) {
 }
 
 // Search student by Id Number/Passport.
-func (s *studentService) FindByIdNumber(idNumber string) (*models.Student, error) {
+func (s *studentService) FindByIDNumber(idNumber string) (*models.Student, error) {
 	student := &models.Student{}
 	idNumber = s.SanitizeIDNumber(idNumber)
 
@@ -83,7 +83,7 @@ func (s *studentService) Create(student *models.Student) error {
 	var err error
 	student.IDNumber = s.SanitizeIDNumber(student.IDNumber)
 
-	result, err := s.FindByIdNumber(student.IDNumber)
+	result, err := s.FindByIDNumber(student.IDNumber)
 
 	if err != nil {
 		return err
@@ -96,7 +96,7 @@ func (s *studentService) Create(student *models.Student) error {
 
 // Edit an existing student.
 func (s *studentService) Edit(newStudent *models.Student) error {
-	student, err := s.FindById(newStudent.ID)
+	student, err := s.FindByID(newStudent.ID)
 
 	if err != nil {
 		return err
@@ -105,7 +105,7 @@ func (s *studentService) Edit(newStudent *models.Student) error {
 	}
 
 	if student.IDNumber != newStudent.IDNumber {
-		duplicateUser, err := s.FindByIdNumber(newStudent.IDNumber)
+		duplicateUser, err := s.FindByIDNumber(newStudent.IDNumber)
 
 		if err != nil {
 			return err

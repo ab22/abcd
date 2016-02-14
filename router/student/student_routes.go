@@ -39,8 +39,8 @@ func (r *studentRouter) FindAllAvailable(ctx context.Context, w http.ResponseWri
 
 	for _, student := range students {
 		response = append(response, MappedStudent{
-			Id:        student.Id,
-			IdNumber:  student.IdNumber,
+			Id:        student.ID,
+			IdNumber:  student.IDNumber,
 			Email:     student.Email,
 			FirstName: student.FirstName,
 			LastName:  student.LastName,
@@ -87,7 +87,7 @@ func (r *studentRouter) FindByID(ctx context.Context, w http.ResponseWriter, req
 	}
 
 	response := &MappedStudent{
-		Id:        student.Id,
+		Id:        student.ID,
 		Email:     student.Email,
 		FirstName: student.FirstName,
 		LastName:  student.LastName,
@@ -129,7 +129,7 @@ func (r *studentRouter) Create(ctx context.Context, w http.ResponseWriter, req *
 	}
 
 	student := &models.Student{
-		IdNumber:     payload.IdNumber,
+		IDNumber:     payload.IdNumber,
 		FirstName:    payload.FirstName,
 		LastName:     payload.LastName,
 		Email:        payload.Email,
@@ -190,8 +190,8 @@ func (r *studentRouter) Edit(ctx context.Context, w http.ResponseWriter, req *ht
 	}
 
 	student := &models.Student{
-		Id:           payload.Id,
-		IdNumber:     payload.IdNumber,
+		ID:           payload.Id,
+		IDNumber:     payload.IdNumber,
 		FirstName:    payload.FirstName,
 		LastName:     payload.LastName,
 		Email:        payload.Email,
@@ -261,8 +261,8 @@ func (r *studentRouter) FindByIDNumber(ctx context.Context, w http.ResponseWrite
 	}
 
 	response := &MappedStudent{
-		Id:           student.Id,
-		IdNumber:     student.IdNumber,
+		Id:           student.ID,
+		IdNumber:     student.IDNumber,
 		FirstName:    student.FirstName,
 		LastName:     student.LastName,
 		Email:        student.Email,

@@ -81,9 +81,9 @@ func (s *studentService) FindByIdNumber(idNumber string) (*models.Student, error
 // Creates a new student.
 func (s *studentService) Create(student *models.Student) error {
 	var err error
-	student.IdNumber = s.SanitizeIDNumber(student.IdNumber)
+	student.IDNumber = s.SanitizeIDNumber(student.IDNumber)
 
-	result, err := s.FindByIdNumber(student.IdNumber)
+	result, err := s.FindByIdNumber(student.IDNumber)
 
 	if err != nil {
 		return err
@@ -96,7 +96,7 @@ func (s *studentService) Create(student *models.Student) error {
 
 // Edit an existing student.
 func (s *studentService) Edit(newStudent *models.Student) error {
-	student, err := s.FindById(newStudent.Id)
+	student, err := s.FindById(newStudent.ID)
 
 	if err != nil {
 		return err
@@ -104,8 +104,8 @@ func (s *studentService) Edit(newStudent *models.Student) error {
 		return nil
 	}
 
-	if student.IdNumber != newStudent.IdNumber {
-		duplicateUser, err := s.FindByIdNumber(newStudent.IdNumber)
+	if student.IDNumber != newStudent.IDNumber {
+		duplicateUser, err := s.FindByIdNumber(newStudent.IDNumber)
 
 		if err != nil {
 			return err
@@ -114,7 +114,7 @@ func (s *studentService) Edit(newStudent *models.Student) error {
 		}
 	}
 
-	student.IdNumber = newStudent.IdNumber
+	student.IDNumber = newStudent.IDNumber
 	student.FirstName = newStudent.FirstName
 	student.LastName = newStudent.LastName
 	student.Email = newStudent.Email

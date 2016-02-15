@@ -79,7 +79,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 
 		sessionData, ok = session.Values["data"].(*SessionData)
 
-		if !ok {
+		if !ok || sessionData.IsInvalid() {
 			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 			return nil
 		} else if time.Now().After(sessionData.ExpiresAt) {

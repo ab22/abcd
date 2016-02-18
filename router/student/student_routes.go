@@ -75,7 +75,7 @@ func (r *studentRouter) FindByID(ctx context.Context, w http.ResponseWriter, req
 
 	if err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
-		return err
+		return nil
 	}
 
 	student, err := s.Student.FindByID(studentID)

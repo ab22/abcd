@@ -75,11 +75,9 @@ func (r *authRouter) Logout(ctx context.Context, w http.ResponseWriter, req *htt
 	session, err := cookieStore.Get(req, router.SessionCookieName)
 
 	if err != nil {
-		httputils.WriteError(w, http.StatusUnauthorized, "")
 		return err
 	}
 
 	session.Options.MaxAge = -1
-	session.Save(req, w)
-	return nil
+	return session.Save(req, w)
 }

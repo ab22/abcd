@@ -23,7 +23,7 @@
 							<i class="fa fa-remove"></i>
 							El usuario ya existe!
 						</label>
-						<label class="control-label" ng-show="userForm.username.$valid && !userForm.username.$error.available">
+						<label class="control-label" ng-show="userForm.username.$valid && !userForm.username.$error.available && userForm.username.$dirty">
 							<i class="fa fa-check-square-o"></i>
 							Usuario disponible!
 						</label>

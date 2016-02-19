@@ -24,8 +24,16 @@ func NewRoutes(cfg *config.Config, services *services.Services) *Routes {
 		userHandler   = user.NewHandler(services)
 
 		r = &Routes{
-			TemplateRoutes: []Route{},
-			APIRoutes:      []Route{},
+			TemplateRoutes: []Route{
+				&route{
+					pattern:       "/",
+					method:        "GET",
+					handlerFunc:   staticHandler.Index,
+					requiresAuth:  false,
+					requiredRoles: []string{},
+				},
+			},
+			APIRoutes: []Route{},
 		}
 	)
 

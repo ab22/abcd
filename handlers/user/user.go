@@ -18,7 +18,7 @@ type Handler struct {
 }
 
 // NewHandler initializes a new user handler struct.
-func NewHandler(s *services.Services) router.Router {
+func NewHandler(s *services.Services) *Handler {
 	return &Handler{
 		services: s,
 	}
@@ -27,8 +27,8 @@ func NewHandler(s *services.Services) router.Router {
 // FindAllAvailable finds all available users.
 func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err         error
+		userService = h.services.User
 	)
 
 	type MappedUser struct {
@@ -43,7 +43,7 @@ func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
-	users, err := s.User.FindAll()
+	users, err := userService.FindAll()
 	if err != nil {
 		return err
 	}
@@ -69,10 +69,10 @@ func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 // FindByID finds a single user by UserID.
 func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err    error
-		userID int
-		s, _   = ctx.Value("services").(*services.Services)
-		vars   = mux.Vars(r)
+		err         error
+		userID      int
+		userService = h.services.User
+		vars        = mux.Vars(r)
 	)
 
 	type MappedUser struct {
@@ -93,7 +93,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 		return err
 	}
 
-	user, err := s.User.FindByID(userID)
+	user, err := userService.FindByID(userID)
 	if err != nil {
 		return err
 	} else if user == nil {
@@ -118,10 +118,10 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 // FindByUsername finds a User by Username.
 func (h *Handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err      error
-		s, _     = ctx.Value("services").(*services.Services)
-		vars     = mux.Vars(r)
-		username = vars["username"]
+		err         error
+		userService = h.services.User
+		vars        = mux.Vars(r)
+		username    = vars["username"]
 	)
 
 	type MappedUser struct {
@@ -135,7 +135,7 @@ func (h *Handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *
 		IsTeacher bool   `json:"isTeacher"`
 	}
 
-	user, err := s.User.FindByUsername(username)
+	user, err := userService.FindByUsername(username)
 	if err != nil {
 		return err
 	} else if user == nil {
@@ -160,8 +160,8 @@ func (h *Handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *
 // Edit a user.
 func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err         error
+		userService = h.services.User
 
 		payload struct {
 			ID        int
@@ -196,7 +196,7 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 		IsTeacher: payload.IsTeacher,
 	}
 
-	err = s.User.Edit(user)
+	err = userService.Edit(user)
 	if err != nil {
 		if err == services.ErrDuplicatedUsername {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
@@ -216,8 +216,8 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 // Create a user.
 func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err         error
+		userService = h.services.User
 
 		payload struct {
 			Username  string
@@ -250,7 +250,7 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 		IsTeacher: payload.IsTeacher,
 	}
 
-	err = s.User.Create(user)
+	err = userService.Create(user)
 	if err != nil {
 		if err == services.ErrDuplicatedUsername {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
@@ -270,8 +270,8 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 // ChangePassword changes a user's password.
 func (h *Handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err         error
+		userService = h.services.User
 
 		payload struct {
 			UserID      int
@@ -284,7 +284,7 @@ func (h *Handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *
 		return nil
 	}
 
-	err = s.User.ChangePassword(payload.UserID, payload.NewPassword)
+	err = userService.ChangePassword(payload.UserID, payload.NewPassword)
 	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
@@ -293,10 +293,10 @@ func (h *Handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *
 }
 
 // Delete user.
-func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Ruest) error {
+func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err         error
+		userService = h.services.User
 
 		payload struct {
 			UserID int
@@ -308,7 +308,7 @@ func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Rue
 		return nil
 	}
 
-	err = s.User.Delete(payload.UserID)
+	err = userService.Delete(payload.UserID)
 	if err != nil {
 		return err
 	}
@@ -319,8 +319,8 @@ func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Rue
 // GetProfileForCurrentUser retrieves the logged user's information.
 func (h *Handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		s, _           = ctx.Value("services").(*services.Services)
-		sessionData, _ = ctx.Value("sessionData").(*router.SessionData)
+		userService    = h.services.User
+		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 	)
 
 	type Response struct {
@@ -334,7 +334,7 @@ func (h *Handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseW
 		IsTeacher bool   `json:"isTeacher"`
 	}
 
-	user, err := s.User.FindByID(sessionData.UserID)
+	user, err := userService.FindByID(sessionData.UserID)
 
 	if err != nil {
 		return err
@@ -361,8 +361,8 @@ func (h *Handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseW
 func (h *Handler) ChangePasswordForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		s, _           = ctx.Value("services").(*services.Services)
-		sessionData, _ = ctx.Value("sessionData").(*router.SessionData)
+		userService    = h.services.User
+		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 
 		payload struct {
 			NewPassword string
@@ -374,7 +374,7 @@ func (h *Handler) ChangePasswordForCurrentUser(ctx context.Context, w http.Respo
 		return nil
 	}
 
-	err = s.User.ChangePassword(sessionData.UserID, payload.NewPassword)
+	err = userService.ChangePassword(sessionData.UserID, payload.NewPassword)
 	if err != nil && err != services.ErrRecordNotFound {
 		return err
 	}
@@ -386,8 +386,8 @@ func (h *Handler) ChangePasswordForCurrentUser(ctx context.Context, w http.Respo
 func (h *Handler) ChangeEmailForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		s, _           = ctx.Value("services").(*services.Services)
-		sessionData, _ = ctx.Value("sessionData").(*router.SessionData)
+		userService    = h.services.User
+		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 
 		payload struct {
 			NewEmail string
@@ -399,7 +399,7 @@ func (h *Handler) ChangeEmailForCurrentUser(ctx context.Context, w http.Response
 		return nil
 	}
 
-	err = s.User.ChangeEmail(sessionData.UserID, payload.NewEmail)
+	err = userService.ChangeEmail(sessionData.UserID, payload.NewEmail)
 
 	if err != nil && err != services.ErrRecordNotFound {
 		return err
@@ -412,8 +412,8 @@ func (h *Handler) ChangeEmailForCurrentUser(ctx context.Context, w http.Response
 func (h *Handler) ChangeFullNameForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		s, _           = ctx.Value("services").(*services.Services)
-		sessionData, _ = ctx.Value("sessionData").(*router.SessionData)
+		userService    = h.services.User
+		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 
 		payload struct {
 			FirstName string
@@ -426,7 +426,7 @@ func (h *Handler) ChangeFullNameForCurrentUser(ctx context.Context, w http.Respo
 		return nil
 	}
 
-	err = s.User.ChangeFullName(sessionData.UserID, payload.FirstName, payload.LastName)
+	err = userService.ChangeFullName(sessionData.UserID, payload.FirstName, payload.LastName)
 
 	if err != nil && err != services.ErrRecordNotFound {
 		return err
@@ -445,7 +445,7 @@ func (h *Handler) ChangeFullNameForCurrentUser(ctx context.Context, w http.Respo
 // will have to relog to update the values.
 func (h *Handler) GetPrivilegesForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		sessionData, _ = ctx.Value("sessionData").(*router.SessionData)
+		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 	)
 
 	type Response struct {

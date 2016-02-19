@@ -12,9 +12,10 @@ import (
 // Config struct that contains all of the configuration variables
 // that are set up in the environment.
 type Config struct {
-	DbLogMode       bool
-	NoReplyEmail    string
-	SessionLifeTime time.Duration
+	DbLogMode         bool
+	NoReplyEmail      string
+	SessionCookieName string
+	SessionLifeTime   time.Duration
 
 	App struct {
 		Secret string `env:"SECRET_KEY" envDefault:"SOME-VERY-SECRET-AND-RANDOM-KEY"`
@@ -42,9 +43,10 @@ func NewConfig() *Config {
 		err            error
 
 		cfg = &Config{
-			DbLogMode:       false,
-			NoReplyEmail:    "noreply@abcd.com",
-			SessionLifeTime: time.Minute * 30,
+			DbLogMode:         false,
+			NoReplyEmail:      "noreply@abcd.com",
+			SessionCookieName: "_session",
+			SessionLifeTime:   time.Minute * 30,
 		}
 	)
 

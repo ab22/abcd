@@ -4,6 +4,7 @@ import (
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/handlers/auth"
 	"github.com/ab22/abcd/handlers/static"
+	"github.com/ab22/abcd/handlers/student"
 	"github.com/ab22/abcd/handlers/user"
 	"github.com/ab22/abcd/services"
 )
@@ -18,9 +19,10 @@ type Routes struct {
 // and API Routes.
 func NewRoutes(cfg *config.Config, services *services.Services) *Routes {
 	var (
-		staticHandler = static.NewHandler(cfg)
-		authHandler   = auth.NewHandler(services)
-		userHandler   = user.NewHandler(services)
+		staticHandler  = static.NewHandler(cfg)
+		authHandler    = auth.NewHandler(services)
+		userHandler    = user.NewHandler(services)
+		studentHandler = student.NewHandler(services)
 
 		r = &Routes{
 			TemplateRoutes: []Route{
@@ -137,6 +139,41 @@ func NewRoutes(cfg *config.Config, services *services.Services) *Routes {
 					handlerFunc:   userHandler.GetPrivilegesForCurrentUser,
 					requiresAuth:  true,
 					requiredRoles: []string{},
+				},
+				&route{
+					pattern:       "student/findAll/",
+					method:        "GET",
+					handlerFunc:   studentHandler.FindAllAvailable,
+					requiresAuth:  true,
+					requiredRoles: []string{"ADMIN"},
+				},
+				&route{
+					pattern:       "student/findById/{id:[0-9]+}",
+					method:        "GET",
+					handlerFunc:   studentHandler.FindByID,
+					requiresAuth:  true,
+					requiredRoles: []string{"ADMIN"},
+				},
+				&route{
+					pattern:       "student/edit/",
+					method:        "POST",
+					handlerFunc:   studentHandler.Edit,
+					requiresAuth:  true,
+					requiredRoles: []string{"ADMIN"},
+				},
+				&route{
+					pattern:       "student/create/",
+					method:        "POST",
+					handlerFunc:   studentHandler.Create,
+					requiresAuth:  true,
+					requiredRoles: []string{"ADMIN"},
+				},
+				&route{
+					pattern:       "student/findByIdNumber/{idNumber:[0-9A-Za-z-]+}",
+					method:        "GET",
+					handlerFunc:   studentHandler.FindByIDNumber,
+					requiresAuth:  true,
+					requiredRoles: []string{"ADMIN"},
 				},
 			},
 		}

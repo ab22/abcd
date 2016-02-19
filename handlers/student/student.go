@@ -27,8 +27,8 @@ func NewHandler(s *services.Services) *Handler {
 // FindAllAvailable returns all available students.
 func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err            error
+		studentService = h.services.Student
 	)
 
 	type MappedStudent struct {
@@ -42,7 +42,7 @@ func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
-	students, err := s.Student.FindAll()
+	students, err := studentService.FindAll()
 	if err != nil {
 		return err
 	}
@@ -68,10 +68,10 @@ func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 // FindByID finds a Student by Id.
 func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err       error
-		studentID int
-		s, _      = ctx.Value("services").(*services.Services)
-		vars      = mux.Vars(req)
+		err            error
+		studentID      int
+		vars           = mux.Vars(r)
+		studentService = h.services.Student
 	)
 
 	type MappedStudent struct {
@@ -90,7 +90,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 		return nil
 	}
 
-	student, err := s.Student.FindByID(studentID)
+	student, err := studentService.FindByID(studentID)
 	if err != nil {
 		return err
 	} else if student == nil {
@@ -113,8 +113,8 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 // Create a student.
 func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err            error
+		studentService = h.services.Student
 
 		payload struct {
 			IDNumber     string
@@ -135,7 +135,7 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 		ErrorMessage string `json:"errorMessage"`
 	}
 
-	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
+	if err = httputils.DecodeJSON(r.Body, &payload); err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
@@ -153,7 +153,7 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 		PhoneNumber:  payload.PhoneNumber,
 	}
 
-	err = s.Student.Create(student)
+	err = studentService.Create(student)
 	if err != nil {
 		if err == services.ErrDuplicatedStudentIDNumber {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
@@ -173,8 +173,8 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 // Edit a student.
 func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err  error
-		s, _ = ctx.Value("services").(*services.Services)
+		err            error
+		studentService = h.services.Student
 
 		payload struct {
 			ID           int
@@ -196,7 +196,7 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 		ErrorMessage string `json:"errorMessage"`
 	}
 
-	if err = httputils.DecodeJSON(req.Body, &payload); err != nil {
+	if err = httputils.DecodeJSON(r.Body, &payload); err != nil {
 		httputils.WriteError(w, http.StatusBadRequest, "")
 		return nil
 	}
@@ -215,7 +215,7 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 		PhoneNumber:  payload.PhoneNumber,
 	}
 
-	err = s.Student.Edit(student)
+	err = studentService.Edit(student)
 	if err != nil {
 		if err == services.ErrDuplicatedStudentIDNumber {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
@@ -235,10 +235,10 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 // FindByIDNumber finds student by honduran Id number or passport number.
 func (h *Handler) FindByIDNumber(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err      error
-		idNumber string
-		s, _     = ctx.Value("services").(*services.Services)
-		vars     = mux.Vars(req)
+		err            error
+		idNumber       string
+		vars           = mux.Vars(r)
+		studentService = h.services.Student
 	)
 
 	type MappedStudent struct {
@@ -263,7 +263,7 @@ func (h *Handler) FindByIDNumber(ctx context.Context, w http.ResponseWriter, r *
 		return err
 	}
 
-	student, err := s.Student.FindByIDNumber(idNumber)
+	student, err := studentService.FindByIDNumber(idNumber)
 
 	if err != nil {
 		return err

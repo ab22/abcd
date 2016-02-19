@@ -2,45 +2,48 @@ package static
 
 import (
 	"html/template"
+	"log"
+	"net/http"
 	"path"
 
-	"github.com/ab22/abcd/router"
-	"github.com/ab22/abcd/router/httputils"
+	"github.com/ab22/abcd/config"
+	"github.com/ab22/abcd/httputils"
+	"golang.org/x/net/context"
 )
 
-type staticRouter struct {
+// Handler structure for the static handler.
+type Handler struct {
 	cachedTemplates *template.Template
-	routes          []router.Route
 }
 
-// NewRouter creates a new router for the staticRouter.
-func NewRouter(templatesPath string) router.Router {
-	r := &staticRouter{}
+// NewHandler creates a new router for the static handler.
+func NewHandler(cfg *config.Config) *Handler {
+	var (
+		h     = &Handler{}
+		index = path.Join(cfg.App.Frontend.Admin, "index.html")
+	)
 
-	r.initRoutes()
-	r.cacheTemplates(templatesPath)
+	h.cachedTemplates = template.Must(template.ParseFiles(index))
 
-	return r
+	return h
 }
 
-func (r *staticRouter) Routes() []router.Route {
-	return r.routes
-}
-
-func (r *staticRouter) initRoutes() {
-	r.routes = []router.Route{
-		router.NewGetRoute(
-			"/",
-			r.Index,
-			false,
-			[]string{},
-			httputils.Static,
-		),
+// Since Go's router sends all lost requests to home path '/',
+// then we check if the URL path is not '/'.
+// If the requested URL is '/', then we render the index.html template.
+// If it's not, then we return a 404 response.
+func (r *staticRouter) Index(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+	if req.URL.Path != "/" {
+		http.NotFound(w, req)
+		return nil
 	}
-}
 
-func (r *staticRouter) cacheTemplates(templatesPath string) {
-	index := path.Join(templatesPath, "/index.html")
+	err := r.cachedTemplates.ExecuteTemplate(w, "index.html", nil)
 
-	r.cachedTemplates = template.Must(template.ParseFiles(index))
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "HTTP 500: Internal server error", http.StatusInternalServerError)
+	}
+
+	return nil
 }

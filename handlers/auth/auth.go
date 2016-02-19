@@ -1,9 +1,13 @@
 package auth
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/httputils"
 	"github.com/ab22/abcd/services"
+	"github.com/gorilla/sessions"
 	"golang.org/x/net/context"
 )
 
@@ -50,7 +54,7 @@ func (h *Handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 		return nil
 	}
 
-	user, err := s.Auth.BasicAuth(loginForm.Identifier, loginForm.Password)
+	user, err := authService.BasicAuth(loginForm.Identifier, loginForm.Password)
 	if err != nil {
 		httputils.WriteError(w, http.StatusInternalServerError, "")
 		return nil
@@ -59,8 +63,8 @@ func (h *Handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 		return nil
 	}
 
-	session, _ := cookieStore.New(r, router.SessionCookieName)
-	session.Values["data"] = &router.SessionData{
+	session, _ := cookieStore.New(r, cfg.SessionCookieName)
+	session.Values["data"] = &httputils.SessionData{
 		UserID:    user.ID,
 		Email:     user.Email,
 		IsAdmin:   user.IsAdmin,
@@ -75,9 +79,10 @@ func (h *Handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 func (h *Handler) Logout(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
+		cfg         = ctx.Value("config").(*config.Config)
 		err         error
 	)
-	session, err := cookieStore.Get(r, router.SessionCookieName)
+	session, err := cookieStore.Get(r, cfg.SessionCookieName)
 
 	if err != nil {
 		return err

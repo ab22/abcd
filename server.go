@@ -119,15 +119,10 @@ func (s *Server) configureServices() error {
 func (s *Server) configureCookieStore() {
 	secretKey := s.cfg.App.Secret
 
-	gob.Register(&router.SessionData{})
+	gob.Register(&httputils.SessionData{})
 
 	s.cookieStore = sessions.NewCookieStore([]byte(secretKey))
 	s.cookieStore.MaxAge(0)
-}
-
-// addRouter appends a router to the server's router.
-func (s *Server) addRouter(r router.Router) {
-	s.routers = append(s.routers, r)
 }
 
 // configureRouter initializes the server's router.
@@ -187,7 +182,7 @@ func (s *Server) createStaticFilesServer() {
 		}
 	})
 
-	s.muxRouter.
+	s.router.
 		PathPrefix("/static/").
 		Handler(http.StripPrefix("/static/", handler))
 }
@@ -221,16 +216,16 @@ func (s *Server) handleWithMiddlewares(route routes.Route) httputils.ContextHand
 		serverCtx = context.WithValue(serverCtx, "route", route)
 		serverCtx = context.WithValue(serverCtx, "config", s.cfg)
 
-		h := route.Handler()
-		h = router.HandleHTTPError(h)
-		h = router.GzipContent(h)
+		h := route.HandlerFunc()
+		h = handlers.HandleHTTPError(h)
+		h = handlers.GzipContent(h)
 
 		if route.RequiresAuth() {
 			if requiredRoles := route.RequiredRoles(); len(requiredRoles) > 0 {
-				h = router.Authorize(h)
+				h = handlers.Authorize(h)
 			}
 
-			h = router.ValidateAuth(h)
+			h = handlers.ValidateAuth(h)
 		}
 
 		return h(serverCtx, w, r)

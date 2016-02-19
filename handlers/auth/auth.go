@@ -11,7 +11,7 @@ type Handler struct {
 	services *services.Services
 }
 
-// NewHandler creates a new router for the authRouter.
+// NewHandler initializes an auth handler struct.
 func NewHandler(s *services.Services) *Handler {
 	return &Handler{
 		services: s,

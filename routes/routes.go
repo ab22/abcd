@@ -2,11 +2,10 @@ package routes
 
 import (
 	"github.com/ab22/abcd/config"
-	"github.com/ab22/abcd/services"
-
 	"github.com/ab22/abcd/handlers/auth"
 	"github.com/ab22/abcd/handlers/static"
 	"github.com/ab22/abcd/handlers/user"
+	"github.com/ab22/abcd/services"
 )
 
 // Routes contains all Template and API routes for the application.
@@ -33,7 +32,29 @@ func NewRoutes(cfg *config.Config, services *services.Services) *Routes {
 					requiredRoles: []string{},
 				},
 			},
-			APIRoutes: []Route{},
+			APIRoutes: []Route{
+				&route{
+					pattern:       "auth/checkAuthentication/",
+					method:        "POST",
+					handlerFunc:   authHandler.CheckAuth,
+					requiresAuth:  true,
+					requiredRoles: []string{},
+				},
+				&route{
+					pattern:       "auth/login/",
+					method:        "POST",
+					handlerFunc:   authHandler.Login,
+					requiresAuth:  false,
+					requiredRoles: []string{},
+				},
+				&route{
+					pattern:       "auth/logout/",
+					method:        "POST",
+					handlerFunc:   authHandler.Logout,
+					requiresAuth:  true,
+					requiredRoles: []string{},
+				},
+			},
 		}
 	)
 

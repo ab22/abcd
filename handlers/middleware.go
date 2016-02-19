@@ -60,7 +60,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 			ok          bool
 			cookieStore *sessions.CookieStore
 			session     *sessions.Session
-			cfg         *config.Config
+			cfg         = ctx.Value("config").(*config.Config)
 		)
 
 		cookieStore, ok = ctx.Value("cookieStore").(*sessions.CookieStore)

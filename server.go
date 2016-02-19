@@ -8,16 +8,10 @@ import (
 	"net/http"
 	"path"
 
-	// Routes
-	"github.com/ab22/abcd/router/auth"
-	"github.com/ab22/abcd/router/static"
-	"github.com/ab22/abcd/router/student"
-	"github.com/ab22/abcd/router/user"
-
-	// Misc.
 	"github.com/ab22/abcd/config"
-	"github.com/ab22/abcd/router"
-	"github.com/ab22/abcd/router/httputils"
+	"github.com/ab22/abcd/handlers"
+	"github.com/ab22/abcd/httputils"
+	"github.com/ab22/abcd/routes"
 	"github.com/ab22/abcd/services"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -28,53 +22,47 @@ import (
 
 // Server contains instance details for the server.
 type Server struct {
-	cookieStore *sessions.CookieStore
-	muxRouter   *mux.Router
-	services    *services.Services
-	routers     []router.Router
 	cfg         *config.Config
+	cookieStore *sessions.CookieStore
+	router      *mux.Router
+	services    *services.Services
 }
 
 // NewServer returns a new instance of the server. All server configuration
 // is done at the Configure() function.
 func NewServer() *Server {
-	return &Server{}
-}
-
-// Configure initializes all necessary data for the server, including the
-// configuration data, services and routes.
-func (s *Server) Configure() error {
-	var err error
+	var (
+		err    error
+		server = &Server{}
+	)
 
 	log.Println("Configuring server...")
 
-	s.cfg = config.NewConfig()
-	s.cfg.Print()
+	server.cfg = config.NewConfig()
+	server.cfg.Print()
 
-	err = s.cfg.Validate()
-
-	if err != nil {
-		return err
-	}
-
-	err = s.configureServices()
+	err = server.cfg.Validate()
 
 	if err != nil {
-		return err
+		log.Fatalln(err)
 	}
 
-	s.configureCookieStore()
+	err = server.configureServices()
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	server.configureCookieStore()
 
 	log.Println("Setting up routes...")
-	s.createMuxRouter()
 
-	s.configureRouters()
-	s.bindRoutes()
+	server.configureRouter()
 
 	log.Println("Creating static file server...")
-	s.createStaticFilesServer()
+	server.createStaticFilesServer()
 
-	return nil
+	return server
 }
 
 // ListenAndServe attaches the current server to the specified configuration
@@ -82,7 +70,7 @@ func (s *Server) Configure() error {
 func (s *Server) ListenAndServe() error {
 	return http.ListenAndServe(
 		fmt.Sprintf(":%d", s.cfg.App.Port),
-		s.muxRouter,
+		s.router,
 	)
 }
 
@@ -142,39 +130,32 @@ func (s *Server) addRouter(r router.Router) {
 	s.routers = append(s.routers, r)
 }
 
-// configureRouters adds all routers to the server.
-func (s *Server) configureRouters() {
-	var appPath = s.cfg.App.Frontend.Admin
+// configureRouter initializes the server's router.
+func (s *Server) configureRouter() {
+	s.router = mux.NewRouter().StrictSlash(true)
 
-	s.addRouter(static.NewRouter(appPath))
-	s.addRouter(auth.NewRouter())
-	s.addRouter(user.NewRouter())
-	s.addRouter(student.NewRouter())
-}
+	r := routes.NewRoutes(s.cfg, s.services)
 
-// createMuxRouter initializes the server's router.
-func (s *Server) createMuxRouter() {
-	s.muxRouter = mux.NewRouter().StrictSlash(true)
+	s.bindRoutes(r.TemplateRoutes, false)
+	s.bindRoutes(r.APIRoutes, true)
 }
 
 // bindRoutes adds all routes to the server's router.
-func (s *Server) bindRoutes() {
-	for _, route := range s.routers {
-		for _, r := range route.Routes() {
-			var routePath string
-			httpHandler := s.makeHTTPHandler(r)
+func (s *Server) bindRoutes(r []routes.Route, apiRoute bool) {
+	for _, route := range r {
+		var routePath string
+		httpHandler := s.makeHTTPHandler(route)
 
-			if r.Type() == httputils.API {
-				routePath = "/api/" + r.Path()
-			} else {
-				routePath = r.Path()
-			}
-
-			s.muxRouter.
-				Methods(r.Method()).
-				Path(routePath).
-				HandlerFunc(httpHandler)
+		if apiRoute {
+			routePath = "/api/" + route.Pattern()
+		} else {
+			routePath = route.Pattern()
 		}
+
+		s.router.
+			Methods(route.Method()).
+			Path(routePath).
+			HandlerFunc(httpHandler)
 	}
 }
 
@@ -193,7 +174,9 @@ func (s *Server) createStaticFilesServer() {
 		return nil
 	}
 
-	contextHandler = router.NoDirListing(router.GzipContent(contextHandler))
+	contextHandler = handlers.HandleHTTPError(contextHandler)
+	contextHandler = handlers.GzipContent(contextHandler)
+	contextHandler = handlers.NoDirListing(contextHandler)
 
 	handler := http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		ctx := context.Background()
@@ -201,7 +184,6 @@ func (s *Server) createStaticFilesServer() {
 
 		if err != nil {
 			log.Printf("static file handler [%s][%s] returned error: %s", req.Method, req.URL.Path, err)
-			httputils.WriteError(w, http.StatusInternalServerError, "")
 		}
 	})
 
@@ -211,7 +193,7 @@ func (s *Server) createStaticFilesServer() {
 }
 
 // makeHTTPHandler creates a http.HandlerFunc from a httputils.ContextHandler.
-func (s *Server) makeHTTPHandler(route router.Route) http.HandlerFunc {
+func (s *Server) makeHTTPHandler(route routes.Route) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			err         error
@@ -233,11 +215,10 @@ func (s *Server) makeHTTPHandler(route router.Route) http.HandlerFunc {
 // middleware functions are applied depending on the route's properties, such
 // as ValidateAuth and Authorize middlewares. These last 2 functions require
 // that the route RequiresAuth() and that RequiredRoles() > 0.
-func (s *Server) handleWithMiddlewares(route router.Route) httputils.ContextHandler {
+func (s *Server) handleWithMiddlewares(route routes.Route) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		serverCtx := context.WithValue(ctx, "cookieStore", s.cookieStore)
 		serverCtx = context.WithValue(serverCtx, "route", route)
-		serverCtx = context.WithValue(serverCtx, "services", s.services)
 		serverCtx = context.WithValue(serverCtx, "config", s.cfg)
 
 		h := route.Handler()

@@ -7,7 +7,6 @@ import (
 	"path"
 
 	"github.com/ab22/abcd/config"
-	"github.com/ab22/abcd/httputils"
 	"golang.org/x/net/context"
 )
 
@@ -35,12 +34,12 @@ func NewHandler(cfg *config.Config) *Handler {
 // If the requested URL is '/', then we render the index.html template.
 // If it's not, then we return a 404 response.
 func (h *Handler) Index(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
-	if req.URL.Path != "/" {
+	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return nil
 	}
 
-	err := r.cachedTemplates.ExecuteTemplate(w, "index.html", nil)
+	err := h.cachedTemplates.ExecuteTemplate(w, "index.html", nil)
 
 	if err != nil {
 		log.Println(err.Error())

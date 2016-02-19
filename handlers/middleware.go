@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/ab22/abcd/config"
-	"github.com/ab22/abcd/router/httputils"
+	"github.com/ab22/abcd/httputils"
 	"github.com/gorilla/sessions"
 	"golang.org/x/net/context"
 )

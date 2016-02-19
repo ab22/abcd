@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/httputils"
+	"github.com/ab22/abcd/services"
 	"golang.org/x/net/context"
 )
 

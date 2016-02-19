@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/ab22/abcd/httputils"
 	"github.com/ab22/abcd/models"
-	"github.com/ab22/abcd/router/httputils"
 	"github.com/ab22/abcd/services"
 	"github.com/gorilla/mux"
 	"golang.org/x/net/context"

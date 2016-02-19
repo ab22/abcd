@@ -23,7 +23,7 @@
 							<i class="fa fa-remove"></i>
 							El estudiante ya existe!
 						</label>
-						<label class="control-label" ng-show="studentForm.idNumber.$valid && !studentForm.idNumber.$error.available">
+						<label class="control-label" ng-show="studentForm.idNumber.$valid && !studentForm.idNumber.$error.available && studentForm.idNumber.$dirty">
 							<i class="fa fa-check-square-o"></i>
 							Estudiante disponible!
 						</label>
@@ -71,11 +71,9 @@
 				<div class="form-group" ng-class="{'has-error': studentForm.address.$invalid && (studentForm.address.$dirty || studentForm.$submitted)}">
 					<label for="address" class="col-sm-2 control-label">Dirección</label>
 					<div class="col-sm-8">
-<<<<<<< HEAD
+
 						<input id="address" name="address" class="form-control" placeholder="Dirección" type="text" ng-model="student.address" required>
-=======
-						<input id="address" name="address" class="form-control" placeholder="Direccion" type="text" ng-model="student.address" >
->>>>>>> bugFixing
+
 					</div>
 				</div>
 				<div class="form-group">

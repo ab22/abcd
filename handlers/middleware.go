@@ -9,6 +9,7 @@ import (
 
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/httputils"
+	"github.com/ab22/abcd/routes"
 	"github.com/gorilla/sessions"
 	"golang.org/x/net/context"
 )
@@ -45,7 +46,7 @@ func NoDirListing(h httputils.ContextHandler) httputils.ContextHandler {
 // extended. Session's lifetime should be extended only if the session's
 // current lifetime is below sessionLifeTime/2. Returns true if the session
 // needs to be extended.
-func extendSessionLifetime(sessionData *SessionData, sessionLifeTime time.Duration) bool {
+func extendSessionLifetime(sessionData *httputils.SessionData, sessionLifeTime time.Duration) bool {
 	return sessionData.ExpiresAt.Sub(time.Now()) <= sessionLifeTime/2
 }
 
@@ -54,7 +55,7 @@ func extendSessionLifetime(sessionData *SessionData, sessionLifeTime time.Durati
 func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		var (
-			sessionData *SessionData
+			sessionData *httputils.SessionData
 			err         error
 			ok          bool
 			cookieStore *sessions.CookieStore
@@ -69,7 +70,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 			return fmt.Errorf("validate auth: could not cast value as cookie store: %s", ctx.Value("cookieStore"))
 		}
 
-		session, err = cookieStore.Get(r, SessionCookieName)
+		session, err = cookieStore.Get(r, cfg.SessionCookieName)
 
 		if err != nil {
 			log.Println(err)
@@ -77,7 +78,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 			return nil
 		}
 
-		sessionData, ok = session.Values["data"].(*SessionData)
+		sessionData, ok = session.Values["data"].(*httputils.SessionData)
 
 		if !ok || sessionData.IsInvalid() {
 			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
@@ -138,19 +139,19 @@ func Authorize(h httputils.ContextHandler) httputils.ContextHandler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		var (
 			requiredRoles []string
-			sessionData   *SessionData
-			route         Route
+			sessionData   *httputils.SessionData
+			route         routes.Route
 			ok            bool
 		)
 
-		sessionData, ok = ctx.Value("sessionData").(*SessionData)
+		sessionData, ok = ctx.Value("sessionData").(*httputils.SessionData)
 
 		if !ok {
 			httputils.WriteError(w, http.StatusInternalServerError, "")
 			return fmt.Errorf("authorize: could not cast value as session data: %s", ctx.Value("sessionData"))
 		}
 
-		route, ok = ctx.Value("route").(Route)
+		route, ok = ctx.Value("route").(routes.Route)
 
 		if !ok {
 			httputils.WriteError(w, http.StatusInternalServerError, "")

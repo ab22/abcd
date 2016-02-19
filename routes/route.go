@@ -10,13 +10,15 @@ type Route interface {
 	Method() string
 	HandlerFunc() httputils.ContextHandler
 	RequiresAuth() bool
+	RequiredRoles() []string
 }
 
 type route struct {
-	pattern      string
-	method       string
-	handlerFunc  httputils.ContextHandler
-	requiresAuth bool
+	pattern       string
+	method        string
+	handlerFunc   httputils.ContextHandler
+	requiresAuth  bool
+	requiredRoles []string
 }
 
 func (r *route) Pattern() string {
@@ -33,4 +35,8 @@ func (r *route) HandlerFunc() httputils.ContextHandler {
 
 func (r *route) RequiresAuth() bool {
 	return r.requiresAuth
+}
+
+func (r *route) RequiredRoles() []string {
+	return r.requiredRoles
 }

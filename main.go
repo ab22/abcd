@@ -13,11 +13,6 @@ func main() {
 	log.Println("Starting server...")
 
 	s = NewServer()
-	err = s.Configure()
-
-	if err != nil {
-		log.Fatalln(err)
-	}
 
 	log.Println("Listening...")
 	err = s.ListenAndServe()

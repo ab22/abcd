@@ -16,7 +16,7 @@ type Handler struct {
 	cachedTemplates *template.Template
 }
 
-// NewHandler creates a new router for the static handler.
+// NewHandler initializes a static handler struct.
 func NewHandler(cfg *config.Config) *Handler {
 	var (
 		h     = &Handler{}
@@ -34,9 +34,9 @@ func NewHandler(cfg *config.Config) *Handler {
 // then we check if the URL path is not '/'.
 // If the requested URL is '/', then we render the index.html template.
 // If it's not, then we return a 404 response.
-func (h *Handler) Index(ctx context.Context, w http.ResponseWriter, req *http.Request) error {
+func (h *Handler) Index(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	if req.URL.Path != "/" {
-		http.NotFound(w, req)
+		http.NotFound(w, r)
 		return nil
 	}
 

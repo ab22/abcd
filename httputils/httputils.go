@@ -8,17 +8,6 @@ import (
 	"golang.org/x/net/context"
 )
 
-// A RouteType is used to differentiate requests to the API from the statics
-// file server.
-type RouteType int
-
-const (
-	// API type call.
-	API RouteType = iota
-	// Static type call.
-	Static
-)
-
 // ContextHandler defines how API handler functions should be defined. ApiHandler
 // functions should return any kind of value which will be turned into json
 // and an *ApiError.

@@ -23,10 +23,7 @@
 							<i class="fa fa-remove"></i>
 							El estudiante ya existe!
 						</label>
-						<label class="control-label" ng-show="studentForm.idNumber.$valid && !studentForm.idNumber.$error.available && studentForm.idNumber.$dirty">
-							<i class="fa fa-check-square-o"></i>
-							Estudiante disponible!
-						</label>
+
 					</div>
 				</div>
 				<div class="form-group" ng-class="{'has-error': studentForm.firstName.$invalid && (studentForm.firstName.$dirty || studentForm.$submitted)}">

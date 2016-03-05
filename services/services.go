@@ -11,7 +11,7 @@ type Services interface {
 
 // NewServices creates a new instance of Services.
 func NewServices(db *gorm.DB) Services {
-	s := &Services{}
+	s := &services{}
 
 	s.User = &userService{
 		db: db,

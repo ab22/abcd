@@ -5,6 +5,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// AuthService interface describes all functions that must be implemented.
+type AuthService interface {
+	BasicAuth(string, string) (*models.User, error)
+}
+
 // Contains all of the logic for the systems authentications.
 type authService struct {
 	db          *gorm.DB

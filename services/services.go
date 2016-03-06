@@ -7,13 +7,15 @@ import (
 // Services interface defines all methods that return services.
 type Services interface {
 	Auth() AuthService
+	User() UserService
+	Student() StudentService
 }
 
 // NewServices creates a new instance of Services.
 func NewServices(db *gorm.DB) Services {
 	s := &services{}
 
-	s.User = &userService{
+	s.user = &userService{
 		db: db,
 	}
 
@@ -22,7 +24,7 @@ func NewServices(db *gorm.DB) Services {
 		userService: s.User,
 	}
 
-	s.Student = &studentService{
+	s.utudent = &studentService{
 		db: db,
 	}
 
@@ -32,8 +34,8 @@ func NewServices(db *gorm.DB) Services {
 // services contains all services structures in one whole place.
 type services struct {
 	auth    AuthService
-	User    *userService
-	Student *studentService
+	user    UserService
+	student StudentService
 }
 
 func (s *services) Auth() AuthService {

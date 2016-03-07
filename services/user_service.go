@@ -72,7 +72,7 @@ func (s *userService) FindByID(userID int) (*models.User, error) {
 // Search user by Username.
 func (s *userService) FindByUsername(username string) (*models.User, error) {
 	user := &models.User{}
-	username = s.SanitizeUsername(username)
+	username = s.sanitizeUsername(username)
 
 	err := s.db.
 		Where("username = ?", username).
@@ -152,7 +152,7 @@ func (s *userService) FindAll() ([]models.User, error) {
 // taken.
 func (s *userService) Edit(newUser *models.User) error {
 	user, err := s.FindByID(newUser.ID)
-	newUser.Username = s.SanitizeUsername(newUser.Username)
+	newUser.Username = s.sanitizeUsername(newUser.Username)
 
 	if err != nil {
 		return err
@@ -210,7 +210,7 @@ func (s *userService) ChangePassword(userID int, password string) error {
 // and returns the user.
 func (s *userService) Create(user *models.User) error {
 	var err error
-	user.Username = s.SanitizeUsername(user.Username)
+	user.Username = s.sanitizeUsername(user.Username)
 
 	result, err := s.FindByUsername(user.Username)
 	if err != nil {

@@ -38,7 +38,7 @@ func (h *Handler) CheckAuth(ctx context.Context, w http.ResponseWriter, r *http.
 // If the checks pass, it sets up a session cookie.
 func (h *Handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		authService = h.services.Auth
+		authService = h.services.Auth()
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
 		cfg         = ctx.Value("config").(*config.Config)
 		err         error

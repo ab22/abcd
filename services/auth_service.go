@@ -13,7 +13,7 @@ type AuthService interface {
 // Contains all of the logic for the systems authentications.
 type authService struct {
 	db          *gorm.DB
-	userService *userService
+	userService UserService
 }
 
 // Basic username/password authentication. BasicAuth checks if the user exists,

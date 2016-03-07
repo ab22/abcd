@@ -21,7 +21,7 @@ func NewServices(db *gorm.DB) Services {
 
 	s.auth = &authService{
 		db:          db,
-		userService: s.User,
+		userService: s.user,
 	}
 
 	s.student = &studentService{
@@ -40,4 +40,12 @@ type services struct {
 
 func (s *services) Auth() AuthService {
 	return s.auth
+}
+
+func (s *services) User() UserService {
+	return s.user
+}
+
+func (s *services) Student() StudentService {
+	return s.student
 }

@@ -24,7 +24,7 @@ func NewServices(db *gorm.DB) Services {
 		userService: s.User,
 	}
 
-	s.utudent = &studentService{
+	s.student = &studentService{
 		db: db,
 	}
 

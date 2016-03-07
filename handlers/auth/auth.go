@@ -13,11 +13,11 @@ import (
 
 // Handler structure for the auth handler.
 type Handler struct {
-	services *services.Services
+	services services.Services
 }
 
 // NewHandler initializes an auth handler struct.
-func NewHandler(s *services.Services) *Handler {
+func NewHandler(s services.Services) *Handler {
 	return &Handler{
 		services: s,
 	}

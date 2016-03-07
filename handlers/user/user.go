@@ -28,7 +28,7 @@ func NewHandler(s services.Services) *Handler {
 func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
-		userService = h.services.User
+		userService = h.services.User()
 	)
 
 	type MappedUser struct {
@@ -71,7 +71,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 	var (
 		err         error
 		userID      int
-		userService = h.services.User
+		userService = h.services.User()
 		vars        = mux.Vars(r)
 	)
 
@@ -119,7 +119,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 func (h *Handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
-		userService = h.services.User
+		userService = h.services.User()
 		vars        = mux.Vars(r)
 		username    = vars["username"]
 	)
@@ -161,7 +161,7 @@ func (h *Handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *
 func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
-		userService = h.services.User
+		userService = h.services.User()
 
 		payload struct {
 			ID        int
@@ -217,7 +217,7 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
-		userService = h.services.User
+		userService = h.services.User()
 
 		payload struct {
 			Username  string
@@ -271,7 +271,7 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 func (h *Handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
-		userService = h.services.User
+		userService = h.services.User()
 
 		payload struct {
 			UserID      int
@@ -296,7 +296,7 @@ func (h *Handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *
 func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
-		userService = h.services.User
+		userService = h.services.User()
 
 		payload struct {
 			UserID int
@@ -319,7 +319,7 @@ func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Req
 // GetProfileForCurrentUser retrieves the logged user's information.
 func (h *Handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		userService    = h.services.User
+		userService    = h.services.User()
 		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 	)
 
@@ -361,7 +361,7 @@ func (h *Handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseW
 func (h *Handler) ChangePasswordForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		userService    = h.services.User
+		userService    = h.services.User()
 		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 
 		payload struct {
@@ -386,7 +386,7 @@ func (h *Handler) ChangePasswordForCurrentUser(ctx context.Context, w http.Respo
 func (h *Handler) ChangeEmailForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		userService    = h.services.User
+		userService    = h.services.User()
 		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 
 		payload struct {
@@ -412,7 +412,7 @@ func (h *Handler) ChangeEmailForCurrentUser(ctx context.Context, w http.Response
 func (h *Handler) ChangeFullNameForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		userService    = h.services.User
+		userService    = h.services.User()
 		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 
 		payload struct {

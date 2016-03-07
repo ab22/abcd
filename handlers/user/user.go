@@ -14,11 +14,11 @@ import (
 
 // Handler structure for the user handlers.
 type Handler struct {
-	services *services.Services
+	services services.Services
 }
 
 // NewHandler initializes a new user handler struct.
-func NewHandler(s *services.Services) *Handler {
+func NewHandler(s services.Services) *Handler {
 	return &Handler{
 		services: s,
 	}

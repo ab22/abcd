@@ -7,13 +7,22 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// StudentService interface describes all functions that must be implemented.
+type StudentService interface {
+	FindAll() ([]models.Student, error)
+	FindByID(int) (*models.Student, error)
+	FindByIDNumber(string) (*models.Student, error)
+	Create(*models.Student) error
+	Edit(*models.Student) error
+}
+
 // Contains all logic to handle students in the database.
 type studentService struct {
 	db *gorm.DB
 }
 
 // SanitizeIDNumber trims spaces in the string.
-func (s *studentService) SanitizeIDNumber(idNumber string) string {
+func (s *studentService) sanitizeIDNumber(idNumber string) string {
 	return strings.Trim(idNumber, " ")
 }
 

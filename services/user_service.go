@@ -8,6 +8,22 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// UserService interface describes all functions that must be implemented.
+type UserService interface {
+	FindByID(int) (*models.User, error)
+	FindByUsername(string) (*models.User, error)
+	FindByEmail(string) (*models.User, error)
+	EncryptPassword(string) ([]byte, error)
+	ComparePasswords([]byte, string) bool
+	FindAll() (*models.User, error)
+	Edit(*models.User) error
+	ChangePassword(int, string) error
+	Create(*models.User) error
+	Delete(int) error
+	ChangeEmail(int, string) error
+	ChangeFullName(int, string, string) error
+}
+
 // Contains all of the logic for the User model.
 type userService struct {
 	db *gorm.DB
@@ -22,12 +38,12 @@ const (
 	Disabled
 )
 
-// SanitizeUsername trims the username string and converts it to a lowercase
+// sanitizeUsername trims the username string and converts it to a lowercase
 // version of it.
 //
 // In the future, more checks might be added such as not allowing the username
 // to start with numbers, not allowing special characters, etc.
-func (s *userService) SanitizeUsername(username string) string {
+func (s *userService) sanitizeUsername(username string) string {
 	sanitizedString := strings.Trim(username, " ")
 	sanitizedString = strings.ToLower(sanitizedString)
 

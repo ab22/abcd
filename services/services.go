@@ -11,6 +11,13 @@ type Services interface {
 	Student() StudentService
 }
 
+// services contains all services structures in one whole place.
+type services struct {
+	auth    AuthService
+	user    UserService
+	student StudentService
+}
+
 // NewServices creates a new instance of Services.
 func NewServices(db *gorm.DB) Services {
 	s := &services{}
@@ -29,13 +36,6 @@ func NewServices(db *gorm.DB) Services {
 	}
 
 	return s
-}
-
-// services contains all services structures in one whole place.
-type services struct {
-	auth    AuthService
-	user    UserService
-	student StudentService
 }
 
 func (s *services) Auth() AuthService {

@@ -15,7 +15,7 @@ type UserService interface {
 	FindByEmail(string) (*models.User, error)
 	EncryptPassword(string) ([]byte, error)
 	ComparePasswords([]byte, string) bool
-	FindAll() (*models.User, error)
+	FindAll() ([]models.User, error)
 	Edit(*models.User) error
 	ChangePassword(int, string) error
 	Create(*models.User) error

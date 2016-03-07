@@ -28,7 +28,7 @@ func NewHandler(s services.Services) *Handler {
 func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		studentService = h.services.Student
+		studentService = h.services.Student()
 	)
 
 	type MappedStudent struct {
@@ -71,7 +71,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 		err            error
 		studentID      int
 		vars           = mux.Vars(r)
-		studentService = h.services.Student
+		studentService = h.services.Student()
 	)
 
 	type MappedStudent struct {
@@ -114,7 +114,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		studentService = h.services.Student
+		studentService = h.services.Student()
 
 		payload struct {
 			IDNumber     string
@@ -174,7 +174,7 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
-		studentService = h.services.Student
+		studentService = h.services.Student()
 
 		payload struct {
 			ID           int
@@ -238,7 +238,7 @@ func (h *Handler) FindByIDNumber(ctx context.Context, w http.ResponseWriter, r *
 		err            error
 		idNumber       string
 		vars           = mux.Vars(r)
-		studentService = h.services.Student
+		studentService = h.services.Student()
 	)
 
 	type MappedStudent struct {

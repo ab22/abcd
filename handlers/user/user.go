@@ -34,7 +34,7 @@ type handler struct {
 }
 
 // NewHandler initializes a new user handler struct.
-func NewHandler(s services.Services) *Handler {
+func NewHandler(s services.Services) Handler {
 	return &handler{
 		services: s,
 	}

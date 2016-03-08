@@ -38,7 +38,7 @@ func (s *studentService) FindAll() ([]models.Student, error) {
 		Find(&students).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return nil, err
 		}
 
@@ -57,7 +57,7 @@ func (s *studentService) FindByID(studentID int) (*models.Student, error) {
 		First(student).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return nil, err
 		}
 
@@ -77,7 +77,7 @@ func (s *studentService) FindByIDNumber(idNumber string) (*models.Student, error
 		First(student).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return nil, err
 		}
 

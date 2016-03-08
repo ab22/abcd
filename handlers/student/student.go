@@ -28,7 +28,7 @@ type handler struct {
 
 // NewHandler initializes a new student handler struct.
 func NewHandler(s services.Services) *Handler {
-	return &Handler{
+	return &handler{
 		services: s,
 	}
 }

@@ -25,7 +25,7 @@ type Server struct {
 	cfg         *config.Config
 	cookieStore *sessions.CookieStore
 	router      *mux.Router
-	services    *services.Services
+	services    services.Services
 }
 
 // NewServer returns a new instance of the server. All server configuration

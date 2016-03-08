@@ -15,7 +15,7 @@ type Handler interface {
 	Index(context.Context, http.ResponseWriter, *http.Request) error
 }
 
-// Handler structure for the static handler.
+// handler structure for the static handler.
 type handler struct {
 	cachedTemplates *template.Template
 }

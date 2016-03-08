@@ -78,7 +78,7 @@ func (s *Server) ListenAndServe() error {
 // configuration.
 func (s *Server) createDatabaseConn() (*gorm.DB, error) {
 	var (
-		db               gorm.DB
+		db               *gorm.DB
 		err              error
 		dbCfg            = s.cfg.Db
 		connectionString = fmt.Sprintf(
@@ -99,7 +99,7 @@ func (s *Server) createDatabaseConn() (*gorm.DB, error) {
 	db.DB().SetMaxIdleConns(10)
 	db.LogMode(s.cfg.DbLogMode)
 
-	return &db, nil
+	return db, nil
 }
 
 // configureServices creates the new services for the application to use.

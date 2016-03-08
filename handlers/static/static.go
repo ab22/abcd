@@ -10,15 +10,20 @@ import (
 	"golang.org/x/net/context"
 )
 
+// Handler defines all methods to be implemented by the Auth Handler.
+type Handler interface {
+	Index(context.Context, http.ResponseWriter, *http.Request) error
+}
+
 // Handler structure for the static handler.
-type Handler struct {
+type handler struct {
 	cachedTemplates *template.Template
 }
 
 // NewHandler initializes a static handler struct.
-func NewHandler(cfg *config.Config) *Handler {
+func NewHandler(cfg *config.Config) Handler {
 	var (
-		h     = &Handler{}
+		h     = &handler{}
 		index = path.Join(cfg.App.Frontend.Admin, "index.html")
 	)
 
@@ -33,7 +38,7 @@ func NewHandler(cfg *config.Config) *Handler {
 // then we check if the URL path is not '/'.
 // If the requested URL is '/', then we render the index.html template.
 // If it's not, then we return a 404 response.
-func (h *Handler) Index(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h handler) Index(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return nil

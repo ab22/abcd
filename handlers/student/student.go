@@ -12,8 +12,17 @@ import (
 	"golang.org/x/net/context"
 )
 
-// Handler structure for the student handlers.
-type Handler struct {
+// Handler defines all methods to be implemented by the Student Handler.
+type Handler interface {
+	FindAllAvailable(context.Context, http.ResponseWriter, *http.Request) error
+	FindByID(context.Context, http.ResponseWriter, *http.Request) error
+	Create(context.Context, http.ResponseWriter, *http.Request) error
+	Edit(context.Context, http.ResponseWriter, *http.Request) error
+	FindByIDNumber(context.Context, http.ResponseWriter, *http.Request) error
+}
+
+// handler structure for the student handlers.
+type handler struct {
 	services services.Services
 }
 
@@ -25,7 +34,7 @@ func NewHandler(s services.Services) *Handler {
 }
 
 // FindAllAvailable returns all available students.
-func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		studentService = h.services.Student()
@@ -66,7 +75,7 @@ func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 }
 
 // FindByID finds a Student by Id.
-func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		studentID      int
@@ -111,7 +120,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 }
 
 // Create a student.
-func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		studentService = h.services.Student()
@@ -171,7 +180,7 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 }
 
 // Edit a student.
-func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		studentService = h.services.Student()
@@ -233,7 +242,7 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 }
 
 // FindByIDNumber finds student by honduran Id number or passport number.
-func (h *Handler) FindByIDNumber(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) FindByIDNumber(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		idNumber       string

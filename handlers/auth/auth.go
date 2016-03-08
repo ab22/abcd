@@ -11,13 +11,17 @@ import (
 	"golang.org/x/net/context"
 )
 
+// Handler defines all methods to be implemented by the Auth Handler.
+type Handler interface {
+}
+
 // Handler structure for the auth handler.
-type Handler struct {
+type handler struct {
 	services services.Services
 }
 
 // NewHandler initializes an auth handler struct.
-func NewHandler(s services.Services) *Handler {
+func NewHandler(s services.Services) Handler {
 	return &Handler{
 		services: s,
 	}
@@ -25,7 +29,7 @@ func NewHandler(s services.Services) *Handler {
 
 // CheckAuth asumes that the ValidateAuth decorator called this function
 // because the session was validated successfully.
-func (h *Handler) CheckAuth(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) CheckAuth(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
@@ -36,7 +40,7 @@ func (h *Handler) CheckAuth(ctx context.Context, w http.ResponseWriter, r *http.
 //		- User's status is Active
 //
 // If the checks pass, it sets up a session cookie.
-func (h *Handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		authService = h.services.Auth()
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
@@ -76,7 +80,7 @@ func (h *Handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 }
 
 // Logout does basic session logout.
-func (h *Handler) Logout(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) Logout(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
 		cfg         = ctx.Value("config").(*config.Config)

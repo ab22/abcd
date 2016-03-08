@@ -59,7 +59,7 @@ func (s *userService) FindByID(userID int) (*models.User, error) {
 		First(user).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return nil, err
 		}
 
@@ -79,7 +79,7 @@ func (s *userService) FindByUsername(username string) (*models.User, error) {
 		First(user).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return nil, err
 		}
 
@@ -99,7 +99,7 @@ func (s *userService) FindByEmail(email string) (*models.User, error) {
 		First(user).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return nil, err
 		}
 
@@ -137,7 +137,7 @@ func (s *userService) FindAll() ([]models.User, error) {
 		Find(&users).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return nil, err
 		}
 
@@ -195,7 +195,7 @@ func (s *userService) ChangePassword(userID int, password string) error {
 		Update("password", string(encryptedPassword)).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
@@ -259,7 +259,7 @@ func (s *userService) ChangeEmail(userID int, email string) error {
 		Update("email", email).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
@@ -281,7 +281,7 @@ func (s *userService) ChangeFullName(userID int, firstName, lastName string) err
 		Update("last_name", lastName).Error
 
 	if err != nil {
-		if err != gorm.RecordNotFound {
+		if err != gorm.ErrRecordNotFound {
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {

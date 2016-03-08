@@ -28,7 +28,7 @@
 		},
 		{
 			"ImportPath": "github.com/jinzhu/gorm",
-			"Rev": "67f88d977b01a8c87e0e942f791ce2cc21503223"
+			"Rev": "a0aa21aec5280d4394164fe1804629bc7507cb88"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",

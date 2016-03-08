@@ -41,7 +41,7 @@ func NewHandler(s services.Services) *Handler {
 }
 
 // FindAllAvailable finds all available users.
-func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
 		userService = h.services.User()
@@ -83,7 +83,7 @@ func (h *Handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 }
 
 // FindByID finds a single user by UserID.
-func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
 		userID      int
@@ -132,7 +132,7 @@ func (h *Handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 }
 
 // FindByUsername finds a User by Username.
-func (h *Handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
 		userService = h.services.User()
@@ -174,7 +174,7 @@ func (h *Handler) FindByUsername(ctx context.Context, w http.ResponseWriter, r *
 }
 
 // Edit a user.
-func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
 		userService = h.services.User()
@@ -230,7 +230,7 @@ func (h *Handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 }
 
 // Create a user.
-func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
 		userService = h.services.User()
@@ -284,7 +284,7 @@ func (h *Handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 }
 
 // ChangePassword changes a user's password.
-func (h *Handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
 		userService = h.services.User()
@@ -309,7 +309,7 @@ func (h *Handler) ChangePassword(ctx context.Context, w http.ResponseWriter, r *
 }
 
 // Delete user.
-func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err         error
 		userService = h.services.User()
@@ -333,7 +333,7 @@ func (h *Handler) Delete(ctx context.Context, w http.ResponseWriter, r *http.Req
 }
 
 // GetProfileForCurrentUser retrieves the logged user's information.
-func (h *Handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		userService    = h.services.User()
 		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
@@ -374,7 +374,7 @@ func (h *Handler) GetProfileForCurrentUser(ctx context.Context, w http.ResponseW
 }
 
 // ChangePasswordForCurrentUser changes the logged user's password.
-func (h *Handler) ChangePasswordForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) ChangePasswordForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		userService    = h.services.User()
@@ -399,7 +399,7 @@ func (h *Handler) ChangePasswordForCurrentUser(ctx context.Context, w http.Respo
 }
 
 // ChangeEmailForCurrentUser changes the logged user's email.
-func (h *Handler) ChangeEmailForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) ChangeEmailForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		userService    = h.services.User()
@@ -425,7 +425,7 @@ func (h *Handler) ChangeEmailForCurrentUser(ctx context.Context, w http.Response
 }
 
 // ChangeFullNameForCurrentUser change the logged user's full name.
-func (h *Handler) ChangeFullNameForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) ChangeFullNameForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		err            error
 		userService    = h.services.User()
@@ -459,7 +459,7 @@ func (h *Handler) ChangeFullNameForCurrentUser(ctx context.Context, w http.Respo
 // so in this case, we load them from the session cookie to avoid hitting the
 // database everytime. If said user's privileges get changed, then the user
 // will have to relog to update the values.
-func (h *Handler) GetPrivilegesForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (h *handler) GetPrivilegesForCurrentUser(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		sessionData, _ = ctx.Value("sessionData").(*httputils.SessionData)
 	)

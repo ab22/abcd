@@ -2,12 +2,19 @@ package auth_test
 
 import (
 	"testing"
-)
 
-func TestLogin(t *testing.T) {
-	t.Log("Testing login...")
-}
+	"github.com/ab22/abcd/handlers/auth"
+)
 
 func TestCheckAuth(t *testing.T) {
 	// In case we do something else in the future, add tests here.
+	var (
+		authHandler = auth.NewHandler(nil)
+	)
+
+	err := authHandler.CheckAuth(nil, nil, nil)
+
+	if err != nil {
+		t.Fatal("error checking authentication:", err)
+	}
 }

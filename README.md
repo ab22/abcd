@@ -37,6 +37,23 @@ migrate -url postgres://user:pass@host:port/dbname?sslmode=disable -path ./migra
 
 Note: It is required to have MinGW32/64bit installed on Windows!
 
+## Running the application
+
+### Testing the Backend
+
+Since using 'go test ./...' will take the vendor folder as a valid package
+path, it will attempt to test all of the vendored packages. Also, since
+this project contains a frontend folder with all of it's frontend
+npm/bower modules, 'go test ./...' will also scan those folders taking up
+more time for the test run to complete.
+
+To avoid all previously mentioned, use the **test.sh** script to tests current
+golang packages.
+
+```shell
+./test.sh
+```
+
 ### Compiling and Running
 
 To compile and run the project, you can simply run:

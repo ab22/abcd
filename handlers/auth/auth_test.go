@@ -18,3 +18,7 @@ func TestCheckAuth(t *testing.T) {
 		t.Fatal("error checking authentication:", err)
 	}
 }
+
+func TestLogin(t *testing.T) {
+
+}

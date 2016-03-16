@@ -62,6 +62,7 @@ func (h *handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 	}
 
 	user, err := authService.BasicAuth(loginForm.Identifier, loginForm.Password)
+
 	if err != nil {
 		httputils.WriteError(w, http.StatusInternalServerError, "")
 		return nil

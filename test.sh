@@ -28,4 +28,3 @@ PACKAGE_LIST=(
 ALL_PACKAGES=$(printf " %s" "${PACKAGE_LIST[@]}")
 
 go test -v ${ALL_PACKAGES}
-

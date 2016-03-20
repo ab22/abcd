@@ -22,8 +22,8 @@ To install all dependencies for this project, just run:
 npm install && bower install
 ```
 
-This will create a node_modules/ folder and a static/bower_components/ folder
-with all the dependencies for the application.
+This will create a **node_modules/** folder and a **static/bower_components/**
+folder with all the dependencies for the application.
 
 ## Testing
 

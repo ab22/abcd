@@ -9,7 +9,7 @@ production.
 
 - npm
 - bower
-- grunt-cli (Recommended)
+- grunt-cli
 
 ## Installation
 

@@ -1,10 +1,10 @@
 {
   "name": "ABCD",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "engines": {
-    "npm": "2.6.x",
-    "node": "0.12.x"
+    "npm": "2.14.x",
+    "node": "4.2.x"
   },
   "repository": {
     "type": "git",

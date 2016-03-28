@@ -38,6 +38,7 @@ func NewServices(db *gorm.DB) Services {
 	return s
 }
 
+// Auth getter for the AuthService interface.
 func (s *services) Auth() AuthService {
 	return s.auth
 }

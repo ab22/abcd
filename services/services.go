@@ -43,10 +43,12 @@ func (s *services) Auth() AuthService {
 	return s.auth
 }
 
+// User getter for the UserService interface.
 func (s *services) User() UserService {
 	return s.user
 }
 
+// Student getter for the StudentService interface.
 func (s *services) Student() StudentService {
 	return s.student
 }

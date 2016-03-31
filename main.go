@@ -20,4 +20,6 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	log.Println("Server shuting down...")
 }

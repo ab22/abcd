@@ -35,7 +35,7 @@ cd github.com/ab22/abcd/
 migrate -url postgres://user:pass@host:port/dbname?sslmode=disable -path ./migrations up
 ```
 
-Note: It is required to have MinGW32/64bit installed on Windows!
+Note: It is required to have **MinGW32/64bit** installed on **Windows**!
 
 ## Running the application
 

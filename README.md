@@ -25,7 +25,7 @@ files are saved in the migrations folder. To automatically run these queries,
 it is recommended to use the [migrate](https://github.com/mattes/migrate) tool.
 
 ```shell
-go get github.com/mattes/migrate
+go get -u github.com/mattes/migrate
 ```
 
 Console syntax to migrate all queries:

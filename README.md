@@ -15,7 +15,7 @@ to configure the project correctly.
 ### Downloading the project
 
 ```shell
-go get github.com/ab22/abcd
+go get -u github.com/ab22/abcd
 ```
 
 ### Database Migrations
@@ -56,18 +56,10 @@ golang packages.
 
 ### Compiling and Running
 
-To compile and run the project, you can simply run:
+To compile and run the project:
 
 ```shell
-go run *.go
-```
-
-If on Windows, this will create a temp executable, so everytime you run this,
-the Windows firewall will ask for permissions to run it. So to avoid that popup
-to show everytime, you can instead run:
-
-```shell
-go build && abcd.exe
+go build -o abcd.o && ./abcd.o
 ```
 
 ## TODO

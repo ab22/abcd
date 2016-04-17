@@ -77,7 +77,6 @@ deployFrontend() {
     for folder in "${FRONTEND_FOLDER_LIST[@]}"
     do
         cp -vr "$SRC_FRONTEND_FOLDER${folder}" ${DEST_FRONTEND_FOLDER}
-        echo "$SRC_FRONTEND_FOLDER${folder} -> "${DEST_FRONTEND_FOLDER}
     done
 
     printInfo "Frontend deployed!"
@@ -89,7 +88,6 @@ deployBackend(){
 
     for folder in "${BACKEND_FOLDER_LIST[@]}"
     do
-        echo "$SRC_BACKEND_FOLDER${folder} -> "$DEST_BACKEND_FOLDER
         cp -vr "$SRC_BACKEND_FOLDER${folder}" $DEST_BACKEND_FOLDER
     done
 
@@ -98,7 +96,6 @@ deployBackend(){
     for file in "${BACKEND_FILE_LIST[@]}"
     do
         cp -v "$SRC_BACKEND_FOLDER${file}" ${DEST_BACKEND_FOLDER}
-        echo "$SRC_BACKEND_FOLDER${file} ->"${DEST_BACKEND_FOLDER}
     done
 
     printInfo "Backend deployed!"
@@ -109,7 +106,7 @@ removeExistingFiles() {
         printError "The destination deployment folder cannot be '/'"
     fi
 
-    printInfo "Removing existing files from ${DEST_BACKEND_FOLDER}..."
+    printInfo "Removing existing files from '${DEST_BACKEND_FOLDER}'..."
     rm -vrf "$DEST_BACKEND_FOLDER"/*
     printInfo "All files removed!"
 }
@@ -121,15 +118,15 @@ deploy() {
 
 main() {
     printInfo "=================================================="
-    printInfo "             Deployment tool v.0.0.1"
+    printInfo "             Deployment tool v.0.0.2"
     printInfo "=================================================="
     printInfo "      Backend source folder: $SRC_BACKEND_FOLDER"
     printInfo " Backend destination folder: $DEST_BACKEND_FOLDER"
     printInfo "     Frontend source folder: $SRC_BACKEND_FOLDER"
     printInfo "Frontend destination folder: $DEST_FRONTEND_FOLDER"
     printInfo "=================================================="
-    printWarn "This utility will delete all contents from the $DEST_BACKEND_FOLDER and"
-    printWarn "will replace them with the content of $SRC_BACKEND_FOLDER!"
+    printWarn "This utility will delete all contents from the '$DEST_BACKEND_FOLDER' and"
+    printWarn "will replace them with the content of '$SRC_BACKEND_FOLDER'!"
     printWarn "Reminder: Make sure to run 'grunt build' on the frontend folder!"
 
     if promptMsg "Are you sure you want to continue?"; then

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # test.sh takes a list of packages, appends them to a whole string and sends
 # them to go test.
 #

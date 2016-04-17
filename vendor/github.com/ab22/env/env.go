@@ -11,10 +11,10 @@ import (
 // It attempts to read the 'env' and 'envDefault'
 //
 // An error is returned if the value passed as parameter is not a pointer to a
-// structure and it returns an InvalidInterfaceError.
+// structure and it returns an ErrInvalidInterface.
 func Parse(i interface{}) error {
 	if isInvalidInterface(i) {
-		return InvalidInterfaceError
+		return ErrInvalidInterface
 	}
 
 	elem := reflect.ValueOf(i).Elem()
@@ -97,8 +97,8 @@ func getEnvOrDefaultValue(field *reflect.StructField) string {
 }
 
 // setValue function is in charge of determining if the field is an
-// exported field (accessable). We return a FieldMustBeAssignableError if
-// the field is unaccessable.
+// exported field (accesible). We return a ErrFieldMustBeAssignable if
+// the field is unaccesible.
 //
 // For each of the supported types, we just parse the string value into the
 // corresponding type and assigned it to the field. If there's an error when
@@ -108,10 +108,10 @@ func getEnvOrDefaultValue(field *reflect.StructField) string {
 // to attempt to set all values.
 //
 // If an unsupported field is found, then we return an
-// UnsupportedFieldKindError.
+// ErrUnsupportedFieldKind.
 func setValue(field *reflect.Value, fieldName string, envValue string) error {
 	if !field.CanSet() {
-		return FieldMustBeAssignableError(fieldName)
+		return ErrFieldMustBeAssignable(fieldName)
 	}
 
 	fieldKind := field.Kind()
@@ -147,7 +147,7 @@ func setValue(field *reflect.Value, fieldName string, envValue string) error {
 	case reflect.Struct:
 		return Parse(field.Addr().Interface())
 	default:
-		return &UnsupportedFieldKindError{
+		return &ErrUnsupportedFieldKind{
 			FieldName: fieldName,
 			FieldKind: fieldKind.String(),
 		}

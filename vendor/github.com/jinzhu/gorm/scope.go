@@ -412,18 +412,9 @@ func (scope *Scope) CommitOrRollback() *Scope {
 // Private Methods For *gorm.Scope
 ////////////////////////////////////////////////////////////////////////////////
 
-func (scope *Scope) fieldsMap() map[string]*Field {
-	var results = map[string]*Field{}
-	for _, field := range scope.Fields() {
-		if field.IsNormal {
-			results[field.DBName] = field
-		}
-	}
-	return results
-}
-
 func (scope *Scope) callMethod(methodName string, reflectValue reflect.Value) {
-	if reflectValue.CanAddr() {
+	// Only get address from non-pointer
+	if reflectValue.CanAddr() && reflectValue.Kind() != reflect.Ptr {
 		reflectValue = reflectValue.Addr()
 	}
 
@@ -451,40 +442,54 @@ func (scope *Scope) callMethod(methodName string, reflectValue reflect.Value) {
 	}
 }
 
+var columnRegexp = regexp.MustCompile("^[a-zA-Z]+(\\.[a-zA-Z]+)*$") // only match string like `name`, `users.name`
+
 func (scope *Scope) quoteIfPossible(str string) string {
-	if regexp.MustCompile("^[a-zA-Z]+(.[a-zA-Z]+)*$").MatchString(str) {
+	if columnRegexp.MatchString(str) {
 		return scope.Quote(str)
 	}
 	return str
 }
 
-func (scope *Scope) scan(rows *sql.Rows, columns []string, fieldsMap map[string]*Field) {
-	var values = make([]interface{}, len(columns))
-	var ignored interface{}
+func (scope *Scope) scan(rows *sql.Rows, columns []string, fields []*Field) {
+	var (
+		ignored            interface{}
+		selectFields       []*Field
+		values             = make([]interface{}, len(columns))
+		selectedColumnsMap = map[string]int{}
+		resetFields        = map[*Field]int{}
+	)
 
 	for index, column := range columns {
-		if field, ok := fieldsMap[column]; ok {
-			if field.Field.Kind() == reflect.Ptr {
-				values[index] = field.Field.Addr().Interface()
-			} else {
-				reflectValue := reflect.New(reflect.PtrTo(field.Struct.Type))
-				reflectValue.Elem().Set(field.Field.Addr())
-				values[index] = reflectValue.Interface()
+		values[index] = &ignored
+
+		selectFields = fields
+		if idx, ok := selectedColumnsMap[column]; ok {
+			selectFields = selectFields[idx+1:]
+		}
+
+		for fieldIndex, field := range selectFields {
+			if field.DBName == column {
+				if field.Field.Kind() == reflect.Ptr {
+					values[index] = field.Field.Addr().Interface()
+				} else {
+					reflectValue := reflect.New(reflect.PtrTo(field.Struct.Type))
+					reflectValue.Elem().Set(field.Field.Addr())
+					values[index] = reflectValue.Interface()
+					resetFields[field] = index
+				}
+
+				selectedColumnsMap[column] = fieldIndex
+				break
 			}
-		} else {
-			values[index] = &ignored
 		}
 	}
 
 	scope.Err(rows.Scan(values...))
 
-	for index, column := range columns {
-		if field, ok := fieldsMap[column]; ok {
-			if field.Field.Kind() != reflect.Ptr {
-				if v := reflect.ValueOf(values[index]).Elem().Elem(); v.IsValid() {
-					field.Field.Set(v)
-				}
-			}
+	for field, index := range resetFields {
+		if v := reflect.ValueOf(values[index]).Elem().Elem(); v.IsValid() {
+			field.Field.Set(v)
 		}
 	}
 }
@@ -722,7 +727,12 @@ func (scope *Scope) orderSQL() string {
 	if len(scope.Search.orders) == 0 || scope.Search.countingQuery {
 		return ""
 	}
-	return " ORDER BY " + strings.Join(scope.Search.orders, ",")
+
+	var orders []string
+	for _, order := range scope.Search.orders {
+		orders = append(orders, scope.quoteIfPossible(order))
+	}
+	return " ORDER BY " + strings.Join(orders, ",")
 }
 
 func (scope *Scope) limitAndOffsetSQL() string {
@@ -793,27 +803,60 @@ func (scope *Scope) callCallbacks(funcs []*func(s *Scope)) *Scope {
 	return scope
 }
 
-func (scope *Scope) updatedAttrsWithValues(values map[string]interface{}) (results map[string]interface{}, hasUpdate bool) {
+func convertInterfaceToMap(values interface{}) map[string]interface{} {
+	var attrs = map[string]interface{}{}
+
+	switch value := values.(type) {
+	case map[string]interface{}:
+		return value
+	case []interface{}:
+		for _, v := range value {
+			for key, value := range convertInterfaceToMap(v) {
+				attrs[key] = value
+			}
+		}
+	case interface{}:
+		reflectValue := reflect.ValueOf(values)
+
+		switch reflectValue.Kind() {
+		case reflect.Map:
+			for _, key := range reflectValue.MapKeys() {
+				attrs[ToDBName(key.Interface().(string))] = reflectValue.MapIndex(key).Interface()
+			}
+		default:
+			for _, field := range (&Scope{Value: values}).Fields() {
+				if !field.IsBlank {
+					attrs[field.DBName] = field.Field.Interface()
+				}
+			}
+		}
+	}
+	return attrs
+}
+
+func (scope *Scope) updatedAttrsWithValues(value interface{}) (results map[string]interface{}, hasUpdate bool) {
 	if scope.IndirectValue().Kind() != reflect.Struct {
-		return values, true
+		return convertInterfaceToMap(value), true
 	}
 
 	results = map[string]interface{}{}
-	for key, value := range values {
+
+	for key, value := range convertInterfaceToMap(value) {
 		if field, ok := scope.FieldByName(key); ok && scope.changeableField(field) {
-			if !reflect.DeepEqual(field.Field, reflect.ValueOf(value)) {
-				if _, ok := value.(*expr); ok {
+			if _, ok := value.(*expr); ok {
+				hasUpdate = true
+				results[field.DBName] = value
+			} else {
+				err := field.Set(value)
+				if field.IsNormal {
 					hasUpdate = true
-					results[field.DBName] = value
-				} else if !equalAsString(field.Field.Interface(), value) {
-					field.Set(value)
-					if field.IsNormal {
-						hasUpdate = true
+					if err == ErrUnaddressable {
+						fmt.Println(err)
+						results[field.DBName] = value
+					} else {
 						results[field.DBName] = field.Field.Interface()
 					}
 				}
-			} else {
-				field.Set(value)
 			}
 		}
 	}
@@ -836,10 +879,10 @@ func (scope *Scope) rows() (*sql.Rows, error) {
 
 func (scope *Scope) initialize() *Scope {
 	for _, clause := range scope.Search.whereConditions {
-		scope.updatedAttrsWithValues(convertInterfaceToMap(clause["query"]))
+		scope.updatedAttrsWithValues(clause["query"])
 	}
-	scope.updatedAttrsWithValues(convertInterfaceToMap(scope.Search.initAttrs))
-	scope.updatedAttrsWithValues(convertInterfaceToMap(scope.Search.assignAttrs))
+	scope.updatedAttrsWithValues(scope.Search.initAttrs)
+	scope.updatedAttrsWithValues(scope.Search.assignAttrs)
 	return scope
 }
 

@@ -1,2 +1,3 @@
 *.exe
 npm-debug.log
+*.o

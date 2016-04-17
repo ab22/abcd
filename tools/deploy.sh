@@ -118,7 +118,7 @@ deploy() {
 
 main() {
     printInfo "=================================================="
-    printInfo "             Deployment tool v.0.0.2"
+    printInfo "             Deployment tool v.0.0.3"
     printInfo "=================================================="
     printInfo "      Backend source folder: $SRC_BACKEND_FOLDER"
     printInfo " Backend destination folder: $DEST_BACKEND_FOLDER"
@@ -132,6 +132,7 @@ main() {
     if promptMsg "Are you sure you want to continue?"; then
         printInfo "Starting deployment..."
         deploy
+        printInfo "Deployment done!"
     else
         printError "Deployment aborted!"
     fi

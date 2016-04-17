@@ -12,11 +12,18 @@
 # Exit if any of the commands returns an error.
 set -e
 
+# Determine where the current script is stored at so that we
+# can source other scripts from it.
+SCRIPT_PATH="$(dirname `which $0`)/"
+
+# Load common functions.
+source $SCRIPT_PATH"common.sh"
+
 SRC_BACKEND_FOLDER=$GOPATH"/src/github.com/ab22/abcd/"
-SRC_FRONTEND_FOLDER=$SRC_BACKEND_FOLDER"/frontend/admin/"
+SRC_FRONTEND_FOLDER=$SRC_BACKEND_FOLDER"frontend/admin/"
 
 DEST_BACKEND_FOLDER=$HOME"/Dropbox/Aplicaciones/Heroku/instituto-abcd/"
-DEST_FRONTEND_FOLDER=$DEST_BACKEND_FOLDER"/frontend/admin/"
+DEST_FRONTEND_FOLDER=$DEST_BACKEND_FOLDER"frontend/admin/"
 
 BACKEND_FILE_LIST=(
     "main.go"
@@ -38,36 +45,6 @@ BACKEND_FOLDER_LIST=(
 FRONTEND_FOLDER_LIST=(
     "dist/"
 )
-
-printInfo() {
-    echo -e "\e[0;33m + \e[1;32m$1 \e[0m"
-}
-
-printWarn() {
-    echo -e "\e[0;33m + \e[1;33m$1 \e[0m"
-}
-
-printError() {
-    echo -e "\e[0;33m + \e[1;31m$1 \e[0m"
-    exit 1
-}
-
-promptMsg () {
-    [ `echo $FLAGS | grep y` ] && return 0
-
-    echo -en "\e[0;33m + \e[1;32m$1 \e[0m"
-    read -p "[y/N]: " USER_RESPONSE
-
-    if [ -z $USER_RESPONSE ]; then
-        return 1
-    fi
-
-    if [[ $USER_RESPONSE =~ ^[Yy]$ ]]; then
-        return 0
-    else
-        return 1
-    fi
-}
 
 deployFrontend() {
     printInfo "Deploying frontend..."
@@ -110,29 +87,41 @@ removeExistingFiles() {
     rm -vrf "$DEST_BACKEND_FOLDER"/*
     printInfo "All files removed!"
 }
+
 deploy() {
     removeExistingFiles
     deployBackend
     deployFrontend
 }
 
+buildFrontend() {
+    printInfo "Running 'grunt build' on '$SRC_FRONTEND_FOLDER'..."
+
+    cd $SRC_FRONTEND_FOLDER
+    grunt build
+
+    printInfo "Frontend successfully built!"
+}
+
 main() {
     printInfo "=================================================="
-    printInfo "             Deployment tool v.0.0.3"
+    printInfo "             Deployment tool v.0.2.1"
     printInfo "=================================================="
+    printInfo "       Script location path: $SCRIPT_PATH"
     printInfo "      Backend source folder: $SRC_BACKEND_FOLDER"
     printInfo " Backend destination folder: $DEST_BACKEND_FOLDER"
-    printInfo "     Frontend source folder: $SRC_BACKEND_FOLDER"
+    printInfo "     Frontend source folder: $SRC_FRONTEND_FOLDER"
     printInfo "Frontend destination folder: $DEST_FRONTEND_FOLDER"
     printInfo "=================================================="
-    printWarn "This utility will delete all contents from the '$DEST_BACKEND_FOLDER' and"
-    printWarn "will replace them with the content of '$SRC_BACKEND_FOLDER'!"
-    printWarn "Reminder: Make sure to run 'grunt build' on the frontend folder!"
+    printWarn "This script will delete all contents from '$DEST_BACKEND_FOLDER' and"
+    printWarn "will replace them with the contents of '$SRC_BACKEND_FOLDER'!"
+    printWarn ""
+    printWarn "This script will run 'grunt build' on the frontend before"
+    printWarn "copying all files into the Dropbox folder!"
 
     if promptMsg "Are you sure you want to continue?"; then
-        printInfo "Starting deployment..."
+        buildFrontend
         deploy
-        printInfo "Deployment done!"
     else
         printError "Deployment aborted!"
     fi

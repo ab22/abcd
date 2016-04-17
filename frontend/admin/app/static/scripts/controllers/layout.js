@@ -127,6 +127,16 @@
 				]
 			];
 
+			function hideResponsiveMenu() {
+				if ($scope.isResponsiveMode()) {
+					$scope.isCollapsed = !$scope.isCollapsed;
+				}
+			}
+
+			function setActiveOption(option) {
+				$scope.activeOption = option;
+			}
+
 			$scope.optionOnClick = function(option) {
 				hideResponsiveMenu();
 
@@ -160,12 +170,6 @@
 				return showResponsive && $scope.showOption(option);
 			};
 
-			function hideResponsiveMenu() {
-				if ($scope.isResponsiveMode()) {
-					$scope.isCollapsed = !$scope.isCollapsed;
-				}
-			}
-
 			function determineActiveOption() {
 				var currentPath = $location.path();
 
@@ -182,10 +186,6 @@
 				}
 
 				return null;
-			}
-
-			function setActiveOption(option) {
-				$scope.activeOption = option;
 			}
 
 			function generateTopMenu() {

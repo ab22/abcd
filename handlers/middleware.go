@@ -96,7 +96,7 @@ func ValidateAuth(h httputils.ContextHandler) httputils.ContextHandler {
 
 		if !ok {
 			httputils.WriteError(w, http.StatusInternalServerError, "")
-			return fmt.Errorf("validate auth: error casting config object", ctx.Value("config"))
+			return fmt.Errorf("validate auth: error casting config object: %s", ctx.Value("config"))
 		}
 
 		// Save session only if the session was extended.

@@ -1,0 +1,31 @@
+hash: 7c10cf93e9a17874d08de0147b48b82ba724a69600744b4f74b4a31e827eacda
+updated: 2016-05-08T22:07:19.076427218-06:00
+imports:
+- name: github.com/ab22/env
+  version: 3ed2aef86375cc56821f4161f4cc5d274ae81cdc
+- name: github.com/gorilla/context
+  version: a8d44e7d8e4d532b6a27a02dd82abb31cc1b01bd
+- name: github.com/gorilla/mux
+  version: 9c19ed558d5df4da88e2ade9c8940d742aef0e7e
+- name: github.com/gorilla/securecookie
+  version: 667fe4e3466a040b780561fe9b51a83a3753eefc
+- name: github.com/gorilla/sessions
+  version: a1216e0aed834aa9074063dd4085f5c3df8d1fab
+- name: github.com/jinzhu/gorm
+  version: bf413d67d3a25d4eeddb28541283fa6434d1cdb5
+- name: github.com/jinzhu/inflection
+  version: 3272df6c21d04180007eb3349844c89a3856bc25
+- name: github.com/lib/pq
+  version: dd3290b2f71a8b30bee8e4e75a337a825263d26f
+  subpackages:
+  - oid
+- name: golang.org/x/crypto
+  version: 47ff8dfbc528fea3003fc0ce2d88ffbbfbc46a43
+  subpackages:
+  - bcrypt
+  - blowfish
+- name: golang.org/x/net
+  version: 2a35e686583654a1b89ca79c4ac78cb3d6529ca3
+  subpackages:
+  - context
+devImports: []

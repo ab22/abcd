@@ -1,0 +1,13 @@
+package: github.com/ab22/abcd
+import:
+- package: github.com/ab22/env
+- package: github.com/gorilla/mux
+- package: github.com/gorilla/sessions
+- package: github.com/jinzhu/gorm
+- package: github.com/lib/pq
+- package: golang.org/x/crypto
+  subpackages:
+  - bcrypt
+- package: golang.org/x/net
+  subpackages:
+  - context

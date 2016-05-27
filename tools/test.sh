@@ -24,7 +24,9 @@ PACKAGE_LIST=(
 	"github.com/ab22/abcd/httputils"
 	"github.com/ab22/abcd/models"
 	"github.com/ab22/abcd/routes"
-	"github.com/ab22/abcd/services"
+	"github.com/ab22/abcd/services/auth"
+	"github.com/ab22/abcd/services/student"
+	"github.com/ab22/abcd/services/user"
 )
 
 ALL_PACKAGES=$(printf " %s" "${PACKAGE_LIST[@]}")

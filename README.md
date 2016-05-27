@@ -39,6 +39,24 @@ Note: It is required to have **MinGW32/64bit** installed on **Windows**!
 
 ## Running the application
 
+### Installation
+
+It is required to have `glide` installed to download the required packages for the project. To install glide and download the packages with glide run: 
+```shell
+go get -u github.com/Masterminds/glide
+glide install
+```
+
+A new **vendor/** folder should have been created with all the required dependencies.
+
+### Compiling and Running
+
+To compile and run the project:
+
+```shell
+go build -o abcd.o && ./abcd.o
+```
+
 ### Testing the Backend
 
 Since using 'go test ./...' will take the vendor folder as a valid package
@@ -52,14 +70,6 @@ golang packages.
 
 ```shell
 ./test.sh
-```
-
-### Compiling and Running
-
-To compile and run the project:
-
-```shell
-go build -o abcd.o && ./abcd.o
 ```
 
 ## TODO

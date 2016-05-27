@@ -1,24 +1,21 @@
-package services
+package student
 
 import (
 	"strings"
 
 	"github.com/ab22/abcd/models"
+	"github.com/ab22/abcd/services"
 	"github.com/jinzhu/gorm"
 )
-
-// StudentService interface describes all functions that must be implemented.
-type StudentService interface {
-	FindAll() ([]models.Student, error)
-	FindByID(int) (*models.Student, error)
-	FindByIDNumber(string) (*models.Student, error)
-	Create(*models.Student) error
-	Edit(*models.Student) error
-}
 
 // Contains all logic to handle students in the database.
 type studentService struct {
 	db *gorm.DB
+}
+
+// NewService creates a new student service.
+func NewService(db *gorm.DB) Service {
+	return &studentService{db: db}
 }
 
 // sanitizeIDNumber trims spaces in the string.
@@ -97,7 +94,7 @@ func (s *studentService) Create(student *models.Student) error {
 	if err != nil {
 		return err
 	} else if result != nil {
-		return ErrDuplicatedStudentIDNumber
+		return services.ErrDuplicatedStudentIDNumber
 	}
 
 	return s.db.Create(student).Error
@@ -119,7 +116,7 @@ func (s *studentService) Edit(newStudent *models.Student) error {
 		if err != nil {
 			return err
 		} else if duplicateUser != nil {
-			return ErrDuplicatedStudentIDNumber
+			return services.ErrDuplicatedStudentIDNumber
 		}
 	}
 

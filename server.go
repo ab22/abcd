@@ -12,7 +12,6 @@ import (
 	"github.com/ab22/abcd/handlers"
 	"github.com/ab22/abcd/httputils"
 	"github.com/ab22/abcd/routes"
-	"github.com/ab22/abcd/services"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"github.com/jinzhu/gorm"
@@ -25,7 +24,7 @@ type Server struct {
 	cfg         *config.Config
 	cookieStore *sessions.CookieStore
 	router      *mux.Router
-	services    services.Services
+	db          *gorm.DB
 }
 
 // NewServer returns a new instance of the server. All server configuration
@@ -47,7 +46,9 @@ func NewServer() *Server {
 		log.Fatalln(err)
 	}
 
-	err = server.configureServices()
+	log.Println("Creating database connection...")
+
+	server.db, err = server.createDatabaseConn()
 
 	if err != nil {
 		log.Fatalln(err)
@@ -102,18 +103,6 @@ func (s *Server) createDatabaseConn() (*gorm.DB, error) {
 	return db, nil
 }
 
-// configureServices creates the new services for the application to use.
-func (s *Server) configureServices() error {
-	db, err := s.createDatabaseConn()
-
-	if err != nil {
-		return err
-	}
-
-	s.services = services.NewServices(db)
-	return nil
-}
-
 // configureCookieStore creates the cookie store used to validate user
 // sessions.
 func (s *Server) configureCookieStore() {
@@ -129,7 +118,7 @@ func (s *Server) configureCookieStore() {
 func (s *Server) configureRouter() {
 	s.router = mux.NewRouter().StrictSlash(true)
 
-	r := routes.NewRoutes(s.cfg, s.services)
+	r := routes.NewRoutes(s.cfg, s.db)
 
 	s.bindRoutes(r.TemplateRoutes, false)
 	s.bindRoutes(r.APIRoutes, true)

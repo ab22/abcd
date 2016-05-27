@@ -1,12 +1,16 @@
 package routes
 
 import (
+	"github.com/jinzhu/gorm"
+
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/handlers/auth"
 	"github.com/ab22/abcd/handlers/static"
 	"github.com/ab22/abcd/handlers/student"
 	"github.com/ab22/abcd/handlers/user"
-	"github.com/ab22/abcd/services"
+	authservices "github.com/ab22/abcd/services/auth"
+	studentservices "github.com/ab22/abcd/services/student"
+	userservices "github.com/ab22/abcd/services/user"
 )
 
 // Routes contains all Template and API routes for the application.
@@ -17,12 +21,16 @@ type Routes struct {
 
 // NewRoutes creates a new Router instance and initializes all template
 // and API Routes.
-func NewRoutes(cfg *config.Config, services services.Services) *Routes {
+func NewRoutes(cfg *config.Config, db *gorm.DB) *Routes {
 	var (
+		userService    = userservices.NewService(db)
+		authService    = authservices.NewService(db, userService)
+		studentService = studentservices.NewService(db)
+
 		staticHandler  = static.NewHandler(cfg)
-		authHandler    = auth.NewHandler(services)
-		userHandler    = user.NewHandler(services)
-		studentHandler = student.NewHandler(services)
+		authHandler    = auth.NewHandler(authService)
+		userHandler    = user.NewHandler(userService)
+		studentHandler = student.NewHandler(studentService)
 
 		r = &Routes{
 			TemplateRoutes: []Route{

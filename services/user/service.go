@@ -1,42 +1,23 @@
-package services
+package user
 
 import (
 	"strings"
 
 	"github.com/ab22/abcd/models"
+	"github.com/ab22/abcd/services"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 )
-
-// UserService interface describes all functions that must be implemented.
-type UserService interface {
-	FindByID(int) (*models.User, error)
-	FindByUsername(string) (*models.User, error)
-	FindByEmail(string) (*models.User, error)
-	EncryptPassword(string) ([]byte, error)
-	ComparePasswords([]byte, string) bool
-	FindAll() ([]models.User, error)
-	Edit(*models.User) error
-	ChangePassword(int, string) error
-	Create(*models.User) error
-	Delete(int) error
-	ChangeEmail(int, string) error
-	ChangeFullName(int, string, string) error
-}
 
 // Contains all of the logic for the User model.
 type userService struct {
 	db *gorm.DB
 }
 
-// UserStatus defines an int type to define statuses for the User model.
-type UserStatus int
-
-// Defines all user statuses.
-const (
-	Enabled UserStatus = iota
-	Disabled
-)
+// NewService creates a new user service.
+func NewService(db *gorm.DB) Service {
+	return &userService{db: db}
+}
 
 // sanitizeUsername trims the username string and converts it to a lowercase
 // version of it.
@@ -166,7 +147,7 @@ func (s *userService) Edit(newUser *models.User) error {
 		if err != nil {
 			return err
 		} else if duplicatedUser != nil {
-			return ErrDuplicatedUsername
+			return services.ErrDuplicatedUsername
 		}
 	}
 
@@ -199,7 +180,7 @@ func (s *userService) ChangePassword(userID int, password string) error {
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
-		return ErrRecordNotFound
+		return services.ErrRecordNotFound
 	}
 
 	return nil
@@ -216,7 +197,7 @@ func (s *userService) Create(user *models.User) error {
 	if err != nil {
 		return err
 	} else if result != nil {
-		return ErrDuplicatedUsername
+		return services.ErrDuplicatedUsername
 	}
 
 	hashedPassword, err := s.EncryptPassword(user.Password)
@@ -263,7 +244,7 @@ func (s *userService) ChangeEmail(userID int, email string) error {
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
-		return ErrRecordNotFound
+		return services.ErrRecordNotFound
 	}
 
 	return nil
@@ -285,7 +266,7 @@ func (s *userService) ChangeFullName(userID int, firstName, lastName string) err
 			return err
 		}
 	} else if s.db.RowsAffected == 0 {
-		return ErrRecordNotFound
+		return services.ErrRecordNotFound
 	}
 
 	return nil

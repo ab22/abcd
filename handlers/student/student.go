@@ -8,6 +8,7 @@ import (
 	"github.com/ab22/abcd/httputils"
 	"github.com/ab22/abcd/models"
 	"github.com/ab22/abcd/services"
+	"github.com/ab22/abcd/services/student"
 	"github.com/gorilla/mux"
 	"golang.org/x/net/context"
 )
@@ -23,22 +24,19 @@ type Handler interface {
 
 // handler structure for the student handlers.
 type handler struct {
-	services services.Services
+	studentService student.Service
 }
 
 // NewHandler initializes a new student handler struct.
-func NewHandler(s services.Services) Handler {
+func NewHandler(studentService student.Service) Handler {
 	return &handler{
-		services: s,
+		studentService: studentService,
 	}
 }
 
 // FindAllAvailable returns all available students.
 func (h *handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
-	var (
-		err            error
-		studentService = h.services.Student()
-	)
+	var err error
 
 	type MappedStudent struct {
 		ID        int       `json:"id"`
@@ -51,7 +49,7 @@ func (h *handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
-	students, err := studentService.FindAll()
+	students, err := h.studentService.FindAll()
 	if err != nil {
 		return err
 	}
@@ -77,10 +75,9 @@ func (h *handler) FindAllAvailable(ctx context.Context, w http.ResponseWriter, r
 // FindByID finds a Student by Id.
 func (h *handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err            error
-		studentID      int
-		vars           = mux.Vars(r)
-		studentService = h.services.Student()
+		err       error
+		studentID int
+		vars      = mux.Vars(r)
 	)
 
 	type MappedStudent struct {
@@ -99,7 +96,7 @@ func (h *handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 		return nil
 	}
 
-	student, err := studentService.FindByID(studentID)
+	student, err := h.studentService.FindByID(studentID)
 	if err != nil {
 		return err
 	} else if student == nil {
@@ -122,8 +119,7 @@ func (h *handler) FindByID(ctx context.Context, w http.ResponseWriter, r *http.R
 // Create a student.
 func (h *handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err            error
-		studentService = h.services.Student()
+		err error
 
 		payload struct {
 			IDNumber     string
@@ -162,7 +158,7 @@ func (h *handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 		PhoneNumber:  payload.PhoneNumber,
 	}
 
-	err = studentService.Create(student)
+	err = h.studentService.Create(student)
 	if err != nil {
 		if err == services.ErrDuplicatedStudentIDNumber {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
@@ -182,8 +178,7 @@ func (h *handler) Create(ctx context.Context, w http.ResponseWriter, r *http.Req
 // Edit a student.
 func (h *handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err            error
-		studentService = h.services.Student()
+		err error
 
 		payload struct {
 			ID           int
@@ -224,7 +219,7 @@ func (h *handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 		PhoneNumber:  payload.PhoneNumber,
 	}
 
-	err = studentService.Edit(student)
+	err = h.studentService.Edit(student)
 	if err != nil {
 		if err == services.ErrDuplicatedStudentIDNumber {
 			return httputils.WriteJSON(w, http.StatusOK, &Response{
@@ -244,10 +239,9 @@ func (h *handler) Edit(ctx context.Context, w http.ResponseWriter, r *http.Reque
 // FindByIDNumber finds student by honduran Id number or passport number.
 func (h *handler) FindByIDNumber(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		err            error
-		idNumber       string
-		vars           = mux.Vars(r)
-		studentService = h.services.Student()
+		err      error
+		idNumber string
+		vars     = mux.Vars(r)
 	)
 
 	type MappedStudent struct {
@@ -272,7 +266,7 @@ func (h *handler) FindByIDNumber(ctx context.Context, w http.ResponseWriter, r *
 		return err
 	}
 
-	student, err := studentService.FindByIDNumber(idNumber)
+	student, err := h.studentService.FindByIDNumber(idNumber)
 
 	if err != nil {
 		return err

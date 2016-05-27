@@ -6,7 +6,7 @@ import (
 
 	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/httputils"
-	"github.com/ab22/abcd/services"
+	"github.com/ab22/abcd/services/auth"
 	"github.com/gorilla/sessions"
 	"golang.org/x/net/context"
 )
@@ -20,13 +20,13 @@ type Handler interface {
 
 // Handler structure for the auth handler.
 type handler struct {
-	services services.Services
+	authService auth.Service
 }
 
 // NewHandler initializes an auth handler struct.
-func NewHandler(s services.Services) Handler {
+func NewHandler(authService auth.Service) Handler {
 	return &handler{
-		services: s,
+		authService: authService,
 	}
 }
 
@@ -45,7 +45,6 @@ func (h *handler) CheckAuth(ctx context.Context, w http.ResponseWriter, r *http.
 // If the checks pass, it sets up a session cookie.
 func (h *handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
-		authService = h.services.Auth()
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
 		cfg         = ctx.Value("config").(*config.Config)
 		err         error
@@ -61,7 +60,7 @@ func (h *handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 		return nil
 	}
 
-	user, err := authService.BasicAuth(loginForm.Identifier, loginForm.Password)
+	user, err := h.authService.BasicAuth(loginForm.Identifier, loginForm.Password)
 
 	if err != nil {
 		httputils.WriteError(w, http.StatusInternalServerError, "")

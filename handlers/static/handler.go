@@ -10,11 +10,6 @@ import (
 	"golang.org/x/net/context"
 )
 
-// Handler defines all methods to be implemented by the Static Handler.
-type Handler interface {
-	Index(context.Context, http.ResponseWriter, *http.Request) error
-}
-
 // handler structure for the static handler.
 type handler struct {
 	cachedTemplates *template.Template

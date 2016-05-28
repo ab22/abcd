@@ -11,13 +11,6 @@ import (
 	"golang.org/x/net/context"
 )
 
-// Handler defines all methods to be implemented by the Auth Handler.
-type Handler interface {
-	CheckAuth(context.Context, http.ResponseWriter, *http.Request) error
-	Login(context.Context, http.ResponseWriter, *http.Request) error
-	Logout(context.Context, http.ResponseWriter, *http.Request) error
-}
-
 // Handler structure for the auth handler.
 type handler struct {
 	authService auth.Service

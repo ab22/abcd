@@ -61,7 +61,7 @@ func NewRoutes(cfg *config.Config, db *gorm.DB) *Routes {
 					pattern:       "auth/logout/",
 					method:        "POST",
 					handlerFunc:   authHandler.Logout,
-					requiresAuth:  true,
+					requiresAuth:  false,
 					requiredRoles: []string{},
 				},
 				&route{

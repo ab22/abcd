@@ -21,7 +21,7 @@ func NewHandler(cfg *config.Config) Handler {
 	index := path.Join(cfg.App.Frontend.Admin, "index.html")
 
 	return &handler{
-		cfg:             cfg * config.Config,
+		cfg:             cfg,
 		cachedTemplates: template.Must(template.ParseFiles(index)),
 	}
 }

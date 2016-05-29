@@ -28,9 +28,9 @@ func NewRoutes(cfg *config.Config, db *gorm.DB) *Routes {
 		studentService = studentservices.NewService(db)
 
 		staticHandler  = static.NewHandler(cfg)
-		authHandler    = auth.NewHandler(authService)
-		userHandler    = user.NewHandler(userService)
-		studentHandler = student.NewHandler(studentService)
+		authHandler    = auth.NewHandler(cfg, authService)
+		userHandler    = user.NewHandler(cfg, userService)
+		studentHandler = student.NewHandler(cfg, studentService)
 
 		r = &Routes{
 			TemplateRoutes: []Route{

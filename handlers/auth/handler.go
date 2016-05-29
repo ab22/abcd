@@ -13,12 +13,14 @@ import (
 
 // Handler structure for the auth handler.
 type handler struct {
+	cfg         *config.Config
 	authService auth.Service
 }
 
 // NewHandler initializes an auth handler struct.
-func NewHandler(authService auth.Service) Handler {
+func NewHandler(cfg *config.Config, authService auth.Service) Handler {
 	return &handler{
+		cfg:         cfg,
 		authService: authService,
 	}
 }
@@ -39,7 +41,6 @@ func (h *handler) CheckAuth(ctx context.Context, w http.ResponseWriter, r *http.
 func (h *handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
-		cfg         = ctx.Value("config").(*config.Config)
 		err         error
 
 		loginForm struct {
@@ -63,13 +64,13 @@ func (h *handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 		return nil
 	}
 
-	session, _ := cookieStore.New(r, cfg.SessionCookieName)
+	session, _ := cookieStore.New(r, h.cfg.SessionCookieName)
 	session.Values["data"] = &httputils.SessionData{
 		UserID:    user.ID,
 		Email:     user.Email,
 		IsAdmin:   user.IsAdmin,
 		IsTeacher: user.IsTeacher,
-		ExpiresAt: time.Now().Add(cfg.SessionLifeTime),
+		ExpiresAt: time.Now().Add(h.cfg.SessionLifeTime),
 	}
 
 	return session.Save(r, w)
@@ -79,10 +80,9 @@ func (h *handler) Login(ctx context.Context, w http.ResponseWriter, r *http.Requ
 func (h *handler) Logout(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	var (
 		cookieStore = ctx.Value("cookieStore").(*sessions.CookieStore)
-		cfg         = ctx.Value("config").(*config.Config)
 		err         error
 	)
-	session, err := cookieStore.Get(r, cfg.SessionCookieName)
+	session, err := cookieStore.Get(r, h.cfg.SessionCookieName)
 
 	if err != nil {
 		return err

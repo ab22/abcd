@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/ab22/abcd/config"
 	"github.com/ab22/abcd/httputils"
 	"github.com/ab22/abcd/models"
 	"github.com/ab22/abcd/services"
@@ -15,11 +16,12 @@ import (
 
 // handler structure for the user handlers.
 type handler struct {
+	cfg         *config.Config
 	userService user.Service
 }
 
 // NewHandler initializes a new user handler struct.
-func NewHandler(userService user.Service) Handler {
+func NewHandler(cfg *config.Config, userService user.Service) Handler {
 	return &handler{
 		userService: userService,
 	}

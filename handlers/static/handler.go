@@ -12,19 +12,18 @@ import (
 
 // handler structure for the static handler.
 type handler struct {
+	cfg             *config.Config
 	cachedTemplates *template.Template
 }
 
 // NewHandler initializes a static handler struct.
 func NewHandler(cfg *config.Config) Handler {
-	var (
-		h     = &handler{}
-		index = path.Join(cfg.App.Frontend.Admin, "index.html")
-	)
+	index := path.Join(cfg.App.Frontend.Admin, "index.html")
 
-	h.cachedTemplates = template.Must(template.ParseFiles(index))
-
-	return h
+	return &handler{
+		cfg:             cfg * config.Config,
+		cachedTemplates: template.Must(template.ParseFiles(index)),
+	}
 }
 
 // Index simply returns the index.html file from the main app.

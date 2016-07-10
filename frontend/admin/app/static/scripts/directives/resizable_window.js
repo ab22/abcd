@@ -17,8 +17,8 @@
 
 					scope.getWindowDimensions = function() {
 						return {
-							height: window.height(),
-							width: window.width()
+							height: $window.innerHeight,
+							width: $window.innerWidth
 						};
 					};
 
